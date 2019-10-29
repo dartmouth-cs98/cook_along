@@ -644,7 +644,7 @@ PlayerSettings:
     m_ModelFolderPath: 
     m_PortalFolderPath: 
   luminCert:
-    m_CertPath: /Users/Erika/MagicLeap/privatekey/cookalong.cert
+    m_CertPath: /Users/zacharyjohnson/Downloads/Coding Things/CS98/cookAlong/cook_along/privatekey/cookalongzdj.cert
     m_SignPackage: 1
   luminIsChannelApp: 0
   luminVersion:
