@@ -56,7 +56,8 @@ sysinfo.txt
 *.mpk
 *.unitypackage
 *.package
-out/
+*.out/
+
 
 # Crashlytics generated file
 crashlytics-build.properties
