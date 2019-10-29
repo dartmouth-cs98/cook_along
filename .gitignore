@@ -58,6 +58,7 @@ sysinfo.txt
 *.package
 *.out/
 
+
 # Crashlytics generated file
 crashlytics-build.properties
 
