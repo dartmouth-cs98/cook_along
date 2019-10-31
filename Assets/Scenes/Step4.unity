@@ -386,8 +386,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: '4. Butter a second slice of bread on one side and place butter-side-up
-    on top of sandwich. '
+  m_Text: 4. Butter a second slice of bread on one side and place butter-side-up on
+    top of sandwich
 --- !u!222 &1599132305
 CanvasRenderer:
   m_ObjectHideFlags: 0
