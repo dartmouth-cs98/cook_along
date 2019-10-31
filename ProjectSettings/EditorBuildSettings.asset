@@ -9,11 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/HelloCube.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 0
-    path: Assets/Scenes/Hello World.unity
+    path: Assets/Scenes/Recipe Instruction.unity
     guid: b2d5ab3660de54535af7b67c142b4831
   - enabled: 1
-    path: Assets/Scenes/HelloCylinder.unity
-    guid: 3dab30c44e24e43738fefa0c5a55986c
+    path: Assets/Scenes/Recipe Information.unity
+    guid: a1dc9adbcf348450fa84466c24e6f8e1
+
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 2ba4dbd235ed941bb8fdb5a40ab00f22,
       type: 2}
