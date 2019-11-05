@@ -12,6 +12,7 @@
 
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.XR.MagicLeap;
 
 namespace MagicLeap
@@ -28,6 +29,8 @@ namespace MagicLeap
 
         private int _lastLEDindex = -1;
         #endregion
+
+        private Button _button;
 
         #region Const Variables
         private const float TRIGGER_DOWN_MIN_VALUE = 0.2f;
@@ -52,6 +55,7 @@ namespace MagicLeap
             MLInput.OnControllerButtonUp += HandleOnButtonUp;
             MLInput.OnControllerButtonDown += HandleOnButtonDown;
             MLInput.OnTriggerDown += HandleOnTriggerDown;
+
         }
 
         /// <summary>
@@ -127,8 +131,7 @@ namespace MagicLeap
             if (controller != null && controller.Id == controllerId &&
                 button == MLInputControllerButton.Bumper)
             {
-                // Demonstrate haptics using callbacks.
-                controller.StartFeedbackPatternVibe(MLInputControllerFeedbackPatternVibe.ForceDown, MLInputControllerFeedbackIntensity.Medium);
+                Debug.Log("Clicked bumper down");
             }
         }
 
@@ -143,8 +146,7 @@ namespace MagicLeap
             if (controller != null && controller.Id == controllerId &&
                 button == MLInputControllerButton.Bumper)
             {
-                // Demonstrate haptics using callbacks.
-                controller.StartFeedbackPatternVibe(MLInputControllerFeedbackPatternVibe.ForceUp, MLInputControllerFeedbackIntensity.Medium);
+                Debug.Log("Bumper released");
             }
         }
 
@@ -158,8 +160,7 @@ namespace MagicLeap
             MLInputController controller = _controllerConnectionHandler.ConnectedController;
             if (controller != null && controller.Id == controllerId)
             {
-                MLInputControllerFeedbackIntensity intensity = (MLInputControllerFeedbackIntensity)((int)(value * 2.0f));
-                controller.StartFeedbackPatternVibe(MLInputControllerFeedbackPatternVibe.Buzz, intensity);
+                Debug.Log("Trigger Down");
             }
         }
         #endregion

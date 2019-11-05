@@ -66,6 +66,9 @@ crashlytics-build.properties
 # VS Code
 .vscode/
 
+# Editor
+.idea/
+
 # General
 .DS_Store
 .AppleDouble
