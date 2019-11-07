@@ -2,12 +2,6 @@
  * Magic Leap tutorial from
  * https://creator.magicleap.com/learn/guides/gestures-in-unity
  */
-/**
- * Plan for toggling through steps:
- * Consolidate steps in a single folder
- * Load steps from folder
- * Use gestures to move through steps (scenes)
- */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +10,6 @@ using UnityEngine.XR.MagicLeap;
 
 public class GestureScript : MonoBehaviour {
 	
-	private bool OKHandPose = false;
 	private MLHandKeyPose[] gestures;	// Holds the different gestures we will look for
 	private AssetBundle myLoadedAssetBundle;
   private string[] stepPaths;
@@ -43,9 +36,11 @@ public class GestureScript : MonoBehaviour {
 	void Update () {
 		// TODO: 
 		// test this out on MagicLeap.
-		// Extend this to toggling through steps
+		// Extend this to going through steps
 		if (GetOkay()) {	
-			SceneManager.LoadScene("Recipe Information");
+			// unload active scene, then load recipe information
+			SceneManager.UnloadSceneAsync("HelloCube");
+			SceneManager.LoadScene("Recipe Chooser");
 		}
 	}
 
@@ -67,8 +62,8 @@ public class GestureScript : MonoBehaviour {
 		
 		if (GetGesture(MLHands.Left, MLHandKeyPose.Thumb) 
 		|| GetGesture(MLHands.Left, MLHandKeyPose.Ok)
-		|| (GetGesture(MLHands.Right, MLHandKeyPose.Thumb) 
-		|| GetGesture(MLHands.Right, MLHandKeyPose.Ok) {
+		|| GetGesture(MLHands.Right, MLHandKeyPose.Thumb) 
+		|| GetGesture(MLHands.Right, MLHandKeyPose.Ok)) {
 			return true;
 		}
 
