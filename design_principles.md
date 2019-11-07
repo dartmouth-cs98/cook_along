@@ -1,6 +1,6 @@
-#Design Principles for UI 
+# Design Principles for UI 
 
-##Canvas 
+## Canvas 
 Rect Transform: 
 * Width: 1300-1320
 * Height: 520-530
@@ -12,7 +12,7 @@ Render mode:
 	* Main Camera should be at 0,0,0
 
 
-##Text 
+## Text 
 * Font: LominoUI_A_WideReg
 * Font style: Normal 
 * Font sizes: must be at least 18, but recommended around 22 
@@ -22,7 +22,7 @@ Render mode:
 * Color: 130,130,130     Hex: 828282
 
 
-##Images 
+## Images 
 * Load as 2D sprite 
 * save image in images folder 
 
