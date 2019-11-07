@@ -13,6 +13,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UI.Collections;
 using UnityEngine.XR.MagicLeap;
 
 namespace MagicLeap
@@ -26,22 +27,9 @@ namespace MagicLeap
     {
         #region Private Variables
         private ControllerConnectionHandler _controllerConnectionHandler;
-
-        private int _lastLEDindex = -1;
-        #endregion
-
+        private Canvas _canvas;
         private Button _button;
-
-        #region Const Variables
-        private const float TRIGGER_DOWN_MIN_VALUE = 0.2f;
-
-        // UpdateLED - Constants
-        private const float HALF_HOUR_IN_DEGREES = 15.0f;
-        private const float DEGREES_PER_HOUR = 12.0f / 360.0f;
-
-        private const int MIN_LED_INDEX = (int)(MLInputControllerFeedbackPatternLED.Clock12);
-        private const int MAX_LED_INDEX = (int)(MLInputControllerFeedbackPatternLED.Clock6And12);
-        private const int LED_INDEX_DELTA = MAX_LED_INDEX - MIN_LED_INDEX;
+        
         #endregion
 
         #region Unity Methods
@@ -51,6 +39,9 @@ namespace MagicLeap
         void Start()
         {
             _controllerConnectionHandler = GetComponent<ControllerConnectionHandler>();
+            _canvas = GetComponent<Canvas>();
+            GameObject buttonObject = GameObject.Find("Button");
+            _button = buttonObject.GetComponent<Button>();
 
             MLInput.OnControllerButtonUp += HandleOnButtonUp;
             MLInput.OnControllerButtonDown += HandleOnButtonDown;
@@ -63,7 +54,6 @@ namespace MagicLeap
         /// </summary>
         void Update()
         {
-            UpdateLED();
         }
 
         /// <summary>
@@ -74,48 +64,6 @@ namespace MagicLeap
             MLInput.OnTriggerDown -= HandleOnTriggerDown;
             MLInput.OnControllerButtonDown -= HandleOnButtonDown;
             MLInput.OnControllerButtonUp -= HandleOnButtonUp;
-        }
-        #endregion
-
-        #region Private Methods
-        /// <summary>
-        /// Updates LED on the physical controller based on touch pad input.
-        /// </summary>
-        private void UpdateLED()
-        {
-            if (!_controllerConnectionHandler.IsControllerValid())
-            {
-                return;
-            }
-
-            MLInputController controller = _controllerConnectionHandler.ConnectedController;
-            if (controller.Touch1Active)
-            {
-                // Get angle of touchpad position.
-                float angle = -Vector2.SignedAngle(Vector2.up, controller.Touch1PosAndForce);
-                if (angle < 0.0f)
-                {
-                    angle += 360.0f;
-                }
-
-                // Get the correct hour and map it to [0,6]
-                int index = (int)((angle + HALF_HOUR_IN_DEGREES) * DEGREES_PER_HOUR) % LED_INDEX_DELTA;
-
-                // Pass from hour to MLInputControllerFeedbackPatternLED index  [0,6] -> [MAX_LED_INDEX, MIN_LED_INDEX + 1, ..., MAX_LED_INDEX - 1]
-                index = (MAX_LED_INDEX + index > MAX_LED_INDEX) ? MIN_LED_INDEX + index : MAX_LED_INDEX;
-
-                if (_lastLEDindex != index)
-                {
-                    // a duration of 0 means leave it on indefinitely
-                    controller.StartFeedbackPatternLED((MLInputControllerFeedbackPatternLED)index, MLInputControllerFeedbackColorLED.BrightCosmicPurple, 0);
-                    _lastLEDindex = index;
-                }
-            }
-            else if (_lastLEDindex != -1)
-            {
-                controller.StopFeedbackPatternLED();
-                _lastLEDindex = -1;
-            }
         }
         #endregion
 
@@ -131,7 +79,8 @@ namespace MagicLeap
             if (controller != null && controller.Id == controllerId &&
                 button == MLInputControllerButton.Bumper)
             {
-                Debug.Log("Clicked bumper down");
+                Debug.Log("Clicked bumper down from feedback script");
+                _button.onClick.Invoke();
             }
         }
 
@@ -146,7 +95,7 @@ namespace MagicLeap
             if (controller != null && controller.Id == controllerId &&
                 button == MLInputControllerButton.Bumper)
             {
-                Debug.Log("Bumper released");
+                Debug.Log("Bumper released from feedback script");
             }
         }
 
