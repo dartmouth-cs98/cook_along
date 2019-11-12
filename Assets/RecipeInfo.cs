@@ -5,28 +5,19 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR.MagicLeap;
 
-public class RecipeLoader : MonoBehaviour
+public class RecipeInfo : MonoBehaviour
 {
     
     #region Private Variables
     private ControllerConnectionHandler _controllerConnectionHandler;
-    private GameObject _recipe1;
-    private Image _recipe1Image;
-    public static bool Recipe1Active;
-    private GameObject _recipe2;
-    private Image _recipe2Image;
     #endregion
     
     // Start is called before the first frame update
     void Start()
     {
         _controllerConnectionHandler = GetComponent<ControllerConnectionHandler>();
-
-        _recipe1 = GameObject.Find("Viewport/Recipe 1");
-        _recipe1Image = _recipe1.GetComponent<Image>();
-        _recipe2 = GameObject.Find("Viewport/Recipe 2");
-        _recipe2Image = _recipe2.GetComponent<Image>();
-        Recipe1Active = true;
+        Debug.Log("Below is static variable passed through: ");
+        Debug.Log(RecipeLoader.Recipe1Active);
 
         MLInput.OnControllerButtonUp += HandleOnButtonUp;
         MLInput.OnControllerButtonDown += HandleOnButtonDown;
@@ -38,23 +29,8 @@ public class RecipeLoader : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        updateActiveRecipe();
     }
 
-    void updateActiveRecipe()
-    {
-        if (Recipe1Active)
-        {
-            _recipe1Image.color = new Color(0, 213, 0);
-            _recipe2Image.color = new Color(245, 223, 186);
-        }
-        else
-        {
-            _recipe2Image.color = new Color(0, 213, 0);
-            _recipe1Image.color = new Color(245, 223, 186);
-        }
-    }
-    
     void OnDestroy()
     {
         MLInput.OnControllerButtonDown -= HandleOnButtonDown;
@@ -81,10 +57,10 @@ public class RecipeLoader : MonoBehaviour
     {
         MLInputController controller = _controllerConnectionHandler.ConnectedController;
         if (controller != null && controller.Id == controllerId &&
-            button == MLInputControllerButton.Bumper)
+            button == MLInputControllerButton.HomeTap)
         {
             Debug.Log("Button up");
-            SceneManager.LoadScene("Recipe Information");
+            SceneManager.LoadScene("Recipe Chooser");
         }
     }
     
@@ -93,15 +69,13 @@ public class RecipeLoader : MonoBehaviour
         if (gesture.Type == MLInputControllerTouchpadGestureType.Swipe
             && gesture.Direction == MLInputControllerTouchpadGestureDirection.Up)
         {
-            Recipe1Active = !Recipe1Active;
+            
         }
         
         if (gesture.Type == MLInputControllerTouchpadGestureType.Swipe
             && gesture.Direction == MLInputControllerTouchpadGestureDirection.Down)
         {
-            Recipe1Active = !Recipe1Active;
+            
         }
-
     }
 }
-
