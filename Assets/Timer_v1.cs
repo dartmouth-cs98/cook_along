@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class TimerExample: MonoBehaviour
+public class Timer_v1: MonoBehaviour
 {
     public static float timer = 120f; //2 minutes
     //public static bool timeStarted = false;
