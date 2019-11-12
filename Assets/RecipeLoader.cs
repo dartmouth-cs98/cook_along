@@ -55,6 +55,7 @@ public class RecipeLoader : MonoBehaviour
     {
         MLInput.OnControllerButtonDown -= HandleOnButtonDown;
         MLInput.OnControllerButtonUp -= HandleOnButtonUp;
+        MLInput.OnControllerTouchpadGestureStart -= OnTouchpadGestureStart;
     }
     
     private void HandleOnButtonDown(byte controllerId, MLInputControllerButton button)
