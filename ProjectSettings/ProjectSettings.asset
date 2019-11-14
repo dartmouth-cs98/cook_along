@@ -644,9 +644,7 @@ PlayerSettings:
     m_ModelFolderPath: 
     m_PortalFolderPath: 
   luminCert:
-
     m_CertPath: /Users/Erika/MagicLeap/privatekey/cookalong.cert
-
     m_SignPackage: 1
   luminIsChannelApp: 0
   luminVersion:

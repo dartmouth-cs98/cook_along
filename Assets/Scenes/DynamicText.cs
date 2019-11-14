@@ -6,17 +6,38 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Diagnostics;
 using UnityEngine.XR.MagicLeap;
+using System.IO;
 
 
 public class DynamicText : MonoBehaviour
 {
 	private Text thisText;
-	private int step_number;
+	private int step_number=1;
     private MLHandKeyPose[] gestures;   // Holds the different gestures we will look for
     private AssetBundle myLoadedAssetBundle;
+    // string path;
+    // string jsonString;
+    Recipe myRecipe = new Recipe();
+    int steps = 3;
+
+    // RecipeStep currentStep = new RecipeStep();
+    // myRecipe.steps.add(currentStep)
+    // [0].instruction ="at step 1";
+    // myRecipe.steps[1].instruction ="at step 2";
+    // myRecipe.steps[2].instruction ="at step 3";
+    
+
     // Start is called before the first frame update
     void Start()
     {
+        for(int i =1;i<=steps;i++){
+        RecipeStep currentStep = new RecipeStep();
+        currentStep.instruction= "at step" +i;
+        myRecipe.steps.Add(currentStep);
+
+        }
+
+        UnityEngine.Debug.Log(myRecipe);
     	thisText = GetComponent<Text>();
         MLHands.Start();
 
@@ -44,7 +65,7 @@ public class DynamicText : MonoBehaviour
             }
             stopWatch.Stop();
         }
-        thisText.text = "Step " + step_number;
+        thisText.text = myRecipe.steps[step_number-1].instruction;
     }
 
     void onDestroy () {
@@ -80,16 +101,32 @@ public class DynamicText : MonoBehaviour
         }
     }
 
-    // void Hold(int delay){
-    //     Stopwatch stopWatch= new Stopwatch();
-    //     stopWatch.Start();
-    //     float curr = stopWatch.ElapsedMilliseconds/1000;
-    //     while (curr <delay){
-    //         curr = stopWatch.ElapsedMilliseconds/1000;
-    //     }
-    //     stopWatch.Stop();
-    // }
+}
 
+
+public class Recipe
+{
+    public long id;
+    public string name;
+    public string description;
+    public int time;
+    public int serving_size;
+    public int calories;
+    public List<RecipeIngredient> ingredients;
+    public List<RecipeStep> steps;
+    public List<string> tools;
+}
+
+public class RecipeIngredient {
+    public long id;
+    public string name;
+    public string amount;
+}
+
+public class RecipeStep {
+    public long id;
+    public string instruction;
+    public string videoUrl;
 }
 
 
