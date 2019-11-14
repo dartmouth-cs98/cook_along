@@ -1,0 +1,69 @@
+﻿{"recipe": {
+    "1": {
+	    "name": "Grilled Cheese",
+        "description": "Melted cheese on toasted bread",
+        "time”: 10,
+        "serving_size": 1,
+        "calories": 200,
+        "ingredients": {
+            "1": {
+                "name":"Half inch thick Pullman or white bread",
+                "amount" :"Two slices",
+             },
+            "2": {
+                "name":"Mayonnaise",
+                "amount" :"2 tablespoons",
+             },
+            "3": {
+                "name":"Unsalted butter",
+                "amount" :"1 tablespoon",
+             },
+            "4": {
+                "name":"Thinly sliced American or cheddar cheese",
+                "amount" :"2 ounces (~4 slices)",
+             },
+            "5": {
+                "name":"Ground black pepper",
+                "amount" :"To taste",
+             }
+        },
+        "steps": {
+            "1": {
+                "instruction":"Place bread on a cutting board and spread mayonnaise over top side of each; this is key to a golden, delectable crunch.",
+                "videoUrl" :"",
+             },
+            "2": {
+                "instruction":"Heat a small skillet (nonstick, ideally) over medium heat.",
+                "videoUrl" :"",
+             },
+            "3": {
+                "instruction":"Slide in half of butter",
+                "videoUrl" :"",
+             },
+            "4": {
+                "instruction":"When it melts, place 1 slice of bread, mayonnaise side down, in skillet; top with cheese; season with pepper.",
+                "videoUrl" :"",
+             },
+            "5": {
+                "instruction":"Top with second slice of bread, mayonnaise side up.",
+                "videoUrl" :"",
+             },
+            "6": {
+                "instruction":"When underside is golden brown, about 4 minutes, turn sandwich and add remaining butter to skillet.",
+                "videoUrl" :"",
+             },
+            "7": {
+                "instruction":"Press down on sandwich to encourage even browning and to help melt cheese—be gentle, don’t smash it.",
+                "videoUrl" :"",
+             },
+            "8": {
+                "instruction":"Cook until second side is golden brown and cheese is melted.",
+                "videoUrl" :"",
+             },
+            "9": {
+                "instruction":"Eat it.",
+                "videoUrl" :"",
+             }
+        },
+        "tools": ["Cutting board", "Butter knife", "Skillet", "Stove"],
+}}    
