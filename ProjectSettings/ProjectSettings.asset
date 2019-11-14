@@ -644,11 +644,9 @@ PlayerSettings:
     m_ModelFolderPath: 
     m_PortalFolderPath: 
   luminCert:
-<<<<<<< Updated upstream
-    m_CertPath: /Users/dani/Documents/College/19F/CS98/cubetemplate.cert
-=======
+
     m_CertPath: /Users/Erika/MagicLeap/privatekey/cookalong.cert
->>>>>>> Stashed changes
+
     m_SignPackage: 1
   luminIsChannelApp: 0
   luminVersion:
