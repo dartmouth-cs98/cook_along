@@ -1,38 +1,66 @@
-# Magic Leap Unity Project Template
+# CookAlong
 
-## Project
+An AR application to help streamline the cooking process. Include recipe selection, step-by-step instructions, and education on cooking terms and ingradient pictures.
 
-Hello, Cube!
+Sample mockups
+![Welcome](https://github.com/dartmouth-cs98/19f-cookalong/blob/master/welcome.png)
+![Tutorial](https://github.com/dartmouth-cs98/19f-cookalong/blob/master/tutorial.png)
+![Recipes](https://github.com/dartmouth-cs98/19f-cookalong/blob/master/recipes.png)
+![ARecipes](https://github.com/dartmouth-cs98/19f-cookalong/blob/master/recipecheese.png)
+![Dicing](https://github.com/dartmouth-cs98/19f-cookalong/blob/master/slicewvid.png)
+![Dicingw/instructions](https://github.com/dartmouth-cs98/19f-cookalong/blob/master/slice.png)
 
-## Versions
 
-### Unity
+## Architecture
+Backend : https://github.com/dartmouth-cs98/cookalong-backend
+* Springboot Java for rest API calls
+* Data storage in AWS
 
-2019.2.x
+Frontend: https://github.com/dartmouth-cs98/cook_along
+* Unity app coded in C#
+* Building onto a MagicLeap headset
 
-### MLSDK
 
-v0.22.0
+## Setup
 
-### LuminOS
+TODO: how to get the project dev environment up and running, npm install etc, all necessary commands needed, environment variables etc
+1. Have Unity Installed
+2. Have MagicLeap Package Manager Installed
+3. Configure the connection between the two using links below:
+[Dev Set up](https://creator.magicleap.com/learn/guides/develop-setup)
 
-0.97.x
+[Device Set up](https://creator.magicleap.com/learn/guides/develop-device-setup)
 
-## Downloading
+[Connect](https://creator.magicleap.com/learn/guides/connect-device)
 
-1) Download the latest Source Code .`zip` release file from <https://github.magicleap.com/DevRelSamples/Unity-Project-Template/releases/>.
-2) Extract the zip file in a directory of your choice.
+[Certificate](https://creator.magicleap.com/learn/guides/developer-certificates)
 
-## Instructions After Downloading
+[Starter](https://creator.magicleap.com/learn/guides/get-started-developing-in-unity)
 
-1) Using Unity Hub, download Unity 2019.2.x and make sure Lumin support is checked during installation
-2) `ADD` the project using Unity Hub
-3) Open the project using Unity Hub
-4) Under File > Build Settings, make sure the build target is Lumin
-5) Under Unity preferences, set the MLSDK path
-6) Under project settings > publishing settings, set your cert path (and make sure the privkey file is in the same directory. If this is confusing, refer to and read our docs. There’s also a `README` in the privkey folder after unzipping)
-7) Make sure USB debugging is enabled between your device and computer (which requires MLDB access) and you’re allowing untrusted sources
-8) Open the `HelloCube` Scene from `Assets`>`Scenes`>`HelloCube`
-9) Build and Run
-10) Accept the cert if prompted after build is complete
-11) There will be a cube 1 meter in front of where your current headpose session started
+[Unity Setup](https://creator.magicleap.com/learn/guides/unity-setup)
+
+4. To modify App 
+a. Clone from [repository](https://github.com/dartmouth-cs98/cook_along)
+b. Change Certificate path with *Edit > Project Settings > Player > Lumin Tab > Publish Settings*
+change ML certificate to the private key from the Certificate part of Step 3 above
+c. Modify and push as needed
+ 
+
+
+ 
+## Deployment
+
+1. Download the .mpk file from the [repository](https://github.com/dartmouth-cs98/cook_along)
+2. Install using `mldb install appName.mpk`
+3. run `mldb packages`
+4. Try launching app with `mldb launch sampleApp`
+
+## Authors
+Brian Tomasco
+Zach Johnson
+Anders Linstrom
+Erika Ogino
+Danielle Fang
+
+## Acknowledgments
+[MagicLeap Guides](https://creator.magicleap.com/learn/guides/)
