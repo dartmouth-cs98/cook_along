@@ -1,8 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Net;
+using System;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
 using UnityEngine.XR.MagicLeap;
 
 public class RecipeInfo : MonoBehaviour
@@ -10,14 +14,19 @@ public class RecipeInfo : MonoBehaviour
     
     #region Private Variables
     private ControllerConnectionHandler _controllerConnectionHandler;
+    private Recipe _recipe;
     #endregion
     
     // Start is called before the first frame update
     void Start()
     {
+
         _controllerConnectionHandler = GetComponent<ControllerConnectionHandler>();
         Debug.Log("Below is static variable passed through: ");
         Debug.Log(RecipeLoader.Recipe1Active);
+
+        _recipe = getRecipe();
+        Debug.Log(_recipe.name);
 
         MLInput.OnControllerButtonUp += HandleOnButtonUp;
         MLInput.OnControllerButtonDown += HandleOnButtonDown;
@@ -37,6 +46,18 @@ public class RecipeInfo : MonoBehaviour
         MLInput.OnControllerButtonUp -= HandleOnButtonUp;
         MLInput.OnControllerTouchpadGestureStart -= OnTouchpadGestureStart;
     }
+
+
+    Recipe getRecipe()
+    {
+        HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://localhost:8080/grilledcheese");
+        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+        StreamReader reader = new StreamReader(response.GetResponseStream());
+        string jsonResponse = reader.ReadToEnd();
+        Recipe info = JsonUtility.FromJson<Recipe>(jsonResponse);
+        return info;
+    }
+    
     
     private void HandleOnButtonDown(byte controllerId, MLInputControllerButton button)
     {
