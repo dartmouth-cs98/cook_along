@@ -15,7 +15,7 @@ public class RecipeInfo : MonoBehaviour
     
     #region Private Variables
     private ControllerConnectionHandler _controllerConnectionHandler;
-    private Recipe _recipe;
+    public static Recipe RecipeVar;
     private Text _title;
     private Text _ingredients;
     private Text _tools;
@@ -27,21 +27,18 @@ public class RecipeInfo : MonoBehaviour
     {
 
         _controllerConnectionHandler = GetComponent<ControllerConnectionHandler>();
-        _recipe = getRecipe();
+        RecipeVar = getRecipe();
         _title = GameObject.Find("Header").GetComponent<Text>();
-        _title.text = _recipe.name;
+        _title.text = RecipeVar.name;
         _ingredients = GameObject.Find("Ingredients").GetComponent<Text>();
-        _ingredients.text = GetIngredientString(_recipe.ingredients);
+        _ingredients.text = GetIngredientString(RecipeVar.ingredients);
         _tools = GameObject.Find("Tools").GetComponent<Text>();
-        _tools.text = GetToolsString(_recipe.tools);
+        _tools.text = GetToolsString(RecipeVar.tools);
         _other_info = GameObject.Find("Other information").GetComponent<Text>();
-        _other_info.text = GetOtherInfoString(_recipe.calories, _recipe.time, _recipe.serving_size);
+        _other_info.text = GetOtherInfoString(RecipeVar.calories, RecipeVar.time, RecipeVar.serving_size);
         
         MLInput.OnControllerButtonUp += HandleOnButtonUp;
         MLInput.OnControllerButtonDown += HandleOnButtonDown;
-        
-        // used for reference: https://github.com/larkintuckerllc/magic-leap-patterns/blob/master/Assets/MagicLeap/Examples/Scripts/MeshingExample.cs
-        MLInput.OnControllerTouchpadGestureStart += OnTouchpadGestureStart;
     }
 
     // Update is called once per frame
@@ -53,7 +50,6 @@ public class RecipeInfo : MonoBehaviour
     {
         MLInput.OnControllerButtonDown -= HandleOnButtonDown;
         MLInput.OnControllerButtonUp -= HandleOnButtonUp;
-        MLInput.OnControllerTouchpadGestureStart -= OnTouchpadGestureStart;
     }
 
     String GetIngredientString(List<RecipeIngredient> ingredients)
@@ -127,21 +123,6 @@ public class RecipeInfo : MonoBehaviour
         {
             Debug.Log("Button up");
             SceneManager.LoadScene("Recipe Chooser");
-        }
-    }
-    
-    private void OnTouchpadGestureStart(byte controller_id, MLInputControllerTouchpadGesture gesture)
-    {
-        if (gesture.Type == MLInputControllerTouchpadGestureType.Swipe
-            && gesture.Direction == MLInputControllerTouchpadGestureDirection.Up)
-        {
-            
-        }
-        
-        if (gesture.Type == MLInputControllerTouchpadGestureType.Swipe
-            && gesture.Direction == MLInputControllerTouchpadGestureDirection.Down)
-        {
-            
         }
     }
 }
