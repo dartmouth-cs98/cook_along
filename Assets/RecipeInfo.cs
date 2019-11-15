@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System;
 using System.IO;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -15,6 +16,10 @@ public class RecipeInfo : MonoBehaviour
     #region Private Variables
     private ControllerConnectionHandler _controllerConnectionHandler;
     private Recipe _recipe;
+    private Text _title;
+    private Text _ingredients;
+    private Text _tools;
+    private Text _other_info;
     #endregion
     
     // Start is called before the first frame update
@@ -22,12 +27,16 @@ public class RecipeInfo : MonoBehaviour
     {
 
         _controllerConnectionHandler = GetComponent<ControllerConnectionHandler>();
-        Debug.Log("Below is static variable passed through: ");
-        Debug.Log(RecipeLoader.Recipe1Active);
-
         _recipe = getRecipe();
-        Debug.Log(_recipe.name);
-
+        _title = GameObject.Find("Header").GetComponent<Text>();
+        _title.text = _recipe.name;
+        _ingredients = GameObject.Find("Ingredients").GetComponent<Text>();
+        _ingredients.text = GetIngredientString(_recipe.ingredients);
+        _tools = GameObject.Find("Tools").GetComponent<Text>();
+        _tools.text = GetToolsString(_recipe.tools);
+        _other_info = GameObject.Find("Other information").GetComponent<Text>();
+        _other_info.text = GetOtherInfoString(_recipe.calories, _recipe.time, _recipe.serving_size);
+        
         MLInput.OnControllerButtonUp += HandleOnButtonUp;
         MLInput.OnControllerButtonDown += HandleOnButtonDown;
         
@@ -47,10 +56,46 @@ public class RecipeInfo : MonoBehaviour
         MLInput.OnControllerTouchpadGestureStart -= OnTouchpadGestureStart;
     }
 
+    String GetIngredientString(List<RecipeIngredient> ingredients)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine("Ingredients:");
+        foreach (RecipeIngredient ingredient in ingredients)
+        {
+            sb.AppendLine(" - " + ingredient.amount + " " + ingredient.name);
+        }
+        return sb.ToString();
+    }
+
+    String GetToolsString(List<string> tools)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine("Tools:");
+        foreach (string tool in tools)
+        {
+            sb.AppendLine(" - " + tool);
+        }
+        return sb.ToString();
+    }
+
+    String GetOtherInfoString(int calories, int time, int serving_size)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine("Time: " + time + " minutes");
+        sb.AppendLine(serving_size + " servings");
+        sb.AppendLine(calories + " calories");
+        return sb.ToString();
+    }
+
 
     Recipe getRecipe()
     {
-        HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://localhost:8080/grilledcheese");
+        String url = "http://localhost:8080/grilledcheese";
+        if (!RecipeLoader.Recipe1Active)
+        {
+            url = "http://localhost:8080/pho";
+        }
+        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
         HttpWebResponse response = (HttpWebResponse)request.GetResponse();
         StreamReader reader = new StreamReader(response.GetResponseStream());
         string jsonResponse = reader.ReadToEnd();
