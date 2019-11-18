@@ -19,15 +19,17 @@ public class DynamicText : MonoBehaviour
     // string path;
     // string jsonString;
     Recipe myRecipes = new Recipe();
-     int numsteps = 3;
-    private string [] stepList = new string[] {"step 1: efjer","step 2: egweg", "step 3: ajfjfa"};
+    int numsteps = 3;
+    private string [] steps = { "1. Preheat skillet over medium heat", "2. Generously butter one side of a slice of bread", "3. Place bread butter-side-down onto skillet bottom and add 1 slice of cheese", "4. Butter a second slice of bread on one side and place butter-side-up on top of sandwich", "5. Grill until lightly browned and flip over; continue grilling until cheese is melted", "6. Repeat with remaining 2 slices of bread, butter and slice of cheese" };
+    private string[] ing = { "bread", "butter", "cheddar cheese"};
+    private string[] amt = { "4 slices", "3 tablespoons", "2 slices" };
 
     // RecipeStep currentStep = new RecipeStep();
     // myRecipe.steps.add(currentStep)
     // [0].instruction ="at step 1";
     // myRecipe.steps[1].instruction ="at step 2";
     // myRecipe.steps[2].instruction ="at step 3";
-    
+
 
     // Start is called before the first frame update
     void Start()
@@ -40,7 +42,7 @@ public class DynamicText : MonoBehaviour
           
            RecipeSteps currentStep = new RecipeSteps();
     
-           currentStep.instruction = "at step" + i;
+           currentStep.instruction = steps[i-1];
           
            currentStep.videoUrl = "www.google.com";
           
@@ -50,20 +52,21 @@ public class DynamicText : MonoBehaviour
        myRecipes.steps=stepList;
 
        List<RecipeIngredients> ingredientList = new List<RecipeIngredients>();
-       for (int j = 1; j <= 5; j++)
+       for (int j = 0; j < 3; j++)
        {
            RecipeIngredients inggredient = new RecipeIngredients();
-           inggredient.name = "ingredient" + j;
-           inggredient.amount = ""+j;
+           inggredient.name = ing[j];
+           inggredient.amount = amt[j]j;
            ingredientList.Add(inggredient);
        }
        myRecipes.ingredients=ingredientList;
        myRecipes.id = 1;
-       myRecipes.name = "grilled cheese";
+       myRecipes.name = "Grilled Cheese";
        myRecipes.time = 10;
        myRecipes.serving_size = 2;
-       myRecipes.calories = 150;
-       List<string> myTools = new List<string>(new string[] { "knife", "skillet" });
+       myRecipes.imgUrl = "https://assets.bonappetit.com/photos/57acf62a53e63daf11a4dbee/16:9/w_2560,c_limit/best-ever-grilled-cheese.jpg";
+       myRecipes.calories = 300;
+       List<string> myTools = new List<string>(new string[] { "knife", "skillet", "stove" });
        myRecipes.tools = myTools;
 
 
@@ -175,12 +178,14 @@ public class Recipe
     public long id;
     public string name;
     public string description;
+    public string imgUrl;
     public int time;
     public int serving_size;
     public int calories;
     public List<RecipeIngredients> ingredients;
     public List<RecipeSteps> steps;
     public List<string> tools;
+
 }
 
 public class RecipeIngredients {
