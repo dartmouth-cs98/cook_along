@@ -4,6 +4,7 @@
  */
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR.MagicLeap;
@@ -34,13 +35,27 @@ public class GestureScript : MonoBehaviour {
 	}
 
 	void Update () {
-		// TODO: 
-		// test this out on MagicLeap.
-		// Extend this to going through steps
-		if (GetOkay()) {	
-			// unload active scene, then load recipe information
-			SceneManager.UnloadSceneAsync("HelloCube");
-			SceneManager.LoadScene("Recipe Chooser");
+			if (GetOkay()) {	
+
+				// unload active scene, then load recipe information
+      	string scene = SceneManager.GetActiveScene().name;
+
+      	// Determine which transition to execute
+      	if (Equals(scene, "welcome_screen")) {
+        	SceneManager.UnloadSceneAsync("welcome_screen");
+        	SceneManager.LoadSceneAsync("Recipe Chooser");
+        	Hold(2);
+      	}
+      	else if (Equals(scene, "Recipe Information")) {
+        	SceneManager.UnloadSceneAsync("Recipe Information");
+        	SceneManager.LoadSceneAsync("Step1");
+        	Hold(2);
+      	}
+      	else if (Equals(scene, "Step1")) {
+          	SceneManager.UnloadSceneAsync("Step1");
+          	SceneManager.LoadScene("Step2");
+          	Hold(15);
+			}
 		}
 	}
 
@@ -71,5 +86,19 @@ public class GestureScript : MonoBehaviour {
 			return false;
 		}
 	}
+
+	void Hold(int delay)
+  {
+    Stopwatch stopWatch = new Stopwatch();
+
+    stopWatch.Start();
+    float curr = stopWatch.ElapsedMilliseconds / 1000;
+
+    while ( curr < delay) {
+      curr = stopWatch.ElapsedMilliseconds / 1000;
+    }
+
+    stopWatch.Stop();
+  }
 
 }
