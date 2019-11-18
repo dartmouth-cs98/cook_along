@@ -76,7 +76,6 @@ public class RecipeInfo : MonoBehaviour
 
     void SetRecipeInfo(Recipe recipeObj)
     {
-        Debug.Log("HI FROM SET RECIPE INFO");
         RecipeVar = recipeObj;
         _title = GameObject.Find("Header").GetComponent<Text>();
         _title.text = recipeObj.name;
@@ -91,8 +90,12 @@ public class RecipeInfo : MonoBehaviour
     // https://www.red-gate.com/simple-talk/dotnet/c-programming/calling-restful-apis-unity3d/
     IEnumerator GetRecipe(Action<Recipe> onSuccess)
     {
-        Debug.Log("HI FROM GETRECIPE");
         String url = "https://cookalong-api.herokuapp.com/grilledcheese";
+        if (!RecipeLoader.Recipe1Active)
+        {
+            url = "https://cookalong-api.herokuapp.com/pho";
+        }
+        
         using (UnityWebRequest req = UnityWebRequest.Get(url))
         {
             yield return req.SendWebRequest();
@@ -105,11 +108,10 @@ public class RecipeInfo : MonoBehaviour
             else
             {
                 string result = req.downloadHandler.text;
-                Debug.Log(result);
                 Recipe info = JsonUtility.FromJson<Recipe>(result);
+                RecipeVar = info;
                 onSuccess(info);
             }
-            
         }
     }
     
