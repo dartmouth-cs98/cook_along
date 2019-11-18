@@ -18,8 +18,8 @@ public class DynamicText : MonoBehaviour
     private AssetBundle myLoadedAssetBundle;
     // string path;
     // string jsonString;
-    // Recipe myRecipe = new Recipe();
-    // int steps = 0;
+    Recipe myRecipes = new Recipe();
+     int numsteps = 3;
     private string [] stepList = new string[] {"step 1: efjer","step 2: egweg", "step 3: ajfjfa"};
 
     // RecipeStep currentStep = new RecipeStep();
@@ -32,15 +32,44 @@ public class DynamicText : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // for(int i =1;i<=steps;i++){
-        // RecipeStep currentStep = new RecipeStep();
-        // currentStep.instruction= "at step" +i;
-        // myRecipe.steps.Add(currentStep);
+      
 
-        // }
-        // UnityEngine.Debug.Log("We are here");
-        // UnityEngine.Debug.Log(myRecipe);
-      thisText = GetComponent<Text>();
+    List<RecipeSteps> stepList = new List<RecipeSteps>();
+    for (int i = 1; i <= numsteps; i++)
+       {
+          
+           RecipeSteps currentStep = new RecipeSteps();
+    
+           currentStep.instruction = "at step" + i;
+          
+           currentStep.videoUrl = "www.google.com";
+          
+           stepList.Add(currentStep);
+    
+       }
+       myRecipes.steps=stepList;
+
+       List<RecipeIngredients> ingredientList = new List<RecipeIngredients>();
+       for (int j = 1; j <= 5; j++)
+       {
+           RecipeIngredients inggredient = new RecipeIngredients();
+           inggredient.name = "ingredient" + j;
+           inggredient.amount = ""+j;
+           ingredientList.Add(inggredient);
+       }
+       myRecipes.ingredients=ingredientList;
+       myRecipes.id = 1;
+       myRecipes.name = "grilled cheese";
+       myRecipes.time = 10;
+       myRecipes.serving_size = 2;
+       myRecipes.calories = 150;
+       List<string> myTools = new List<string>(new string[] { "knife", "skillet" });
+       myRecipes.tools = myTools;
+
+
+
+
+        thisText = GetComponent<Text>();
         MLHands.Start();
 
         gestures = new MLHandKeyPose[3];
@@ -62,7 +91,7 @@ public class DynamicText : MonoBehaviour
            Hold(3);
 
 
-       } 
+       } // && step_number == myRecipes.steps.Count
        else if (GetDone())
        {
            SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().name);
@@ -75,8 +104,8 @@ public class DynamicText : MonoBehaviour
             Hold(3);
             
        }
-        thisText.text = stepList[step_number];
-       // thisText.text = myRecipe.steps[step_number-1].instruction;
+        thisText.text = myRecipes.steps[step_number].instruction;
+
        
    }
 
@@ -149,18 +178,18 @@ public class Recipe
     public int time;
     public int serving_size;
     public int calories;
-    public List<RecipeIngredient> ingredients;
-    public List<RecipeStep> steps;
+    public List<RecipeIngredients> ingredients;
+    public List<RecipeSteps> steps;
     public List<string> tools;
 }
 
-public class RecipeIngredient {
+public class RecipeIngredients {
     public long id;
     public string name;
     public string amount;
 }
 
-public class RecipeStep {
+public class RecipeSteps {
     public long id;
     public string instruction;
     public string videoUrl;
