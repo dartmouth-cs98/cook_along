@@ -36,11 +36,11 @@ public class DynamicText : MonoBehaviour
     {
       
 
-    List<RecipeSteps> stepList = new List<RecipeSteps>();
+    List<RecipeStep> stepList = new List<RecipeStep>();
     for (int i = 1; i <= numsteps; i++)
        {
           
-           RecipeSteps currentStep = new RecipeSteps();
+           RecipeStep currentStep = new RecipeStep();
     
            currentStep.instruction = steps[i-1];
           
@@ -51,10 +51,10 @@ public class DynamicText : MonoBehaviour
        }
        myRecipes.steps=stepList;
 
-       List<RecipeIngredients> ingredientList = new List<RecipeIngredients>();
+       List<RecipeIngredient> ingredientList = new List<RecipeIngredient>();
        for (int j = 0; j < 3; j++)
        {
-           RecipeIngredients inggredient = new RecipeIngredients();
+           RecipeIngredient inggredient = new RecipeIngredient();
            inggredient.name = ing[j];
            inggredient.amount = amt[j];
            ingredientList.Add(inggredient);
@@ -170,34 +170,6 @@ public class DynamicText : MonoBehaviour
            }
            stopWatch.Stop();
    }
-}
-
-
-public class Recipe
-{
-    public long id;
-    public string name;
-    public string description;
-    public string imgUrl;
-    public int time;
-    public int serving_size;
-    public int calories;
-    public List<RecipeIngredients> ingredients;
-    public List<RecipeSteps> steps;
-    public List<string> tools;
-
-}
-
-public class RecipeIngredients {
-    public long id;
-    public string name;
-    public string amount;
-}
-
-public class RecipeSteps {
-    public long id;
-    public string instruction;
-    public string videoUrl;
 }
 
 

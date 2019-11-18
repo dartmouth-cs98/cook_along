@@ -11,8 +11,10 @@ public class RecipeLoader : MonoBehaviour
     #region Private Variables
     private ControllerConnectionHandler _controllerConnectionHandler;
     private GameObject _recipe1;
-    private bool _recipe1Active;
+    private Image _recipe1Image;
+    public static bool Recipe1Active;
     private GameObject _recipe2;
+    private Image _recipe2Image;
     #endregion
     
     // Start is called before the first frame update
@@ -21,8 +23,10 @@ public class RecipeLoader : MonoBehaviour
         _controllerConnectionHandler = GetComponent<ControllerConnectionHandler>();
 
         _recipe1 = GameObject.Find("Viewport/Recipe 1");
+        _recipe1Image = _recipe1.GetComponent<Image>();
         _recipe2 = GameObject.Find("Viewport/Recipe 2");
-        _recipe1Active = true;
+        _recipe2Image = _recipe2.GetComponent<Image>();
+        Recipe1Active = true;
 
         MLInput.OnControllerButtonUp += HandleOnButtonUp;
         MLInput.OnControllerButtonDown += HandleOnButtonDown;
@@ -39,15 +43,15 @@ public class RecipeLoader : MonoBehaviour
 
     void updateActiveRecipe()
     {
-        if (_recipe1Active)
+        if (Recipe1Active)
         {
-            _recipe1.GetComponent<Image>().color = new Color(0, 213, 0);
-            _recipe2.GetComponent<Image>().color = new Color(245, 223, 186);
+            _recipe1Image.color = new Color(0, 213, 0);
+            _recipe2Image.color = new Color(245, 223, 186);
         }
         else
         {
-            _recipe2.GetComponent<Image>().color = new Color(0, 213, 0);
-            _recipe1.GetComponent<Image>().color = new Color(245, 223, 186);
+            _recipe2Image.color = new Color(0, 213, 0);
+            _recipe1Image.color = new Color(245, 223, 186);
         }
     }
     
@@ -89,16 +93,15 @@ public class RecipeLoader : MonoBehaviour
         if (gesture.Type == MLInputControllerTouchpadGestureType.Swipe
             && gesture.Direction == MLInputControllerTouchpadGestureDirection.Up)
         {
-            _recipe1Active = !_recipe1Active;
+            Recipe1Active = !Recipe1Active;
         }
         
         if (gesture.Type == MLInputControllerTouchpadGestureType.Swipe
             && gesture.Direction == MLInputControllerTouchpadGestureDirection.Down)
         {
-            _recipe1Active = !_recipe1Active;
+            Recipe1Active = !Recipe1Active;
         }
-        
-        
+
     }
 }
 
