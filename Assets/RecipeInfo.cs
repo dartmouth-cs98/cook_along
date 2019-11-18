@@ -92,7 +92,7 @@ public class RecipeInfo : MonoBehaviour
     IEnumerator GetRecipe(Action<Recipe> onSuccess)
     {
         Debug.Log("HI FROM GETRECIPE");
-        String url = "https://dynamodb.us-west-2.amazonaws.com";
+        String url = "https://cookalong-api.herokuapp.com/grilledcheese";
         using (UnityWebRequest req = UnityWebRequest.Get(url))
         {
             yield return req.SendWebRequest();
@@ -106,24 +106,7 @@ public class RecipeInfo : MonoBehaviour
             {
                 string result = req.downloadHandler.text;
                 Debug.Log(result);
-                Recipe info = new Recipe();
-                List<RecipeStep> stepList = new List<RecipeStep>();
-                List<RecipeIngredient> ingredientList = new List<RecipeIngredient>();
-                for (int j = 1; j <= 5; j++)
-                {
-                    RecipeIngredient inggredient = new RecipeIngredient();
-                    inggredient.name = "ingredient" + j;
-                    inggredient.amount = ""+j;
-                    ingredientList.Add(inggredient);
-                }
-                info.ingredients=ingredientList;
-                info.id = 1;
-                info.name = "grilled cheese sup";
-                info.time = 10;
-                info.serving_size = 2;
-                info.calories = 150;
-                List<string> myTools = new List<string>(new string[] { "knife", "skillet" });
-                info.tools = myTools;
+                Recipe info = JsonUtility.FromJson<Recipe>(result);
                 onSuccess(info);
             }
             
