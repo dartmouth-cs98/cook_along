@@ -56,7 +56,7 @@ public class DynamicText : MonoBehaviour
        {
            RecipeIngredients inggredient = new RecipeIngredients();
            inggredient.name = ing[j];
-           inggredient.amount = amt[j]j;
+           inggredient.amount = amt[j];
            ingredientList.Add(inggredient);
        }
        myRecipes.ingredients=ingredientList;

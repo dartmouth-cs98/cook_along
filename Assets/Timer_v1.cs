@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class Timer_v1: MonoBehaviour
 {
     public static float timer = 120f; //2 minutes
