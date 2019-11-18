@@ -11,21 +11,7 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-<<<<<<< HEAD
-  - enabled: 0
-    path: Assets/Scenes/Recipe Information.unity
-    guid: a1dc9adbcf348450fa84466c24e6f8e1
-  - enabled: 0
-    path: Assets/Scenes/Recipe Chooser.unity
-    guid: 3dab30c44e24e43738fefa0c5a55986c
-  - enabled: 0
-    path: Assets/Scenes/welcome_screen.unity
-    guid: 2398091ade3774e4ab1050ca532cb20c
-  - enabled: 1
-    path: Assets/Scenes/DynamicText.unity
-    guid: d80d7b24b6f0948e4801692772090fbd
 
-=======
   - enabled: 1
     path: Assets/Scenes/welcome_screen.unity
     guid: 2398091ade3774e4ab1050ca532cb20c
@@ -53,7 +39,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Step6.unity
     guid: 80140393118b9485c91de5b467e127b5
->>>>>>> 104389f75914637e17c9978280871b91a98e5b9a
+
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 2ba4dbd235ed941bb8fdb5a40ab00f22,
       type: 2}
