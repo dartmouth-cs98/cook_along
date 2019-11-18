@@ -27,18 +27,9 @@ public class RecipeInfo : MonoBehaviour
     {
 
         _controllerConnectionHandler = GetComponent<ControllerConnectionHandler>();
-        RecipeVar = getRecipe();
-        _title = GameObject.Find("Header").GetComponent<Text>();
-        _title.text = RecipeVar.name;
-        _ingredients = GameObject.Find("Ingredients").GetComponent<Text>();
-        _ingredients.text = GetIngredientString(RecipeVar.ingredients);
-        _tools = GameObject.Find("Tools").GetComponent<Text>();
-        _tools.text = GetToolsString(RecipeVar.tools);
-        _other_info = GameObject.Find("Other information").GetComponent<Text>();
-        _other_info.text = GetOtherInfoString(RecipeVar.calories, RecipeVar.time, RecipeVar.serving_size);
-        
         MLInput.OnControllerButtonUp += HandleOnButtonUp;
         MLInput.OnControllerButtonDown += HandleOnButtonDown;
+        StartCoroutine(GetRecipe(SetRecipeInfo));
     }
 
     // Update is called once per frame
@@ -83,20 +74,60 @@ public class RecipeInfo : MonoBehaviour
         return sb.ToString();
     }
 
-
-    Recipe getRecipe()
+    void SetRecipeInfo(Recipe recipeObj)
     {
-        String url = "http://localhost:8080/grilledcheese";
-        if (!RecipeLoader.Recipe1Active)
+        Debug.Log("HI FROM SET RECIPE INFO");
+        RecipeVar = recipeObj;
+        _title = GameObject.Find("Header").GetComponent<Text>();
+        _title.text = recipeObj.name;
+        _ingredients = GameObject.Find("Ingredients").GetComponent<Text>();
+        _ingredients.text = GetIngredientString(recipeObj.ingredients);
+        _tools = GameObject.Find("Tools").GetComponent<Text>();
+        _tools.text = GetToolsString(recipeObj.tools);
+        _other_info = GameObject.Find("Other information").GetComponent<Text>();
+        _other_info.text = GetOtherInfoString(recipeObj.calories, recipeObj.time, recipeObj.serving_size);
+    }
+
+    // https://www.red-gate.com/simple-talk/dotnet/c-programming/calling-restful-apis-unity3d/
+    IEnumerator GetRecipe(Action<Recipe> onSuccess)
+    {
+        Debug.Log("HI FROM GETRECIPE");
+        String url = "https://dynamodb.us-west-2.amazonaws.com";
+        using (UnityWebRequest req = UnityWebRequest.Get(url))
         {
-            url = "http://localhost:8080/pho";
+            yield return req.SendWebRequest();
+            
+            if (req.isHttpError || req.isNetworkError)
+            {
+                Debug.Log("HIT ERROR");
+                Debug.Log(req.error);
+            }
+            else
+            {
+                string result = req.downloadHandler.text;
+                Debug.Log(result);
+                Recipe info = new Recipe();
+                List<RecipeStep> stepList = new List<RecipeStep>();
+                List<RecipeIngredient> ingredientList = new List<RecipeIngredient>();
+                for (int j = 1; j <= 5; j++)
+                {
+                    RecipeIngredient inggredient = new RecipeIngredient();
+                    inggredient.name = "ingredient" + j;
+                    inggredient.amount = ""+j;
+                    ingredientList.Add(inggredient);
+                }
+                info.ingredients=ingredientList;
+                info.id = 1;
+                info.name = "grilled cheese sup";
+                info.time = 10;
+                info.serving_size = 2;
+                info.calories = 150;
+                List<string> myTools = new List<string>(new string[] { "knife", "skillet" });
+                info.tools = myTools;
+                onSuccess(info);
+            }
+            
         }
-        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-        StreamReader reader = new StreamReader(response.GetResponseStream());
-        string jsonResponse = reader.ReadToEnd();
-        Recipe info = JsonUtility.FromJson<Recipe>(jsonResponse);
-        return info;
     }
     
     
