@@ -85,6 +85,21 @@ public class RecipeInfo : MonoBehaviour
         _tools.text = GetToolsString(recipeObj.tools);
         _other_info = GameObject.Find("Other information").GetComponent<Text>();
         _other_info.text = GetOtherInfoString(recipeObj.calories, recipeObj.time, recipeObj.serving_size);
+        StartCoroutine(GetTexture());
+    }
+
+    IEnumerator GetTexture()
+    {
+        UnityWebRequest www = UnityWebRequestTexture.GetTexture(RecipeVar.imgUrl);
+
+        yield return www.SendWebRequest();
+
+        if(www.isNetworkError) {
+            Debug.Log(www.error);
+        }
+        else {
+            GameObject.Find("Recipe Photo").GetComponent<RawImage>().texture = DownloadHandlerTexture.GetContent(www);
+        }
     }
 
     // https://www.red-gate.com/simple-talk/dotnet/c-programming/calling-restful-apis-unity3d/
