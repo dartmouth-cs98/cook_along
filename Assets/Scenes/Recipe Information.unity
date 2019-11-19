@@ -154,8 +154,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 158, y: 41}
-  m_SizeDelta: {x: 500, y: 128.9}
+  m_AnchoredPosition: {x: 180, y: 37}
+  m_SizeDelta: {x: 700, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &222231894
 MonoBehaviour:
@@ -179,7 +179,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 8401b9c91b47d6449a4be596c8138a90, type: 3}
-    m_FontSize: 30
+    m_FontSize: 22
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -187,11 +187,12 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
-    m_VerticalOverflow: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Ingredients:\n- 4 slices of bread\n- 3 tablespoons of butter \n- 2 slices
-    of cheddar cheese"
+  m_Text: 'Ingredients:
+
+'
 --- !u!222 &222231895
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -266,7 +267,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 348126093}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.002, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -588,7 +589,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Grilled Cheese
+  m_Text: 
 --- !u!222 &1160741521
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -667,7 +668,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "Time: 10 minutes\n2 servings \n300 cals"
+  m_Text: "Time: \n servings \n cals"
 --- !u!222 &1238297461
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -710,8 +711,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 114, y: -53}
-  m_SizeDelta: {x: 329.15, y: 150.6}
+  m_AnchoredPosition: {x: 131, y: -55}
+  m_SizeDelta: {x: 500, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1416705440
 MonoBehaviour:
@@ -735,7 +736,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 8401b9c91b47d6449a4be596c8138a90, type: 3}
-    m_FontSize: 30
+    m_FontSize: 22
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -743,16 +744,12 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
-    m_VerticalOverflow: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'Tools:
 
-    - Skillet
-
-    - Knife
-
-    - Stove'
+'
 --- !u!222 &1416705441
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -904,6 +901,7 @@ GameObject:
   - component: {fileID: 1647849398}
   - component: {fileID: 1647849400}
   - component: {fileID: 1647849399}
+  - component: {fileID: 1647849401}
   m_Layer: 5
   m_Name: Recipe Photo
   m_TagString: Untagged
@@ -965,6 +963,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1647849397}
   m_CullTransparentMesh: 0
+--- !u!114 &1647849401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1647849397}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abf46bd8a04b84f5b9c659fde66bcad9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  URL: 
 --- !u!1 &1703922469
 GameObject:
   m_ObjectHideFlags: 0
@@ -1024,7 +1035,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 8401b9c91b47d6449a4be596c8138a90, type: 3}
-    m_FontSize: 22
+    m_FontSize: 18
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
