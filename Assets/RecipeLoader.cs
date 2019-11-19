@@ -45,13 +45,13 @@ public class RecipeLoader : MonoBehaviour
     {
         if (Recipe1Active)
         {
-            _recipe1Image.color = new Color(0, 213, 0);
-            _recipe2Image.color = new Color(245, 223, 186);
+            _recipe1Image.color = new Color(0.937f, 0.741f, 0.42f);
+            _recipe2Image.color = new Color(1f, 1f, 1f);
         }
         else
         {
-            _recipe2Image.color = new Color(0, 213, 0);
-            _recipe1Image.color = new Color(245, 223, 186);
+            _recipe2Image.color = new Color(0.937f, 0.741f, 0.42f);
+            _recipe1Image.color = new Color(1f, 1f, 1f);
         }
     }
     
