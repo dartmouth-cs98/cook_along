@@ -70,7 +70,9 @@ public class RecipeInfo : MonoBehaviour
         {
             if (i<number_to_show){
                 sb.AppendLine(" - " + tool);
+                i++;
             }
+
         }
         return sb.ToString();
     }
