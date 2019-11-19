@@ -20,6 +20,7 @@ public class RecipeInfo : MonoBehaviour
     private Text _ingredients;
     private Text _tools;
     private Text _other_info;
+    int number_to_show = 6;
     #endregion
     
     // Start is called before the first frame update
@@ -45,11 +46,17 @@ public class RecipeInfo : MonoBehaviour
 
     String GetIngredientString(List<RecipeIngredient> ingredients)
     {
+        
+        int i = 0;
         StringBuilder sb = new StringBuilder();
         sb.AppendLine("Ingredients:");
         foreach (RecipeIngredient ingredient in ingredients)
         {
-            sb.AppendLine(" - " + ingredient.amount + " " + ingredient.name);
+            if (i < number_to_show){
+                sb.AppendLine(" - " + ingredient.amount + " " + ingredient.name);
+                i++;
+            }
+            
         }
         return sb.ToString();
     }
@@ -58,9 +65,14 @@ public class RecipeInfo : MonoBehaviour
     {
         StringBuilder sb = new StringBuilder();
         sb.AppendLine("Tools:");
+        int i = 0; 
         foreach (string tool in tools)
         {
-            sb.AppendLine(" - " + tool);
+            if (i<number_to_show){
+                sb.AppendLine(" - " + tool);
+                i++;
+            }
+
         }
         return sb.ToString();
     }
