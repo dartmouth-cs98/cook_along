@@ -39,7 +39,7 @@ public class DynamicText : MonoBehaviour
            Hold(3);
       } else if (GetDone()) {
            SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().name);
-           SceneManager.LoadSceneAsync("welcome_screen");
+           SceneManager.LoadSceneAsync("Recipe Chooser");
       } else if (GetGesture(MLHands.Left, MLHandKeyPose.L) || GetGesture(MLHands.Right, MLHandKeyPose.L)) {
             step_number -= 1;
             Hold(3);
@@ -85,7 +85,7 @@ public class DynamicText : MonoBehaviour
 
     bool GetDone()
    {
-       if (GetGesture(MLHands.Left, MLHandKeyPose.Ok) || GetGesture(MLHands.Right, MLHandKeyPose.Ok))
+       if ( (GetGesture(MLHands.Left, MLHandKeyPose.Ok) || GetGesture(MLHands.Right, MLHandKeyPose.Ok)) 
        {
            return true;
        }
