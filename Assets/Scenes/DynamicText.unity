@@ -190,7 +190,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "Thumbs up to go to next step \nL hand gesture to go back "
+  m_Text: "Thumbs up to go to next step \nL hand gesture to go back step\nOk gesture
+    to go back to recipe chooser"
 --- !u!222 &239502647
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -448,7 +449,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -87}
+  m_AnchoredPosition: {x: 0, y: -97}
   m_SizeDelta: {x: 600, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1547119018
