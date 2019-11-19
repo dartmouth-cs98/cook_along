@@ -20,7 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Recipe Information.unity
     guid: a1dc9adbcf348450fa84466c24e6f8e1
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/DynamicText.unity
     guid: d80d7b24b6f0948e4801692772090fbd
   m_configObjects:
