@@ -36,13 +36,13 @@ public class DynamicText : MonoBehaviour
     {
       if(GetOkay() && RecipeInfo.RecipeVar != null && step_number < (RecipeInfo.RecipeVar.steps.Count - 1)) {
            step_number += 1;
-           Hold(3);
+           Hold(1);
       } else if (GetDone()) {
            SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().name);
            SceneManager.LoadSceneAsync("Recipe Chooser");
       } else if (GetGesture(MLHands.Left, MLHandKeyPose.L) || GetGesture(MLHands.Right, MLHandKeyPose.L)) {
             step_number -= 1;
-            Hold(3);
+            Hold(1);
       }
 
       if (RecipeInfo.RecipeVar == null)

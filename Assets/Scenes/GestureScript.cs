@@ -43,12 +43,12 @@ public class GestureScript : MonoBehaviour {
       		if (Equals(scene, "welcome_screen")) {
         		SceneManager.UnloadSceneAsync("welcome_screen");
         		SceneManager.LoadSceneAsync("Recipe Chooser");
-        		Hold(2);
+        		Hold(1);
       		}
       		else if (Equals(scene, "Recipe Information")) {
         		SceneManager.UnloadSceneAsync("Recipe Information");
         		SceneManager.LoadSceneAsync("DynamicText");
-        		Hold(2);
+        		Hold(1);
       		}
 		}
 	}
