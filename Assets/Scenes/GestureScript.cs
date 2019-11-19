@@ -35,27 +35,21 @@ public class GestureScript : MonoBehaviour {
 	}
 
 	void Update () {
-			if (GetOkay()) {	
+		if (GetOkay()) {
+			// unload active scene, then load recipe information
+      		string scene = SceneManager.GetActiveScene().name;
 
-				// unload active scene, then load recipe information
-      	string scene = SceneManager.GetActiveScene().name;
-
-      	// Determine which transition to execute
-      	if (Equals(scene, "welcome_screen")) {
-        	SceneManager.UnloadSceneAsync("welcome_screen");
-        	SceneManager.LoadSceneAsync("Recipe Chooser");
-        	Hold(2);
-      	}
-      	else if (Equals(scene, "Recipe Information")) {
-        	SceneManager.UnloadSceneAsync("Recipe Information");
-        	SceneManager.LoadSceneAsync("Step1");
-        	Hold(2);
-      	}
-      	else if (Equals(scene, "Step1")) {
-          	SceneManager.UnloadSceneAsync("Step1");
-          	SceneManager.LoadScene("Step2");
-          	Hold(15);
-			}
+      		// Determine which transition to execute
+      		if (Equals(scene, "welcome_screen")) {
+        		SceneManager.UnloadSceneAsync("welcome_screen");
+        		SceneManager.LoadSceneAsync("Recipe Chooser");
+        		Hold(2);
+      		}
+      		else if (Equals(scene, "Recipe Information")) {
+        		SceneManager.UnloadSceneAsync("Recipe Information");
+        		SceneManager.LoadSceneAsync("DynamicText");
+        		Hold(2);
+      		}
 		}
 	}
 
@@ -75,10 +69,8 @@ public class GestureScript : MonoBehaviour {
 	// Cleans up logic for reading the 'All Good' gesture
 	bool GetOkay() {
 		
-		if (GetGesture(MLHands.Left, MLHandKeyPose.Thumb) 
-		|| GetGesture(MLHands.Left, MLHandKeyPose.Ok)
-		|| GetGesture(MLHands.Right, MLHandKeyPose.Thumb) 
-		|| GetGesture(MLHands.Right, MLHandKeyPose.Ok)) {
+		if (GetGesture(MLHands.Left, MLHandKeyPose.Thumb)
+		    || GetGesture(MLHands.Right, MLHandKeyPose.Thumb)) {
 			return true;
 		}
 
