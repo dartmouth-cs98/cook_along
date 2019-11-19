@@ -85,7 +85,7 @@ public class DynamicText : MonoBehaviour
 
     bool GetDone()
    {
-       if ( (GetGesture(MLHands.Left, MLHandKeyPose.Ok) || GetGesture(MLHands.Right, MLHandKeyPose.Ok)) 
+       if (GetGesture(MLHands.Left, MLHandKeyPose.Ok) || GetGesture(MLHands.Right, MLHandKeyPose.Ok)) 
        {
            return true;
        }
