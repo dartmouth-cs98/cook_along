@@ -23,7 +23,6 @@ Frontend: https://github.com/dartmouth-cs98/cook_along
 
 ## Setup
 
-TODO: how to get the project dev environment up and running, npm install etc, all necessary commands needed, environment variables etc
 1. Have Unity Installed
 2. Have MagicLeap Package Manager Installed
 3. Configure the connection between the two using links below:
