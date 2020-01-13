@@ -56,24 +56,6 @@ public class DynamicText : MonoBehaviour
       
     }
 
-  // IEnumerator GetTexture()
-  //   {
-  //       int numIngredients=RecipeInfo.RecipeVar.steps[step_number].ingredients.Count;
-  //       int currentIngredient = 0; 
-
-  //       if (currentIngredient<numIngredients){
-  //         UnityWebRequest www = UnityWebRequestTexture.GetTexture(RecipeInfo.RecipeVar.steps[step_number].ingredients[currentIngredient].imgURL);
-
-  //         yield return www.SendWebRequest();
-
-  //         if(www.isNetworkError) {
-  //             Debug.Log(www.error);
-  //         }
-  //         else {
-  //             GameObject.Find("Recipe Photo").GetComponent<RawImage>().texture = DownloadHandlerTexture.GetContent(www);
-  //         }
-  //       }
-  //   }
 
     void onDestroy () {
         MLHands.Stop();
