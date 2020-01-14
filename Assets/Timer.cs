@@ -21,7 +21,7 @@ public class Timer : MonoBehaviour
         NewTime.GetComponent<RectTransform>().anchoredPosition = new Vector3(250,200,0);
         NewTime.SetActive(true); //Activate the GameObject
         StartCoroutine(LoseTime(timeUrl, NewTime));
-        Time.timeScale = 1; //Just making sure that the timeScale is right
+        Time.timeScale = 1; //Just making sure incrementation is standard to 1s
     }
 
     void Update()
@@ -43,7 +43,7 @@ public class Timer : MonoBehaviour
             Debug.Log(www.error);
         }
         else {
-            currrentTime.GetComponent<Text> = DownloadHandlerTexture.GetContent(www);
+           // currrentTime.GetComponent<Text> = DownloadHandlerTexture.GetContent(www);
         }
         while (true)
         {

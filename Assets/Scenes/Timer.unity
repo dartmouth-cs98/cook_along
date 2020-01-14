@@ -504,11 +504,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1652711855}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca24f16f576bc470ab8aa0e5612b8233, type: 3}
+  m_Script: {fileID: 11500000, guid: 2efeba8966b504b80832a77627e6e16e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeLeft: 5400
-  countdown: {fileID: 1652711858}
 --- !u!114 &1652711858
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,36 +1,41 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Threading;
+using UnityEngine.Networking;
 
 public class Timer_v1: MonoBehaviour
 {
-    public static float timer = 120f; //2 minutes
-    //public static bool timeStarted = false;
+    
+    public int timeLeft = 60; //Seconds Overall
+    public Text countdown; //UI Text Object
+    public GameObject canvas;
+
+    void Start()
+    {
+        canvas = GameObject.Find("Canvas");
+        StartCoroutine(LoseTime());
+        Time.timeScale = 1; //Just making sure incrementation is standard to 1s
+    }
 
     void Update()
     {
-        //timer is the 
-        timer -= Time.deltaTime;
-        if (timer < 0)
+        int hours = Mathf.FloorToInt(timeLeft / 3600F);
+        int minutes = Mathf.FloorToInt((timeLeft - (hours*3600)) / 60F);
+        int seconds = Mathf.FloorToInt(timeLeft - (hours * 3600) - (minutes * 60));
+        string niceTime = string.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
+
+        countdown.text = ("" + niceTime); //Showing the Score on the Canvas
+    }
+    
+
+    IEnumerator LoseTime()
+    {
+        while (true)
         {
-            TimerOver();
+            yield return new WaitForSeconds(1);
+            timeLeft--;
         }
-        
     }
-
-    void OnGUI()
-    {
-        int minutes = Mathf.FloorToInt(timer / 60F);
-        int seconds = Mathf.FloorToInt(timer - minutes * 60);
-        string niceTime = string.Format("{0:00}:{1:00}", minutes, seconds);
-
-        GUI.Label(new Rect(10, 10, 250, 100), niceTime);
-    }
-
-    void TimerOver()
-    {
-        //filler to do something when the timer is over
-        return;
-    }
-
 }
