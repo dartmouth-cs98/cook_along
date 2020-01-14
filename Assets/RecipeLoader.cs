@@ -38,7 +38,6 @@ public class RecipeLoader : MonoBehaviour
     {
         updateActiveRecipe();
         if (_controller	 != null && _controller.TriggerValue > 0.2f) {
-            Debug.Log	("Should hypothetically go to recipe info now");
             SceneManager.LoadScene("Recipe Information");
         }
         

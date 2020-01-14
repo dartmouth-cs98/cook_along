@@ -117,10 +117,10 @@ public class RecipeInfo : MonoBehaviour
     // https://www.red-gate.com/simple-talk/dotnet/c-programming/calling-restful-apis-unity3d/
     IEnumerator GetRecipe(Action<Recipe> onSuccess)
     {
-        String url = "https://cookalong-api.herokuapp.com/grilledcheese";
+        String url = "https://cookalong-api.herokuapp.com/recipes/5e1e393abbc1e900046f6d46";
         if (!RecipeLoader.Recipe1Active)
         {
-            url = "https://cookalong-api.herokuapp.com/pho";
+            url = "https://cookalong-api.herokuapp.com/recipes/5e1e39fdbbc1e900046f6d47";
         }
         
         using (UnityWebRequest req = UnityWebRequest.Get(url))
