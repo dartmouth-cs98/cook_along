@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using System;
 
 public class StepCanvas : MonoBehaviour
 {
@@ -11,6 +12,10 @@ public class StepCanvas : MonoBehaviour
     public int yCoord;
     public int xCoord;
     // Start is called before the first frame update
+    //Timer work below under contruction
+    public int timeLeft; //Seconds Overall
+    public Text countdown; //UI Text Object
+    
     void Start()
     {
         yCoord=-20;
@@ -44,6 +49,8 @@ public class StepCanvas : MonoBehaviour
         else {
             currrentImage.GetComponent<RawImage>().texture = DownloadHandlerTexture.GetContent(www);
         }
+
+
     }
 
 

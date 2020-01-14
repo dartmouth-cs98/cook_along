@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Threading;
 
-public class Timer_v1 : MonoBehaviour
+public class Timer1 : MonoBehaviour
 {
     public int timeLeft; //Seconds Overall
     public Text countdown; //UI Text Object
@@ -26,7 +26,7 @@ public class Timer_v1 : MonoBehaviour
         countdown.text = ("" + niceTime); //Showing the Score on the Canvas
     }
 
-    IEnumerator LoseTime()
+    public IEnumerator LoseTime()
     {
         while (true)
         {
