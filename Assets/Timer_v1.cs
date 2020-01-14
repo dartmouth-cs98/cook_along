@@ -3,20 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Threading;
-using UnityEngine.Networking;
 
-public class Timer_v1: MonoBehaviour
+public class Timer_v1 : MonoBehaviour
 {
-    
-    public int timeLeft = 60; //Seconds Overall
+    public int timeLeft; //Seconds Overall
     public Text countdown; //UI Text Object
-    public GameObject canvas;
 
     void Start()
     {
-        canvas = GameObject.Find("Canvas");
-        StartCoroutine(LoseTime());
-        Time.timeScale = 1; //Just making sure incrementation is standard to 1s
+        timeLeft = 200;
+        StartCoroutine("LoseTime");
+        Time.timeScale = 1; //Just making sure that the timeScale is right
     }
 
     void Update()
@@ -28,7 +25,6 @@ public class Timer_v1: MonoBehaviour
 
         countdown.text = ("" + niceTime); //Showing the Score on the Canvas
     }
-    
 
     IEnumerator LoseTime()
     {

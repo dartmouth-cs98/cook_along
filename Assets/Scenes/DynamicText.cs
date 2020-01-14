@@ -17,6 +17,7 @@ public class DynamicText : MonoBehaviour
     private MLHandKeyPose[] gestures;   // Holds the different gestures we will look for
     private AssetBundle myLoadedAssetBundle;
     int numsteps;
+    
 
 
     // Start is called before the first frame update
