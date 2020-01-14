@@ -183,24 +183,6 @@ Camera:
     type: 3}
   m_PrefabInstance: {fileID: 67730634}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &67730636 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1011244501761250, guid: 24158fb1437dc8e418d893939758764d,
-    type: 3}
-  m_PrefabInstance: {fileID: 67730634}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &67730637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 67730636}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b425425826d08489eb26f06b037e70ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &121870545
 GameObject:
   m_ObjectHideFlags: 0
@@ -354,6 +336,7 @@ GameObject:
   - component: {fileID: 835056721}
   - component: {fileID: 835056720}
   - component: {fileID: 835056719}
+  - component: {fileID: 835056723}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -443,6 +426,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1314, y: 522}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &835056723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 835056718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22a9256a1c134473183c4cfa1726d3c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &903774855
 GameObject:
   m_ObjectHideFlags: 0
@@ -588,7 +583,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Thumbs up to start
+  m_Text: Pull trigger to start
 --- !u!222 &1753365895
 CanvasRenderer:
   m_ObjectHideFlags: 0

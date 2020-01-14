@@ -13,7 +13,7 @@ public class GestureScript : MonoBehaviour {
 	
 	private MLHandKeyPose[] gestures;	// Holds the different gestures we will look for
 	private AssetBundle myLoadedAssetBundle;
-  private string[] stepPaths;
+	private string[] stepPaths;
 	private int stepIndex; // marks the recipe step
 
 	void Start () {
@@ -38,13 +38,8 @@ public class GestureScript : MonoBehaviour {
 		if (GetOkay()) {
 			// unload active scene, then load recipe information
       		string scene = SceneManager.GetActiveScene().name;
-
-      		// Determine which transition to execute
-      		if (Equals(scene, "welcome_screen")) {
-	            SceneManager.LoadSceneAsync("Recipe Chooser");
-        		Hold(1);
-      		}
-      		else if (Equals(scene, "Recipe Information")) {
+            
+      		if (Equals(scene, "Recipe Information")) {
 	            SceneManager.LoadSceneAsync("DynamicText");
         		Hold(1);
       		}
@@ -87,7 +82,6 @@ public class GestureScript : MonoBehaviour {
     while ( curr < delay) {
       curr = stopWatch.ElapsedMilliseconds / 1000;
     }
-
     stopWatch.Stop();
   }
 
