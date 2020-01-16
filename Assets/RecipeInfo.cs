@@ -120,7 +120,7 @@ public class RecipeInfo : MonoBehaviour
         String url = "https://cookalong-api.herokuapp.com/grilledcheese";
         if (!RecipeLoader.Recipe1Active)
         {
-            url = "https://cookalong-api.herokuapp.com/pho";
+            url = "https://cookalong-api.herokuapp.com/pho"; 
         }
         
         using (UnityWebRequest req = UnityWebRequest.Get(url))
