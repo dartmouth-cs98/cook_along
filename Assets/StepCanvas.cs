@@ -59,9 +59,13 @@ public class StepCanvas : MonoBehaviour
     {
        
     }
-    
-    IEnumerator LoseTime()
-    {
+
+    void CountDown(Text TimeObj, float Totaltime) {
+        minutes += Time.deltaTime;
+        float seconds = minutes % 60;
+        //Reduce the total time by the amount of seconds elapsed...
+        Totaltime -= seconds;
+        
         //yield return ("it works"); new WaitForSeconds(1.0f);
         hours = Mathf.FloorToInt(timeLeft / 3600F);
         minutes = Mathf.FloorToInt((timeLeft - (hours*3600)) / 60F);
@@ -71,14 +75,13 @@ public class StepCanvas : MonoBehaviour
         countdown.text = ("" + niceTime); //Showing the Score on the Canvas
 
         
-        float done = Time.time + 0.0f;
-        while(Time.time < done) yield return 0;
-        
-        timeLeft--;
-        Debug.Log("Now time is " + timeLeft);
-        
+        TimeObj.text = "Time Elapsed: " + seconds.ToString("0")+" seconds"+ " Time Remaining: "+ (int)Totaltime;
+        if (Totaltime <= 40f) {
+            PanelObj.SetActive(true);
+            TimeText.enabled = false;
+        }
     }
-
+    
     IEnumerator GetTexture(string thisURL, GameObject currrentImage) {
         UnityWebRequest www = UnityWebRequestTexture.GetTexture(thisURL);
     	yield return www.SendWebRequest();
@@ -89,14 +92,7 @@ public class StepCanvas : MonoBehaviour
         else {
             currrentImage.GetComponent<RawImage>().texture = DownloadHandlerTexture.GetContent(www);
         }
-
-
-        for (int i = 0; i < z; i++) 
-        {
-            StartCoroutine("LoseTime");
-            Time.timeScale = 1; //Just making sure that the timeScale is right;
-            
-        }
+        
     }
 
 
