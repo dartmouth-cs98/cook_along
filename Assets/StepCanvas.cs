@@ -14,8 +14,12 @@ public class StepCanvas : MonoBehaviour
     // Start is called before the first frame update
     //Timer work below under contruction
     public int timeLeft; //Seconds Overall
-    public Text countdown = GameObject.Find("Timer").GetComponent<Text>(); //UI Text Object
-    
+    public Text countdown; //UI Text Object
+    public int hours;
+    public int minutes;
+    public int seconds;
+    public String niceTime;
+    public int z;
     void Start()
     {
         yCoord=-20;
@@ -40,35 +44,39 @@ public class StepCanvas : MonoBehaviour
         }
         
         Debug.Log("Out of URL Loop");
-        
-        timeLeft = 120;
-        while (timeLeft != 0)
-        {
-            StartCoroutine("LoseTime");
-            Time.timeScale = 1; //Just making sure that the timeScale is right
-        }
+        countdown = GameObject.Find("Timer").GetComponent<Text>();
+        timeLeft = 10;
+        z = timeLeft / 2;
+//        timeLeft = 10;
+//        for(int i = 0; i < 5; i++)
+//        {
+//            StartCoroutine("LoseTime");
+//            Time.timeScale = 1; //Just making sure that the timeScale is right
+//        }
     }
     
     void Update()
     {
-        int hours = Mathf.FloorToInt(timeLeft / 3600F);
-        int minutes = Mathf.FloorToInt((timeLeft - (hours*3600)) / 60F);
-        int seconds = Mathf.FloorToInt(timeLeft - (hours * 3600) - (minutes * 60));
-        string niceTime = string.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
-
-        countdown.text = ("" + niceTime); //Showing the Score on the Canvas
+       
     }
     
     IEnumerator LoseTime()
     {
-        Debug.Log("in loseTime");
-        while (true)
-        {
-            yield return new WaitForSeconds(1.0f);
-            Debug.Log("Time is " + timeLeft);
-            timeLeft--;
-            Debug.Log("We Get Here");
-        }
+        //yield return ("it works"); new WaitForSeconds(1.0f);
+        hours = Mathf.FloorToInt(timeLeft / 3600F);
+        minutes = Mathf.FloorToInt((timeLeft - (hours*3600)) / 60F);
+        seconds = Mathf.FloorToInt(timeLeft - (hours * 3600) - (minutes * 60));
+        niceTime = String.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
+        
+        countdown.text = ("" + niceTime); //Showing the Score on the Canvas
+
+        
+        float done = Time.time + 0.0f;
+        while(Time.time < done) yield return 0;
+        
+        timeLeft--;
+        Debug.Log("Now time is " + timeLeft);
+        
     }
 
     IEnumerator GetTexture(string thisURL, GameObject currrentImage) {
@@ -81,8 +89,14 @@ public class StepCanvas : MonoBehaviour
         else {
             currrentImage.GetComponent<RawImage>().texture = DownloadHandlerTexture.GetContent(www);
         }
-        
-       // Debug.Log("End of coroutine");
+
+
+        for (int i = 0; i < z; i++) 
+        {
+            StartCoroutine("LoseTime");
+            Time.timeScale = 1; //Just making sure that the timeScale is right;
+            
+        }
     }
 
 
