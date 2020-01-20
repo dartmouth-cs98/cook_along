@@ -63,19 +63,22 @@ public class StepCanvas : MonoBehaviour
     IEnumerator LoseTime()
     {
         //yield return ("it works"); new WaitForSeconds(1.0f);
+        
+        /*float done = Time.time + 1.0f;
+        while(Time.time < done) 
+        { Debug.Log( Time.time);
+            yield return 0;}*/
+
         hours = Mathf.FloorToInt(timeLeft / 3600F);
         minutes = Mathf.FloorToInt((timeLeft - (hours*3600)) / 60F);
         seconds = Mathf.FloorToInt(timeLeft - (hours * 3600) - (minutes * 60));
         niceTime = String.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
         
         countdown.text = ("" + niceTime); //Showing the Score on the Canvas
-
-        
-        float done = Time.time + 0.0f;
-        while(Time.time < done) yield return 0;
         
         timeLeft--;
         Debug.Log("Now time is " + timeLeft);
+        yield return new WaitForSeconds(1);
         
     }
 
