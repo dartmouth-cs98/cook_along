@@ -13,13 +13,16 @@ public class StepCanvas : MonoBehaviour
     public int xCoord;
     // Start is called before the first frame update
     //Timer work below under contruction
-    public int timeLeft; //Seconds Overall
+    
+ 
+    public int myTime; //Seconds Overall
     public Text countdown; //UI Text Object
-    public int hours;
-    public int minutes;
-    public int seconds;
-    public String niceTime;
-    public int z;
+    public int hours; //horus
+    public int minutes; //minutes
+    public int seconds; //seconds
+    public String niceTime; //pretty display time
+    private float timepassed = 0.0f; //keeping track of time passed
+  
     void Start()
     {
         yCoord=-20;
@@ -45,8 +48,10 @@ public class StepCanvas : MonoBehaviour
         
         Debug.Log("Out of URL Loop");
         countdown = GameObject.Find("Timer").GetComponent<Text>();
-        timeLeft = 10;
-        z = timeLeft / 2;
+       myTime = 10;
+      
+        
+       // z = timeLeft / 2;
 //        timeLeft = 10;
 //        for(int i = 0; i < 5; i++)
 //        {
@@ -57,29 +62,24 @@ public class StepCanvas : MonoBehaviour
     
     void Update()
     {
-       
+        Debug.Log("In Update");
+        timepassed += Time.deltaTime;
+        Debug.Log(timepassed);
+        CountDown(countdown, timepassed, myTime);
     }
 
-    void CountDown(Text TimeObj, float Totaltime) {
-        minutes += Time.deltaTime;
-        float seconds = minutes % 60;
-        //Reduce the total time by the amount of seconds elapsed...
-        Totaltime -= seconds;
-        
-        //yield return ("it works"); new WaitForSeconds(1.0f);
-        hours = Mathf.FloorToInt(timeLeft / 3600F);
-        minutes = Mathf.FloorToInt((timeLeft - (hours*3600)) / 60F);
-        seconds = Mathf.FloorToInt(timeLeft - (hours * 3600) - (minutes * 60));
-        niceTime = String.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
-        
-        countdown.text = ("" + niceTime); //Showing the Score on the Canvas
+    void CountDown(Text TimeObj, float timepassed, int totalTime)
+    {
+        int currTime = totalTime - (int)timepassed;
 
-        
-        TimeObj.text = "Time Elapsed: " + seconds.ToString("0")+" seconds"+ " Time Remaining: "+ (int)Totaltime;
-        if (Totaltime <= 40f) {
-            PanelObj.SetActive(true);
-            TimeText.enabled = false;
-        }
+        //yield return ("it works"); new WaitForSeconds(1.0f);
+        hours = Mathf.FloorToInt(currTime / 3600F);
+        minutes = Mathf.FloorToInt((currTime - (hours*3600)) / 60F);
+        seconds = Mathf.FloorToInt(currTime - (hours * 3600) - (minutes * 60));
+        niceTime = String.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
+
+        TimeObj.text = ("" + niceTime); //Showing the Score on the Canvas
+
     }
     
     IEnumerator GetTexture(string thisURL, GameObject currrentImage) {
