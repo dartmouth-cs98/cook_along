@@ -64,7 +64,8 @@ public class StepCanvas : MonoBehaviour
     {
         //yield return ("it works"); new WaitForSeconds(1.0f);
         
-        /*float done = Time.time + 1.0f;
+        /*alternative to WaitForSeconds that i was trying
+         float done = Time.time + 1.0f;
         while(Time.time < done) 
         { Debug.Log( Time.time);
             yield return 0;}*/
