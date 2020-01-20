@@ -15,13 +15,13 @@ public class StepCanvas : MonoBehaviour
     //Timer work below under contruction
     
  
-    public int myTime; //Seconds Overall
+    public float timeLeft; //Seconds Overall
     public Text countdown; //UI Text Object
     public int hours; //horus
     public int minutes; //minutes
     public int seconds; //seconds
     public String niceTime; //pretty display time
-    private float timepassed = 0.0f; //keeping track of time passed
+    //private float timepassed = 0.0f; //keeping track of time passed
   
     void Start()
     {
@@ -48,7 +48,7 @@ public class StepCanvas : MonoBehaviour
         
         Debug.Log("Out of URL Loop");
         countdown = GameObject.Find("Timer").GetComponent<Text>();
-       myTime = 10;
+        timeLeft = 10;
       
         
        // z = timeLeft / 2;
@@ -63,19 +63,18 @@ public class StepCanvas : MonoBehaviour
     void Update()
     {
         Debug.Log("In Update");
-        timepassed += Time.deltaTime;
-        Debug.Log(timepassed);
-        CountDown(countdown, timepassed, myTime);
+        timeLeft -= Time.deltaTime;
+        Debug.Log(timeLeft);
+        CountDown(countdown, timeLeft);
     }
 
-    void CountDown(Text TimeObj, float timepassed, int totalTime)
-    {
-        int currTime = totalTime - (int)timepassed;
+    void CountDown(Text TimeObj,  float timeLeft)
+    { 
 
         //yield return ("it works"); new WaitForSeconds(1.0f);
-        hours = Mathf.FloorToInt(currTime / 3600F);
-        minutes = Mathf.FloorToInt((currTime - (hours*3600)) / 60F);
-        seconds = Mathf.FloorToInt(currTime - (hours * 3600) - (minutes * 60));
+        hours = Mathf.FloorToInt(timeLeft / 3600F);
+        minutes = Mathf.FloorToInt((timeLeft - (hours*3600)) / 60F);
+        seconds = Mathf.FloorToInt(timeLeft - (hours * 3600) - (minutes * 60));
         niceTime = String.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
 
         TimeObj.text = ("" + niceTime); //Showing the Score on the Canvas
