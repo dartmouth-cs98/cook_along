@@ -13,13 +13,13 @@ public class StepCanvas : MonoBehaviour
     public int xCoord;
     // Start is called before the first frame update
     //Timer work below under contruction
-    public int timeLeft; //Seconds Overall
+    public float timeLeft; //Seconds Overall
     public Text countdown; //UI Text Object
     public int hours;
     public int minutes;
     public int seconds;
     public String niceTime;
-    public int z;
+ 
     void Start()
     {
         yCoord=-20;
@@ -45,8 +45,7 @@ public class StepCanvas : MonoBehaviour
         
         Debug.Log("Out of URL Loop");
         countdown = GameObject.Find("Timer").GetComponent<Text>();
-        timeLeft = 10;
-        z = timeLeft / 2;
+        timeLeft = 120;
 //        timeLeft = 10;
 //        for(int i = 0; i < 5; i++)
 //        {
@@ -77,11 +76,20 @@ public class StepCanvas : MonoBehaviour
         
         countdown.text = ("" + niceTime); //Showing the Score on the Canvas
         
-        timeLeft--;
-        Debug.Log("Now time is " + timeLeft);
+        timeLeft = (float)(timeLeft - 0.5);
+        //Debug.Log("Now time is " + timeLeft);
         yield return new WaitForSeconds(1);
         
     }
+
+
+    IEnumerator WaitForIt()
+    {
+        while (timeLeft != 0){
+            yield return StartCoroutine("LoseTime");}
+        Debug.Log("z losetimes later");
+    }
+    
 
     IEnumerator GetTexture(string thisURL, GameObject currrentImage) {
         UnityWebRequest www = UnityWebRequestTexture.GetTexture(thisURL);
@@ -94,13 +102,8 @@ public class StepCanvas : MonoBehaviour
             currrentImage.GetComponent<RawImage>().texture = DownloadHandlerTexture.GetContent(www);
         }
 
-
-        for (int i = 0; i < z; i++) 
-        {
-            StartCoroutine("LoseTime");
-            Time.timeScale = 1; //Just making sure that the timeScale is right;
-            
-        }
+        StartCoroutine("WaitForIt");
+           
     }
 
 
