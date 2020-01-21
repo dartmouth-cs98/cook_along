@@ -9,7 +9,7 @@ public class RecipeLoader : MonoBehaviour
 {
     
     #region Private Variables
-    private ControllerConnectionHandler _controllerConnectionHandler;
+    MLInputController _controller;
     private GameObject _recipe1;
     private Image _recipe1Image;
     public static bool Recipe1Active;
@@ -20,7 +20,8 @@ public class RecipeLoader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _controllerConnectionHandler = GetComponent<ControllerConnectionHandler>();
+        MLInput.Start();
+        _controller = MLInput.GetController(MLInput.Hand.Left);
 
         _recipe1 = GameObject.Find("Viewport/Recipe 1");
         _recipe1Image = _recipe1.GetComponent<Image>();
@@ -28,9 +29,6 @@ public class RecipeLoader : MonoBehaviour
         _recipe2Image = _recipe2.GetComponent<Image>();
         Recipe1Active = true;
 
-        MLInput.OnControllerButtonUp += HandleOnButtonUp;
-        MLInput.OnControllerButtonDown += HandleOnButtonDown;
-        
         // used for reference: https://github.com/larkintuckerllc/magic-leap-patterns/blob/master/Assets/MagicLeap/Examples/Scripts/MeshingExample.cs
         MLInput.OnControllerTouchpadGestureStart += OnTouchpadGestureStart;
     }
@@ -39,6 +37,10 @@ public class RecipeLoader : MonoBehaviour
     void Update()
     {
         updateActiveRecipe();
+        if (_controller	 != null && _controller.TriggerValue > 0.2f) {
+            SceneManager.LoadScene("Recipe Information");
+        }
+        
     }
 
     void updateActiveRecipe()
@@ -57,36 +59,10 @@ public class RecipeLoader : MonoBehaviour
     
     void OnDestroy()
     {
-        MLInput.OnControllerButtonDown -= HandleOnButtonDown;
-        MLInput.OnControllerButtonUp -= HandleOnButtonUp;
         MLInput.OnControllerTouchpadGestureStart -= OnTouchpadGestureStart;
+        MLInput.Stop();
     }
     
-    private void HandleOnButtonDown(byte controllerId, MLInputControllerButton button)
-    {
-        MLInputController controller = _controllerConnectionHandler.ConnectedController;
-        if (controller != null && controller.Id == controllerId &&
-            button == MLInputControllerButton.Bumper)
-        {
-            Debug.Log("Button down");
-        }
-    }
-
-    /// <summary>
-    /// Handles the event for button up.
-    /// </summary>
-    /// <param name="controller_id">The id of the controller.</param>
-    /// <param name="button">The button that is being released.</param>
-    private void HandleOnButtonUp(byte controllerId, MLInputControllerButton button)
-    {
-        MLInputController controller = _controllerConnectionHandler.ConnectedController;
-        if (controller != null && controller.Id == controllerId &&
-            button == MLInputControllerButton.Bumper)
-        {
-            Debug.Log("Button up");
-            SceneManager.LoadScene("Recipe Information");
-        }
-    }
     
     private void OnTouchpadGestureStart(byte controller_id, MLInputControllerTouchpadGesture gesture)
     {
@@ -101,7 +77,6 @@ public class RecipeLoader : MonoBehaviour
         {
             Recipe1Active = !Recipe1Active;
         }
-
     }
 }
 

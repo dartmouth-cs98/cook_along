@@ -6,7 +6,8 @@ using UnityEngine;
 [Serializable]
 public class Recipe
 {
-    public long id;
+    public String id;
+    public DateTime creationDate;
     public string name;
     public string description;
     public string imgUrl;
@@ -15,7 +16,7 @@ public class Recipe
     public int calories;
     public List<RecipeIngredient> ingredients;
     public List<RecipeStep> steps;
-    public List<string> tools;
+    public List<String> tools;
 }
 
 [Serializable]
@@ -31,3 +32,5 @@ public class RecipeStep {
     public string instruction;
     public string videoUrl;
 }
+
+

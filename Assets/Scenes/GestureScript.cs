@@ -41,13 +41,11 @@ public class GestureScript : MonoBehaviour {
 
       		// Determine which transition to execute
       		if (Equals(scene, "welcome_screen")) {
-        		SceneManager.UnloadSceneAsync("welcome_screen");
-        		SceneManager.LoadSceneAsync("Recipe Chooser");
+	            SceneManager.LoadSceneAsync("Recipe Chooser");
         		Hold(1);
       		}
       		else if (Equals(scene, "Recipe Information")) {
-        		SceneManager.UnloadSceneAsync("Recipe Information");
-        		SceneManager.LoadSceneAsync("DynamicText");
+	            SceneManager.LoadSceneAsync("DynamicText");
         		Hold(1);
       		}
 		}
