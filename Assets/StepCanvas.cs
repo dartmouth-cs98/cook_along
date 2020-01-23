@@ -20,13 +20,15 @@ public class StepCanvas : MonoBehaviour
     public VideoPlayer videoPlayer;
     private List<string> URLs = new List<string>();
     private GameObject canvas;  
-    private bool videoInstruction = true;
+    private bool videoInstruction = false;
     private VideoSource videoSource;
     public Button b;
     public RawImage mesh;
 
     private Text thisText;
     private int step_number=0;
+    private string videoURL; 
+    private List<String> URLs;
     private MLHandKeyPose[] gestures;   // Holds the different gestures we will look for
     private AssetBundle myLoadedAssetBundle;
     int numsteps;
@@ -51,9 +53,10 @@ public class StepCanvas : MonoBehaviour
         int width=50;
         int VidHeight =250;
         int VidWidth =450;
-        URLs.Add("https://food.fnr.sndimg.com/content/dam/images/food/fullset/2012/2/24/0/ZB0202H_classic-american-grilled-cheese_s4x3.jpg.rend.hgtvcom.616.462.suffix/1371603614279.jpeg");
-        URLs.Add("https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/299/299147/cheese-varieties.jpg?w=1155&h=1537");
-       
+        URLs= RecipeInfo.RecipeVar.steps[step_number].ingredientURLs;
+        // URLs.Add("https://food.fnr.sndimg.com/content/dam/images/food/fullset/2012/2/24/0/ZB0202H_classic-american-grilled-cheese_s4x3.jpg.rend.hgtvcom.616.462.suffix/1371603614279.jpeg");
+        // URLs.Add("https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/299/299147/cheese-varieties.jpg?w=1155&h=1537");
+        videoURL= RecipeInfo.RecipeVar.steps[step_number].videoUrl;
 
         thisText = GameObject.Find("Recipe step").GetComponent<Text>();
         MLHands.Start();
@@ -64,39 +67,10 @@ public class StepCanvas : MonoBehaviour
         MLHands.KeyPoseManager.EnableKeyPoses(gestures, true, false);
 
 
-
-        canvas = GameObject.Find("Canvas");
-        foreach (string currentURL in URLs)
-        {
-            GameObject NewObj = new GameObject(); //Create the GameObject
-            RawImage NewImage = NewObj.AddComponent<RawImage>(); //Add the Image Component script
-            NewImage.transform.SetParent(canvas.transform, false);
-            NewObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(xCoord, yCoord, 0);
-            NewObj.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
-            yCoord = yCoord - 50;
-            NewObj.SetActive(true); //Activate the GameObject
-            StartCoroutine(GetTexture(currentURL, NewObj));
-        }
-
         countdown = GameObject.Find("Timer").GetComponent<Text>();
         timeLeft = 120;
 
-        if (videoInstruction){
-            GameObject NewObj = new GameObject(); //Create the GameObject
-            RawImage Screen = NewObj.AddComponent<RawImage>(); //Add the Image Component script
-            Screen.transform.SetParent(canvas.transform,false);
-            NewObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,0,0);
-            NewObj.GetComponent<RectTransform>().sizeDelta=new Vector2(VidWidth,VidHeight);
-            NewObj.SetActive(true); //Activate the GameObject
-         Application.runInBackground=true;
-          videoPlayer.source=VideoSource.Url;
-          b.image.rectTransform.sizeDelta= new Vector2(30,30);
-          mesh.GetComponent<RectTransform>().sizeDelta= new Vector2(1000,1000);
 
-          videoPlayer.url = "https:/dl.dropbox.com/s/f5suv9je1vya4pd/3%20Ways%20To%20Chop%20Onions%20Like%20A%20Pro.mp4?dl=1";
-          StartCoroutine(PlayVideo(Screen));
-
-        }
 
     }
     
@@ -135,7 +109,42 @@ public class StepCanvas : MonoBehaviour
       else
       {
           thisText.text = RecipeInfo.RecipeVar.steps[step_number].instruction;
+          URLs= RecipeInfo.RecipeVar.steps[step_number].ingredientURLs;
+           videoURL= RecipeInfo.RecipeVar.steps[step_number].videoUrl;
+
       }
+
+
+              if (videoInstruction){
+            GameObject NewObj = new GameObject(); //Create the GameObject
+            RawImage Screen = NewObj.AddComponent<RawImage>(); //Add the Image Component script
+            Screen.transform.SetParent(canvas.transform,false);
+            NewObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,0,0);
+            NewObj.GetComponent<RectTransform>().sizeDelta=new Vector2(VidWidth,VidHeight);
+            NewObj.SetActive(true); //Activate the GameObject
+         Application.runInBackground=true;
+          videoPlayer.source=VideoSource.Url;
+          b.image.rectTransform.sizeDelta= new Vector2(30,30);
+          mesh.GetComponent<RectTransform>().sizeDelta= new Vector2(1000,1000);
+
+          videoPlayer.url = videoURL;
+          StartCoroutine(PlayVideo(Screen));
+
+        }
+
+
+                canvas = GameObject.Find("Canvas");
+        foreach (string currentURL in URLs)
+        {
+            GameObject NewObj = new GameObject(); //Create the GameObject
+            RawImage NewImage = NewObj.AddComponent<RawImage>(); //Add the Image Component script
+            NewImage.transform.SetParent(canvas.transform, false);
+            NewObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(xCoord, yCoord, 0);
+            NewObj.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
+            yCoord = yCoord - 50;
+            NewObj.SetActive(true); //Activate the GameObject
+            StartCoroutine(GetTexture(currentURL, NewObj));
+        }
 
     }
     
