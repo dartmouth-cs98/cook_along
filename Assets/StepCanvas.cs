@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-using System;
 using UnityEngine.Video;
 using UnityEngine.EventSystems;
 
@@ -23,17 +22,6 @@ public class StepCanvas : MonoBehaviour
 
 
     // Start is called before the first frame update
-    //Timer work below under contruction
-    
- 
-    public float timeLeft; //Seconds Overall
-    public Text countdown; //UI Text Object
-    public int hours; //horus
-    public int minutes; //minutes
-    public int seconds; //seconds
-    public String niceTime; //pretty display time
-    //private float timepassed = 0.0f; //keeping track of time passed
-  
     void Start()
     {
         yCoord=-20;
@@ -47,21 +35,16 @@ public class StepCanvas : MonoBehaviour
 
         foreach (string currentURL in URLs)
         {
-            
             canvas = GameObject.Find("Canvas");
             GameObject NewObj = new GameObject(); //Create the GameObject
             RawImage NewImage = NewObj.AddComponent<RawImage>(); //Add the Image Component script
-            NewImage.transform.SetParent(canvas.transform, false);
-            NewObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(xCoord, yCoord, 0);
-            NewObj.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
-            yCoord = yCoord - 50;
+            NewImage.transform.SetParent(canvas.transform,false);
+            NewObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(xCoord,yCoord,0);
+            NewObj.GetComponent<RectTransform>().sizeDelta=new Vector2(width,height);
+            yCoord=yCoord-50;
             NewObj.SetActive(true); //Activate the GameObject
             StartCoroutine(GetTexture(currentURL, NewObj));
         }
-    Debug.Log("Out of URL Loop");
-        countdown = GameObject.Find("Timer").GetComponent<Text>();
-        timeLeft = 10;
-
         if (videoInstruction){
             GameObject NewObj = new GameObject(); //Create the GameObject
             RawImage Screen = NewObj.AddComponent<RawImage>(); //Add the Image Component script
@@ -69,7 +52,7 @@ public class StepCanvas : MonoBehaviour
             NewObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,0,0);
             NewObj.GetComponent<RectTransform>().sizeDelta=new Vector2(VidWidth,VidHeight);
             NewObj.SetActive(true); //Activate the GameObject
-         Application.runInBackground=true;
+        Application.runInBackground=true;
           videoPlayer.source=VideoSource.Url;
           b.image.rectTransform.sizeDelta= new Vector2(30,30);
           mesh.GetComponent<RectTransform>().sizeDelta= new Vector2(1000,1000);
@@ -78,31 +61,8 @@ public class StepCanvas : MonoBehaviour
           StartCoroutine(PlayVideo(Screen));
 
         }
-
-    }
-    
-    void Update()
-    {
-        Debug.Log("In Update");
-        timeLeft -= Time.deltaTime;
-        Debug.Log(timeLeft);
-        CountDown(countdown, timeLeft);
     }
 
-    void CountDown(Text TimeObj,  float timeLeft)
-    { 
-
-
-        //yield return ("it works"); new WaitForSeconds(1.0f);
-        hours = Mathf.FloorToInt(timeLeft / 3600F);
-        minutes = Mathf.FloorToInt((timeLeft - (hours*3600)) / 60F);
-        seconds = Mathf.FloorToInt(timeLeft - (hours * 3600) - (minutes * 60));
-        niceTime = String.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
-
-        TimeObj.text = ("" + niceTime); //Showing the Score on the Canvas
-
-    }
-    
 
       IEnumerator PlayVideo(RawImage rawImage)
      {
@@ -128,7 +88,6 @@ public class StepCanvas : MonoBehaviour
         else {
             currrentImage.GetComponent<RawImage>().texture = DownloadHandlerTexture.GetContent(www);
         }
-        
     }
 
     public void TaskOnClick(){
@@ -144,4 +103,11 @@ public class StepCanvas : MonoBehaviour
         }
     }
 
+    // Update is called once per frame
+    void Update()
+    {
+
+
+     
+    }
 }
