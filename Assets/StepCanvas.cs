@@ -6,6 +6,10 @@ using UnityEngine.UI;
 using System;
 using UnityEngine.Video;
 using UnityEngine.EventSystems;
+using System.Diagnostics;
+using UnityEngine.SceneManagement;
+using UnityEngine.XR.MagicLeap;
+using System.IO;
 
 
 public class StepCanvas : MonoBehaviour
@@ -20,6 +24,12 @@ public class StepCanvas : MonoBehaviour
     private VideoSource videoSource;
     public Button b;
     public RawImage mesh;
+
+    private Text thisText;
+    private int step_number=0;
+    private MLHandKeyPose[] gestures;   // Holds the different gestures we will look for
+    private AssetBundle myLoadedAssetBundle;
+    int numsteps;
 
 
     // Start is called before the first frame update
@@ -43,6 +53,17 @@ public class StepCanvas : MonoBehaviour
         int VidWidth =450;
         URLs.Add("https://food.fnr.sndimg.com/content/dam/images/food/fullset/2012/2/24/0/ZB0202H_classic-american-grilled-cheese_s4x3.jpg.rend.hgtvcom.616.462.suffix/1371603614279.jpeg");
         URLs.Add("https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/299/299147/cheese-varieties.jpg?w=1155&h=1537");
+       
+
+        thisText = GameObject.Find("Recipe step").GetComponent<Text>();
+        MLHands.Start();
+        gestures = new MLHandKeyPose[3];
+        gestures[0] = MLHandKeyPose.Ok;
+        gestures[1] = MLHandKeyPose.Thumb;
+        gestures[2] = MLHandKeyPose.L;
+        MLHands.KeyPoseManager.EnableKeyPoses(gestures, true, false);
+
+
 
         canvas = GameObject.Find("Canvas");
         foreach (string currentURL in URLs)
@@ -81,7 +102,7 @@ public class StepCanvas : MonoBehaviour
     
     void Update()
     {
-        Debug.Log("In Update");
+        // Debug.Log("In Update");
         timeLeft = timeLeft - Time.deltaTime;
         //Debug.Log(timeLeft);
         
@@ -92,6 +113,29 @@ public class StepCanvas : MonoBehaviour
         niceTime = String.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
         
         countdown.text = ("" + niceTime); //Showing the Score on the Canvas
+
+
+
+
+    if(GetOkay() && RecipeInfo.RecipeVar != null && step_number < (RecipeInfo.RecipeVar.steps.Count - 1)) {
+           step_number += 1;
+           Hold(1);
+      } else if (GetDone()) {
+           SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().name);
+           SceneManager.LoadSceneAsync("Recipe Chooser");
+      } else if (GetGesture(MLHands.Left, MLHandKeyPose.L) || GetGesture(MLHands.Right, MLHandKeyPose.L)) {
+            step_number -= 1;
+            Hold(1);
+      }
+
+      if (RecipeInfo.RecipeVar == null)
+      {
+          thisText.text = "No recipe downloaded at the moment";
+      }
+      else
+      {
+          thisText.text = RecipeInfo.RecipeVar.steps[step_number].instruction;
+      }
 
     }
     
@@ -115,7 +159,7 @@ public class StepCanvas : MonoBehaviour
     	yield return www.SendWebRequest();
 
         if(www.isNetworkError) {
-            Debug.Log(www.error);
+           UnityEngine.Debug.Log(www.error);
         }
         else {
             currrentImage.GetComponent<RawImage>().texture = DownloadHandlerTexture.GetContent(www);
@@ -133,5 +177,52 @@ public class StepCanvas : MonoBehaviour
           videoPlayer.Play();
         }
     }
+
+    void onDestroy () {
+        MLHands.Stop();
+    }
+    
+    bool GetGesture(MLHand hand, MLHandKeyPose type) {
+        if (hand != null) {
+            if (hand.KeyPose == type) {
+                if (hand.KeyPoseConfidence > 0.9f) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    // Cleans up logic for reading the 'All Good' gesture
+    bool GetOkay()
+    {
+        if (GetGesture(MLHands.Left, MLHandKeyPose.Thumb) || GetGesture(MLHands.Right, MLHandKeyPose.Thumb))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    bool GetDone()
+   {
+       if (GetGesture(MLHands.Left, MLHandKeyPose.Ok) || GetGesture(MLHands.Right, MLHandKeyPose.Ok)) 
+       {
+           return true;
+       }
+
+       return false;
+   }
+
+   void Hold(int delay){
+       Stopwatch stopWatch = new Stopwatch();
+       stopWatch.Start();
+       float curr = stopWatch.ElapsedMilliseconds / 1000;
+       while (curr < delay)
+       {
+           curr = stopWatch.ElapsedMilliseconds / 1000;
+       }
+       stopWatch.Stop();
+   }
 
 }
