@@ -31,7 +31,7 @@ public class StepCanvas : MonoBehaviour
 
         foreach (string currentURL in URLs)
         {
-            
+
             canvas = GameObject.Find("Canvas");
             GameObject NewObj = new GameObject(); //Create the GameObject
             RawImage NewImage = NewObj.AddComponent<RawImage>(); //Add the Image Component script
@@ -42,54 +42,26 @@ public class StepCanvas : MonoBehaviour
             NewObj.SetActive(true); //Activate the GameObject
             StartCoroutine(GetTexture(currentURL, NewObj));
         }
-        
-        Debug.Log("Out of URL Loop");
+
         countdown = GameObject.Find("Timer").GetComponent<Text>();
         timeLeft = 120;
-//        timeLeft = 10;
-//        for(int i = 0; i < 5; i++)
-//        {
-//            StartCoroutine("LoseTime");
-//            Time.timeScale = 1; //Just making sure that the timeScale is right
-//        }
+
     }
     
     void Update()
     {
-       
-    }
+        Debug.Log("In Update");
+        timeLeft = timeLeft - Time.deltaTime;
+        Debug.Log(timeLeft);
     
-    IEnumerator LoseTime()
-    {
         //yield return ("it works"); new WaitForSeconds(1.0f);
-        
-        /*alternative to WaitForSeconds that i was trying
-         float done = Time.time + 1.0f;
-        while(Time.time < done) 
-        { Debug.Log( Time.time);
-            yield return 0;}*/
-
         hours = Mathf.FloorToInt(timeLeft / 3600F);
         minutes = Mathf.FloorToInt((timeLeft - (hours*3600)) / 60F);
         seconds = Mathf.FloorToInt(timeLeft - (hours * 3600) - (minutes * 60));
         niceTime = String.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
-        
         countdown.text = ("" + niceTime); //Showing the Score on the Canvas
         
-        timeLeft = (float)(timeLeft - 0.5);
-        //Debug.Log("Now time is " + timeLeft);
-        yield return new WaitForSeconds(1);
-        
     }
-
-
-    IEnumerator WaitForIt()
-    {
-        while (timeLeft != 0){
-            yield return StartCoroutine("LoseTime");}
-        Debug.Log("z losetimes later");
-    }
-    
 
     IEnumerator GetTexture(string thisURL, GameObject currrentImage) {
         UnityWebRequest www = UnityWebRequestTexture.GetTexture(thisURL);
@@ -102,8 +74,6 @@ public class StepCanvas : MonoBehaviour
             currrentImage.GetComponent<RawImage>().texture = DownloadHandlerTexture.GetContent(www);
         }
 
-        StartCoroutine("WaitForIt");
-           
     }
 
 
