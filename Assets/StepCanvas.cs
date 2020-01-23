@@ -57,7 +57,7 @@ public class StepCanvas : MonoBehaviour
             StartCoroutine(GetTexture(currentURL, NewObj));
         }
 
-        countdown = canvas.GetComponent<Text>();
+        countdown = GameObject.Find("Timer").GetComponent<Text>();
         timeLeft = 120;
 
         if (videoInstruction){
@@ -83,7 +83,7 @@ public class StepCanvas : MonoBehaviour
     {
         Debug.Log("In Update");
         timeLeft = timeLeft - Time.deltaTime;
-        Debug.Log(timeLeft);
+        //Debug.Log(timeLeft);
         
         //yield return ("it works"); new WaitForSeconds(1.0f);
         hours = Mathf.FloorToInt(timeLeft / 3600F);
