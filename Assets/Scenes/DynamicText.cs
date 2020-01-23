@@ -18,6 +18,7 @@ public class DynamicText : MonoBehaviour
     private AssetBundle myLoadedAssetBundle;
     int numsteps;
 
+
     // Start is called before the first frame update
     void Start() 
     {
