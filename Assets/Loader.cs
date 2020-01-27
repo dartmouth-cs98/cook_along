@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,12 +11,30 @@ public static class Loader
 
     public enum Scene
     {
-        welcome_screen, RecipeChooser, RecipeInformation
+        welcome_screen, RecipeChooser, RecipeInformation, Loading,
     }
-    
+
+
+    private static Action onLoaderCallback;
     
     public static void Load(Scene scene)
     {
-        SceneManager.LoadScene(scene.ToString());
+        // set the loadercallback to the target scene
+        onLoaderCallback = () => { SceneManager.LoadScene(scene.ToString()); };
+        
+        // load the loading scene
+        SceneManager.LoadScene(Scene.Loading.ToString());
+
+    }
+
+    public static void LoaderCallback()
+    {
+        // triggered after the first update to let the sreen refresh
+        // execute the load the target scene
+        if (onLoaderCallback != null)
+        {
+            onLoaderCallback();
+            onLoaderCallback = null;
+        }
     }
 }
