@@ -53,7 +53,7 @@ public class StepCanvas : MonoBehaviour
         int width=50;
         int VidHeight =250;
         int VidWidth =450;
-        URLs= RecipeInfo.RecipeVar.steps[step_number].ingredientURLs;
+        URLs= ingredientURLlistoflist;
         // URLs.Add("https://food.fnr.sndimg.com/content/dam/images/food/fullset/2012/2/24/0/ZB0202H_classic-american-grilled-cheese_s4x3.jpg.rend.hgtvcom.616.462.suffix/1371603614279.jpeg");
         // URLs.Add("https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/299/299147/cheese-varieties.jpg?w=1155&h=1537");
         videoURL= RecipeInfo.RecipeVar.steps[step_number].videoUrl;

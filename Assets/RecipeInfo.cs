@@ -22,6 +22,7 @@ public class RecipeInfo : MonoBehaviour
     private Text _other_info;
     int number_to_show = 6;
     #endregion
+    public static List<List<string>> ingredientURLlistoflist;
     
     // Start is called before the first frame update
     void Start()
@@ -31,6 +32,34 @@ public class RecipeInfo : MonoBehaviour
         MLInput.OnControllerButtonUp += HandleOnButtonUp;
         MLInput.OnControllerButtonDown += HandleOnButtonDown;
         StartCoroutine(GetRecipe(SetRecipeInfo));
+        StartCoroutine(getURLs());
+    }
+
+    IEnumerator getURLs()
+    {
+        String url = "https://cookalong-api.herokuapp.com/recipes/allingredients/1";
+        if (!RecipeLoader.Recipe1Active)
+        {
+            url = "https://cookalong-api.herokuapp.com/recipes/allingredients/2";
+        }
+        
+        using (UnityWebRequest req = UnityWebRequest.Get(url))
+        {
+            yield return req.SendWebRequest();
+            
+            if (req.isHttpError || req.isNetworkError)
+            {
+                Debug.Log("HIT ERROR");
+                Debug.Log(req.error);
+            }
+            else
+            {
+
+                string result = req.downloadHandler.text;
+                List<List<string>> ingredientURLs = JsonUtility.FromJson<Recipe>(result);
+                ingredientURLlistoflist = ingredientURLs;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -112,6 +141,7 @@ public class RecipeInfo : MonoBehaviour
         else {
             GameObject.Find("Recipe Photo").GetComponent<RawImage>().texture = DownloadHandlerTexture.GetContent(www);
         }
+
     }
 
     // https://www.red-gate.com/simple-talk/dotnet/c-programming/calling-restful-apis-unity3d/
