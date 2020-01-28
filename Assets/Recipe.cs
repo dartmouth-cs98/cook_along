@@ -32,7 +32,8 @@ public class RecipeStep {
     public long id;
     public string instruction;
     public string videoUrl;
-    public List<int> ingredients;
+    public List<long> ingredients;
+    public int stepTime;
 }
 
 
