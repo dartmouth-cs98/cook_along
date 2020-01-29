@@ -15,6 +15,7 @@ using System.IO;
 public class StepCanvas : MonoBehaviour
 {
 
+    //Setting up Variables used for video
 	public int yCoord;
     public int xCoord;
     private int height=50;
@@ -30,6 +31,7 @@ public class StepCanvas : MonoBehaviour
     public Button b;
     public RawImage mesh;
 
+    //setting up variables used for steps
     private Text thisText;
     private int step_number=0;
     private string videoURL; 
@@ -39,9 +41,7 @@ public class StepCanvas : MonoBehaviour
     int numsteps;
 
 
-    // Start is called before the first frame update
-    //Timer work below under contruction
-
+    //setting up variables used for timer
     public float timeLeft; //Seconds Overall
     public Text countdown; //UI Text Object
     public int hours;
@@ -49,7 +49,7 @@ public class StepCanvas : MonoBehaviour
     public int seconds;
     public String niceTime; 
  
-
+    // Start is called before the first frame update
     void Start()
     {
         yCoord=-20;
@@ -68,16 +68,14 @@ public class StepCanvas : MonoBehaviour
         gestures[2] = MLHandKeyPose.L;
         MLHands.KeyPoseManager.EnableKeyPoses(gestures, true, false);
 
-
         countdown = GameObject.Find("Timer").GetComponent<Text>();
-        timeLeft = 120;
-
-
-
+        timeLeft = (-1.0);
     }
     
     void Update()
     {
+        if(timeLeft > 0)
+        {
         // Debug.Log("In Update");
         timeLeft = timeLeft - Time.deltaTime;
         //Debug.Log(timeLeft);
@@ -90,9 +88,8 @@ public class StepCanvas : MonoBehaviour
         
         countdown.text = ("" + niceTime); //Showing the Score on the Canvas
 
-
-
-
+        }
+        
     if(GetOkay() && RecipeInfo.RecipeVar != null && step_number < (RecipeInfo.RecipeVar.steps.Count - 1)) {
            step_number += 1;
            Hold(1);
@@ -111,33 +108,31 @@ public class StepCanvas : MonoBehaviour
       else
       {
            thisText.text = RecipeInfo.RecipeVar.steps[step_number].instruction;
+           timeLeft = (float)RecipeInfo.RecipeVar.steps[step_number].stepTime;
            videoURL= RecipeInfo.RecipeVar.steps[step_number].videoUrl;
            URLs=URLsList[step_number];
+      }
+
+      if (videoInstruction){
+        GameObject NewObj = new GameObject(); //Create the GameObject
+        RawImage Screen = NewObj.AddComponent<RawImage>(); //Add the Image Component script
+        Screen.transform.SetParent(canvas.transform,false);
+        NewObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,0,0);
+        NewObj.GetComponent<RectTransform>().sizeDelta=new Vector2(VidWidth,VidHeight);
+        NewObj.SetActive(true); //Activate the GameObject
+        Application.runInBackground=true;
+        videoPlayer.source=VideoSource.Url;
+        b.image.rectTransform.sizeDelta= new Vector2(30,30);
+        mesh.GetComponent<RectTransform>().sizeDelta= new Vector2(1000,1000);
+        videoPlayer.url = videoURL;
+        StartCoroutine(PlayVideo(Screen));
 
       }
 
 
-              if (videoInstruction){
-            GameObject NewObj = new GameObject(); //Create the GameObject
-            RawImage Screen = NewObj.AddComponent<RawImage>(); //Add the Image Component script
-            Screen.transform.SetParent(canvas.transform,false);
-            NewObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,0,0);
-            NewObj.GetComponent<RectTransform>().sizeDelta=new Vector2(VidWidth,VidHeight);
-            NewObj.SetActive(true); //Activate the GameObject
-         Application.runInBackground=true;
-          videoPlayer.source=VideoSource.Url;
-          b.image.rectTransform.sizeDelta= new Vector2(30,30);
-          mesh.GetComponent<RectTransform>().sizeDelta= new Vector2(1000,1000);
-
-          videoPlayer.url = videoURL;
-          StartCoroutine(PlayVideo(Screen));
-
-        }
-
-
-                canvas = GameObject.Find("Canvas");
-        foreach (string currentURL in URLs)
-        {
+       canvas = GameObject.Find("Canvas");
+       foreach (string currentURL in URLs)
+       {
             GameObject NewObj = new GameObject(); //Create the GameObject
             RawImage NewImage = NewObj.AddComponent<RawImage>(); //Add the Image Component script
             NewImage.transform.SetParent(canvas.transform, false);
@@ -146,24 +141,26 @@ public class StepCanvas : MonoBehaviour
             yCoord = yCoord - 50;
             NewObj.SetActive(true); //Activate the GameObject
             StartCoroutine(GetTexture(currentURL, NewObj));
-        }
-
+       }
+       
+       
+       //time each step here
     }
     
 
-      IEnumerator PlayVideo(RawImage rawImage)
-     {
-          videoPlayer.playOnAwake=false;
-          videoPlayer.Prepare();
-          
-          while (!videoPlayer.isPrepared)
-          {
-            yield return null;
-          }
-          rawImage.texture = videoPlayer.texture;
-          videoPlayer.Play();
+    IEnumerator PlayVideo(RawImage rawImage)
+    {
+        videoPlayer.playOnAwake=false;
+        videoPlayer.Prepare();
+        
+        while (!videoPlayer.isPrepared)
+        {
+        yield return null;
+        }
+        rawImage.texture = videoPlayer.texture;
+        videoPlayer.Play();
 
-     }
+    }
 
     IEnumerator GetTexture(string thisURL, GameObject currrentImage) {
         UnityWebRequest www = UnityWebRequestTexture.GetTexture(thisURL);
