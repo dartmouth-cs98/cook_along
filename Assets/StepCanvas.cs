@@ -42,16 +42,17 @@ public class StepCanvas : MonoBehaviour
 
 
     //setting up variables used for timer
-    public float timeLeft; //Seconds Overall
-    public Text countdown; //UI Text Object
-    public int hours;
-    public int minutes;
-    public int seconds;
-    public String niceTime; 
+    private float timeLeft; //Seconds Overall
+    private Text countdown; //UI Text Object
+    private int hours;
+    private int minutes;
+    private int seconds;
+    private String niceTime; 
  
     // Start is called before the first frame update
     void Start()
     {
+        UnityEngine.Debug.Log("Started");
         yCoord=-20;
         xCoord= 210;
         URLsList= RecipeInfo.ingredientURLlistoflist;
@@ -69,11 +70,13 @@ public class StepCanvas : MonoBehaviour
         MLHands.KeyPoseManager.EnableKeyPoses(gestures, true, false);
 
         countdown = GameObject.Find("Timer").GetComponent<Text>();
-        timeLeft = (-1.0);
+        timeLeft = (float)(-1);
     }
     
     void Update()
     {
+         UnityEngine.Debug.Log("In Update");
+         
         if(timeLeft > 0)
         {
         // Debug.Log("In Update");
@@ -90,27 +93,45 @@ public class StepCanvas : MonoBehaviour
 
         }
         
+        
+    //UnityEngine.Debug.Log("Before First If Statement");
     if(GetOkay() && RecipeInfo.RecipeVar != null && step_number < (RecipeInfo.RecipeVar.steps.Count - 1)) {
            step_number += 1;
            Hold(1);
+           //UnityEngine.Debug.Log("Inside first if statement");
       } else if (GetDone()) {
            SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().name);
            SceneManager.LoadSceneAsync("Recipe Chooser");
+           //UnityEngine.Debug.Log("Inside 1st else if of first if statement");
       } else if (GetGesture(MLHands.Left, MLHandKeyPose.L) || GetGesture(MLHands.Right, MLHandKeyPose.L)) {
             step_number -= 1;
             Hold(1);
+           //UnityEngine.Debug.Log("Inside 2nd else if of first if statement");
       }
 
       if (RecipeInfo.RecipeVar == null)
       {
+         //UnityEngine.Debug.Log("recipe is null");
           thisText.text = "No recipe downloaded at the moment";
       }
       else
       {
-           thisText.text = RecipeInfo.RecipeVar.steps[step_number].instruction;
+           UnityEngine.Debug.Log("trying to call and set variables");
+            
            timeLeft = (float)RecipeInfo.RecipeVar.steps[step_number].stepTime;
+           UnityEngine.Debug.Log("timeLeft is:" +timeLeft);
+           
+           UnityEngine.Debug.Log(step_number + "");
+           UnityEngine.Debug.Log(RecipeInfo.RecipeVar.steps[step_number].instruction);
+           
+           thisText.text = RecipeInfo.RecipeVar.steps[step_number].instruction;
+           UnityEngine.Debug.Log("trying to print text");
+           UnityEngine.Debug.Log(thisText.text);
+          
            videoURL= RecipeInfo.RecipeVar.steps[step_number].videoUrl;
-           URLs=URLsList[step_number];
+           URLs=URLsList[step_number]; 
+           UnityEngine.Debug.Log(URLs);
+           
       }
 
       if (videoInstruction){

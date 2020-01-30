@@ -28,7 +28,6 @@ public class RecipeInfo : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         _controllerConnectionHandler = GetComponent<ControllerConnectionHandler>();
         MLInput.OnControllerButtonUp += HandleOnButtonUp;
         MLInput.OnControllerButtonDown += HandleOnButtonDown;
