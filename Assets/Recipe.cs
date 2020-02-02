@@ -24,6 +24,7 @@ public class RecipeIngredient {
     public long id;
     public string name;
     public string amount;
+    public string imgUrl;
 }
 
 [Serializable]
@@ -31,6 +32,7 @@ public class RecipeStep {
     public long id;
     public string instruction;
     public string videoUrl;
+    public List<int> ingredients;
 }
 
 
