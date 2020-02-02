@@ -36,10 +36,9 @@ public class RecipeLoader : MonoBehaviour
     void Update()
     {
         updateActiveRecipe();
-        // if (_controller	 != null && _controller.TriggerValue > 0.2f) {
-        //     SceneManager.LoadScene("Recipe Information");
-        // }
-        //
+        if (_controller	 != null && _controller.TriggerValue > 0.2f) {
+            Loader.Load(Loader.Scene.RecipeInformation);
+        }
     }
 
     void updateActiveRecipe()

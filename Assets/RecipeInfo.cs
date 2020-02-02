@@ -165,7 +165,7 @@ public class RecipeInfo : MonoBehaviour
             button == MLInputControllerButton.HomeTap)
         {
             Debug.Log("Button up");
-            SceneManager.LoadScene("Recipe Chooser");
+            Loader.Load(Loader.Scene.RecipeChooser);
         }
     }
 }
