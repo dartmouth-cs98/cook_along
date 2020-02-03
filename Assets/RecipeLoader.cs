@@ -22,7 +22,6 @@ public class RecipeLoader : MonoBehaviour
     {
         MLInput.Start();
         _controller = MLInput.GetController(MLInput.Hand.Left);
-
         _recipe1 = GameObject.Find("Viewport/Recipe 1");
         _recipe1Image = _recipe1.GetComponent<Image>();
         _recipe2 = GameObject.Find("Viewport/Recipe 2");
@@ -38,9 +37,8 @@ public class RecipeLoader : MonoBehaviour
     {
         updateActiveRecipe();
         if (_controller	 != null && _controller.TriggerValue > 0.2f) {
-            SceneManager.LoadScene("Recipe Information");
+            Loader.Load(Loader.Scene.RecipeInformation);
         }
-        
     }
 
     void updateActiveRecipe()
