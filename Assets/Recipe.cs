@@ -33,7 +33,7 @@ public class RecipeStep {
     public string instruction;
     public string videoUrl;
     public List<long> ingredients;
-    public int stepTime;
+    public int time;
 }
 
 

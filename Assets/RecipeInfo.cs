@@ -54,7 +54,7 @@ public class RecipeInfo : MonoBehaviour
             }
             else
             {
-
+                //check this json handling is correct
                 string result = req.downloadHandler.text;
                 List<List<string>> ingredientURLs = JsonUtility.FromJson<List<List<string>>>(result);
                 ingredientURLlistoflist = ingredientURLs;

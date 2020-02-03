@@ -48,6 +48,7 @@ public class StepCanvas : MonoBehaviour
     private int minutes;
     private int seconds;
     private String niceTime; 
+    private bool called = true;
  
     // Start is called before the first frame update
     void Start()
@@ -55,13 +56,15 @@ public class StepCanvas : MonoBehaviour
         UnityEngine.Debug.Log("Started");
         yCoord=-20;
         xCoord= 210;
-        URLsList= RecipeInfo.ingredientURLlistoflist;
-        URLs=URLsList[0];
+        UnityEngine.Debug.Log("Before URL List");
+        //URLsList= RecipeInfo.ingredientURLlistoflist;
+        //URLs=URLsList[0];
         // URLs.Add("https://food.fnr.sndimg.com/content/dam/images/food/fullset/2012/2/24/0/ZB0202H_classic-american-grilled-cheese_s4x3.jpg.rend.hgtvcom.616.462.suffix/1371603614279.jpeg");
         // URLs.Add("https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/299/299147/cheese-varieties.jpg?w=1155&h=1537");
+        UnityEngine.Debug.Log("Before Video URL");
         videoURL= RecipeInfo.RecipeVar.steps[step_number].videoUrl;
 
-        thisText = GameObject.Find("Recipe step").GetComponent<Text>();
+        UnityEngine.Debug.Log("Before ML Hands");
         MLHands.Start();
         gestures = new MLHandKeyPose[3];
         gestures[0] = MLHandKeyPose.Ok;
@@ -69,7 +72,11 @@ public class StepCanvas : MonoBehaviour
         gestures[2] = MLHandKeyPose.L;
         MLHands.KeyPoseManager.EnableKeyPoses(gestures, true, false);
 
+        UnityEngine.Debug.Log("Before set thisText and countdown");
+        thisText = GameObject.Find("Recipe step").GetComponent<Text>();
+        UnityEngine.Debug.Log(thisText);
         countdown = GameObject.Find("Timer").GetComponent<Text>();
+        UnityEngine.Debug.Log(countdown);
         timeLeft = (float)(-1);
     }
     
@@ -97,8 +104,9 @@ public class StepCanvas : MonoBehaviour
     //UnityEngine.Debug.Log("Before First If Statement");
     if(GetOkay() && RecipeInfo.RecipeVar != null && step_number < (RecipeInfo.RecipeVar.steps.Count - 1)) {
            step_number += 1;
+           called = false;
            Hold(1);
-           //UnityEngine.Debug.Log("Inside first if statement");
+           UnityEngine.Debug.Log("Inside first if statement");
       } else if (GetDone()) {
            SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().name);
            SceneManager.LoadSceneAsync("Recipe Chooser");
@@ -118,12 +126,17 @@ public class StepCanvas : MonoBehaviour
       {
            UnityEngine.Debug.Log("trying to call and set variables");
             
-           timeLeft = (float)RecipeInfo.RecipeVar.steps[step_number].stepTime;
+           if (!called)
+           {
+               timeLeft = (float)RecipeInfo.RecipeVar.steps[step_number].time;
+               called = true;
+           }
            UnityEngine.Debug.Log("timeLeft is:" +timeLeft);
            
            UnityEngine.Debug.Log(step_number + "");
            UnityEngine.Debug.Log(RecipeInfo.RecipeVar.steps[step_number].instruction);
            
+           //breaking after here
            thisText.text = RecipeInfo.RecipeVar.steps[step_number].instruction;
            UnityEngine.Debug.Log("trying to print text");
            UnityEngine.Debug.Log(thisText.text);
