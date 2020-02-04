@@ -26,7 +26,7 @@ public class StepCanvas : MonoBehaviour
     private List<List<string>> URLsList;
     private List<string> URLs;
     private GameObject canvas;  
-    private bool videoInstruction = false;
+    // private bool videoInstruction = false;
     private VideoSource videoSource;
     public Button b;
     public RawImage mesh;
@@ -57,12 +57,12 @@ public class StepCanvas : MonoBehaviour
         yCoord=-20;
         xCoord= 210;
         UnityEngine.Debug.Log("Before URL List");
-        //URLsList= RecipeInfo.ingredientURLlistoflist;
-        //URLs=URLsList[0];
+        URLsList= RecipeInfo.ingredientURLlistoflist;
+        URLs=URLsList[0];
         
         
         
-        // URLs.Add("https://food.fnr.sndimg.com/content/dam/images/food/fullset/2012/2/24/0/ZB0202H_classic-american-grilled-cheese_s4x3.jpg.rend.hgtvcom.616.462.suffix/1371603614279.jpeg");
+        //URLs.Add("https://food.fnr.sndimg.com/content/dam/images/food/fullset/2012/2/24/0/ZB0202H_classic-american-grilled-cheese_s4x3.jpg.rend.hgtvcom.616.462.suffix/1371603614279.jpeg");
         // URLs.Add("https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/299/299147/cheese-varieties.jpg?w=1155&h=1537");
         UnityEngine.Debug.Log("Before Video URL");
         videoURL= RecipeInfo.RecipeVar.steps[step_number].videoUrl;
@@ -150,7 +150,7 @@ public class StepCanvas : MonoBehaviour
            
       }
 
-      if (videoInstruction){
+      if (!string.IsNullOrEmpty(videoURL)){
         GameObject NewObj = new GameObject(); //Create the GameObject
         RawImage Screen = NewObj.AddComponent<RawImage>(); //Add the Image Component script
         Screen.transform.SetParent(canvas.transform,false);

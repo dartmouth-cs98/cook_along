@@ -37,10 +37,10 @@ public class RecipeInfo : MonoBehaviour
 
     IEnumerator getURLs()
     {
-        String url = "https://cookalong-api.herokuapp.com/recipes/allingredients/1";
+        String url = "https://cookalong-api.herokuapp.com/recipes/allingredients/5e30abbce81c2b0004a7b204";
         if (!RecipeLoader.Recipe1Active)
         {
-            url = "https://cookalong-api.herokuapp.com/recipes/allingredients/2";
+            url = "https://cookalong-api.herokuapp.com/recipes/allingredients/5e30abc8e81c2b0004a7b205";
         }
         
         using (UnityWebRequest req = UnityWebRequest.Get(url))
