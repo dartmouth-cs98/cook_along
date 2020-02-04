@@ -87,7 +87,7 @@ public class StepCanvas : MonoBehaviour
     {
          UnityEngine.Debug.Log("In Update");
          
-        if(timeLeft > 0)
+        if(timeLeft > 1)
         {
         // Debug.Log("In Update");
         timeLeft = timeLeft - Time.deltaTime;
