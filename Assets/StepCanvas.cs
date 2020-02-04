@@ -93,9 +93,8 @@ public class StepCanvas : MonoBehaviour
         timeLeft = timeLeft - Time.deltaTime;
         //Debug.Log(timeLeft);
         
-        //yield return ("it works"); new WaitForSeconds(1.0f);
         hours = Mathf.FloorToInt(timeLeft / 3600F);
-        minutes = Mathf.FloorToInt((timeLeft - (hours*3600)) / 60F);
+        minutes = Mathf.FloorToInt((timeLeft - (hours * 3600)) / 60F);
         seconds = Mathf.FloorToInt(timeLeft - (hours * 3600) - (minutes * 60));
         niceTime = String.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
         
