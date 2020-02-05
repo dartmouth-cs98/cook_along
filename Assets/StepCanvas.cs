@@ -33,7 +33,7 @@ public class StepCanvas : MonoBehaviour
 
     //setting up variables used for steps
     private Text thisText;
-    private int step_number=0;
+    private int step_number = 0;
     private string videoURL; 
     //private List<String> URLs;
     private MLHandKeyPose[] gestures;   // Holds the different gestures we will look for
@@ -43,12 +43,16 @@ public class StepCanvas : MonoBehaviour
 
     //setting up variables used for timer
     private float timeLeft; //Seconds Overall
+    private float stepTime; //Seconds to hold per step
     private Text countdown; //UI Text Object
+    private bool called = true; //used to make sure time is called only once per new step
+    private bool timer_running = false; //used to toggle start and stop for timer
+    // variables used for styling the display of time into hh:mm:ss
     private int hours;
     private int minutes;
     private int seconds;
     private String niceTime; 
-    private bool called = true;
+
  
     // Start is called before the first frame update
     void Start()
@@ -69,10 +73,12 @@ public class StepCanvas : MonoBehaviour
 
         UnityEngine.Debug.Log("Before ML Hands");
         MLHands.Start();
-        gestures = new MLHandKeyPose[3];
+        gestures = new MLHandKeyPose[5];
         gestures[0] = MLHandKeyPose.Ok;
         gestures[1] = MLHandKeyPose.Thumb;
         gestures[2] = MLHandKeyPose.L;
+		gestures[3] = MLHandKeyPose.OpenHand;
+		gestures[4] = MLHandKeyPose.Pinch;
         MLHands.KeyPoseManager.EnableKeyPoses(gestures, true, false);
 
         UnityEngine.Debug.Log("Before set thisText and countdown");
@@ -87,7 +93,26 @@ public class StepCanvas : MonoBehaviour
     {
          UnityEngine.Debug.Log("In Update");
          
-        if(timeLeft > 1)
+
+         //Work on Timer Start **********
+        if(Time_Switch()){
+        	if(timer_running){
+        		timer_running = false;
+        	}
+        	else{
+        		timer_running = true;
+        	}
+        	Hold(1);
+        }
+
+        if(Time_Reset()){
+        	timer_running = false;
+        	countdown.text = ("");
+        	timeLeft = stepTime;
+        	Hold(1);
+        }
+
+        if(timeLeft > 1 && timer_running)
         {
         // Debug.Log("In Update");
         timeLeft = timeLeft - Time.deltaTime;
@@ -101,6 +126,8 @@ public class StepCanvas : MonoBehaviour
         countdown.text = ("" + niceTime); //Showing the Score on the Canvas
 
         }
+
+        //work on timer end **********
         
         
     //UnityEngine.Debug.Log("Before First If Statement");
@@ -132,6 +159,7 @@ public class StepCanvas : MonoBehaviour
            {
                timeLeft = (float)RecipeInfo.RecipeVar.steps[step_number].time;
                called = true;
+               stepTime = timeLeft;
            }
            UnityEngine.Debug.Log("timeLeft is:" +timeLeft);
            
@@ -241,6 +269,26 @@ public class StepCanvas : MonoBehaviour
     bool GetOkay()
     {
         if (GetGesture(MLHands.Left, MLHandKeyPose.Thumb) || GetGesture(MLHands.Right, MLHandKeyPose.Thumb))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    bool Time_Switch()
+    {
+        if (GetGesture(MLHands.Left, MLHandKeyPose.OpenHand) || GetGesture(MLHands.Right, MLHandKeyPose.OpenHand))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    bool Time_Reset()
+    {
+        if (GetGesture(MLHands.Left, MLHandKeyPose.Pinch) || GetGesture(MLHands.Right, MLHandKeyPose.Pinch))
         {
             return true;
         }
