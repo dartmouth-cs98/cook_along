@@ -39,8 +39,9 @@ public class GestureScript : MonoBehaviour {
 			// unload active scene, then load recipe information
       		string scene = SceneManager.GetActiveScene().name;
             
-      		if (Equals(scene, "RecipeInformation")) {
-	            SceneManager.LoadSceneAsync("DynamicText");
+      		if (Equals(scene, "RecipeInformation"))
+            {
+	            Loader.Load(Loader.Scene.StepDisplay);
         		Hold(1);
       		}
 		}

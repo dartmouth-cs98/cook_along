@@ -29,7 +29,6 @@ public class RecipeInfo : MonoBehaviour
 
         _controllerConnectionHandler = GetComponent<ControllerConnectionHandler>();
         MLInput.OnControllerButtonUp += HandleOnButtonUp;
-        MLInput.OnControllerButtonDown += HandleOnButtonDown;
         StartCoroutine(GetRecipe(SetRecipeInfo));
     }
 
@@ -40,7 +39,6 @@ public class RecipeInfo : MonoBehaviour
 
     void OnDestroy()
     {
-        MLInput.OnControllerButtonDown -= HandleOnButtonDown;
         MLInput.OnControllerButtonUp -= HandleOnButtonUp;
     }
 
@@ -141,17 +139,6 @@ public class RecipeInfo : MonoBehaviour
             }
         }
     }
-    
-    
-    private void HandleOnButtonDown(byte controllerId, MLInputControllerButton button)
-    {
-        MLInputController controller = _controllerConnectionHandler.ConnectedController;
-        if (controller != null && controller.Id == controllerId &&
-            button == MLInputControllerButton.Bumper)
-        {
-            Debug.Log("Button down");
-        }
-    }
 
     /// <summary>
     /// Handles the event for button up.
@@ -164,7 +151,6 @@ public class RecipeInfo : MonoBehaviour
         if (controller != null && controller.Id == controllerId &&
             button == MLInputControllerButton.HomeTap)
         {
-            Debug.Log("Button up");
             Loader.Load(Loader.Scene.RecipeChooser);
         }
     }

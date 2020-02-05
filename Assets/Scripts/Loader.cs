@@ -11,7 +11,7 @@ public static class Loader
 
     public enum Scene
     {
-        welcome_screen, RecipeChooser, RecipeInformation, Loading,
+        WelcomeScreen, RecipeChooser, RecipeInformation, Loading, StepDisplay,
     }
 
 
