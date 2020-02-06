@@ -52,15 +52,18 @@ public class StepCanvas : MonoBehaviour
     private int minutes;
     private int seconds;
     private String niceTime; 
-
+    
+    //variables for ingredient instuctions
+    private bool visible = false;
+    private float showStart;
  
     // Start is called before the first frame update
     void Start()
     {
-        UnityEngine.Debug.Log("Started");
+        //UnityEngine.Debug.Log("Started");
         yCoord=-20;
         xCoord= 210;
-        UnityEngine.Debug.Log("Before URL List");
+        //UnityEngine.Debug.Log("Before URL List");
         //URLsList= RecipeInfo.ingredientURLlistoflist;
         //URLs=URLsList[0];
         
@@ -68,33 +71,36 @@ public class StepCanvas : MonoBehaviour
         
         // URLs.Add("https://food.fnr.sndimg.com/content/dam/images/food/fullset/2012/2/24/0/ZB0202H_classic-american-grilled-cheese_s4x3.jpg.rend.hgtvcom.616.462.suffix/1371603614279.jpeg");
         // URLs.Add("https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/299/299147/cheese-varieties.jpg?w=1155&h=1537");
-        UnityEngine.Debug.Log("Before Video URL");
+        //UnityEngine.Debug.Log("Before Video URL");
         videoURL= RecipeInfo.RecipeVar.steps[step_number].videoUrl;
 
-        UnityEngine.Debug.Log("Before ML Hands");
+        //UnityEngine.Debug.Log("Before ML Hands");
         MLHands.Start();
-        gestures = new MLHandKeyPose[5];
+        gestures = new MLHandKeyPose[6];
         gestures[0] = MLHandKeyPose.Ok;
         gestures[1] = MLHandKeyPose.Thumb;
         gestures[2] = MLHandKeyPose.L;
 		gestures[3] = MLHandKeyPose.OpenHand;
 		gestures[4] = MLHandKeyPose.Pinch;
+		gestures[5] = MLHandKeyPose.Finger;
         MLHands.KeyPoseManager.EnableKeyPoses(gestures, true, false);
 
-        UnityEngine.Debug.Log("Before set thisText and countdown");
+        //UnityEngine.Debug.Log("Before set thisText and countdown");
         thisText = GameObject.Find("Recipe step").GetComponent<Text>();
-        UnityEngine.Debug.Log(thisText);
+        //UnityEngine.Debug.Log(thisText);
         countdown = GameObject.Find("Timer").GetComponent<Text>();
-        UnityEngine.Debug.Log(countdown);
+        //UnityEngine.Debug.Log(countdown);
         timeLeft = (float)(-1);
     }
     
+    
+    //********** Update ********** 
     void Update()
     {
-         UnityEngine.Debug.Log("In Update");
+         //UnityEngine.Debug.Log("In Update");
          
 
-         //Work on Timer Start **********
+         //********* Work on Timer **********
         if(Time_Switch()){
         	if(timer_running){
         		timer_running = false;
@@ -111,10 +117,16 @@ public class StepCanvas : MonoBehaviour
         	timeLeft = stepTime;
         	Hold(1);
         }
+        
+        if (Instruction()){
+            //UnityEngine.Debug.Log("RECOGNIZED THE FINGER");
+            visible = true;
+            showStart = 10;
+        }
 
         if(timeLeft > 1 && timer_running)
         {
-        // Debug.Log("In Update");
+        //UnityEngine.Debug.Log("In Update");
         timeLeft = timeLeft - Time.deltaTime;
         //Debug.Log(timeLeft);
         
@@ -126,16 +138,48 @@ public class StepCanvas : MonoBehaviour
         countdown.text = ("" + niceTime); //Showing the Score on the Canvas
 
         }
+        
+        
+    UnityEngine.Debug.Log("Before Visible");
+      //********* Work on Gesture Instructions **********
+      if(visible){
+          
+          UnityEngine.Debug.Log("IN GESTURE");
+          
+          GameObject NewInstruction = new GameObject(); //Create the GameObject
+          Text Gesture_Instructions = NewInstruction.AddComponent<Text>(); 
+          Gesture_Instructions.transform.SetParent(canvas.transform,false);
+          NewInstruction.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,0,0);
+          NewInstruction.GetComponent<RectTransform>().sizeDelta=new Vector2(500,500);
+          NewInstruction.SetActive(true); //Activate the GameObject
+          
+          Gesture_Instructions.text = "Thumbs up to go to next step" + 
+                                      Environment.NewLine +
+                                      "L hand gesture to go back step" +
+                                      Environment.NewLine +
+                                      "Ok gesture to go back to recipe chooser" +
+                                      Environment.NewLine +
+                                      "Open Hand to Start/Stop Timer" +
+                                      Environment.NewLine +
+                                      "Pinch to Reset Timer";
+                                      
+          showStart = showStart - Time.deltaTime; 
+                                  
+          if(showStart < 0){
+             visible = false;
+             UnityEngine.Debug.Log("Time Reached");
+          }
+          
+       }
 
-        //work on timer end **********
-        
-        
+     
+     //********** Work on Recipe Step Change ********** 
     //UnityEngine.Debug.Log("Before First If Statement");
     if(GetOkay() && RecipeInfo.RecipeVar != null && step_number < (RecipeInfo.RecipeVar.steps.Count - 1)) {
            step_number += 1;
            called = false;
            Hold(1);
-           UnityEngine.Debug.Log("Inside first if statement");
+           //UnityEngine.Debug.Log("Inside first if statement");
       } else if (GetDone()) {
            SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().name);
            SceneManager.LoadSceneAsync("Recipe Chooser");
@@ -145,7 +189,9 @@ public class StepCanvas : MonoBehaviour
             Hold(1);
            //UnityEngine.Debug.Log("Inside 2nd else if of first if statement");
       }
+       
 
+      //********** Work on Populating Recipe ********** 
       if (RecipeInfo.RecipeVar == null)
       {
          //UnityEngine.Debug.Log("recipe is null");
@@ -153,7 +199,7 @@ public class StepCanvas : MonoBehaviour
       }
       else
       {
-           UnityEngine.Debug.Log("trying to call and set variables");
+           //UnityEngine.Debug.Log("trying to call and set variables");
             
            if (!called)
            {
@@ -161,15 +207,15 @@ public class StepCanvas : MonoBehaviour
                called = true;
                stepTime = timeLeft;
            }
-           UnityEngine.Debug.Log("timeLeft is:" +timeLeft);
+           //UnityEngine.Debug.Log("timeLeft is:" +timeLeft);
            
-           UnityEngine.Debug.Log(step_number + "");
-           UnityEngine.Debug.Log(RecipeInfo.RecipeVar.steps[step_number].instruction);
+           //UnityEngine.Debug.Log(step_number + "");
+           //UnityEngine.Debug.Log(RecipeInfo.RecipeVar.steps[step_number].instruction);
            
            //breaking after here
            thisText.text = RecipeInfo.RecipeVar.steps[step_number].instruction;
-           UnityEngine.Debug.Log("trying to print text");
-           UnityEngine.Debug.Log(thisText.text);
+           //UnityEngine.Debug.Log("trying to print text");
+           //UnityEngine.Debug.Log(thisText.text);
           
            videoURL= RecipeInfo.RecipeVar.steps[step_number].videoUrl;
            URLs=URLsList[step_number]; 
@@ -177,6 +223,8 @@ public class StepCanvas : MonoBehaviour
            
       }
 
+       
+      //********** Work on Video ********** 
       if (videoInstruction){
         GameObject NewObj = new GameObject(); //Create the GameObject
         RawImage Screen = NewObj.AddComponent<RawImage>(); //Add the Image Component script
@@ -194,6 +242,7 @@ public class StepCanvas : MonoBehaviour
       }
 
 
+       //********** Work on Ingrdient Images ********** 
        canvas = GameObject.Find("Canvas");
        foreach (string currentURL in URLs)
        {
@@ -207,11 +256,11 @@ public class StepCanvas : MonoBehaviour
             StartCoroutine(GetTexture(currentURL, NewObj));
        }
        
-       
-       //time each step here
     }
     
 
+
+    //********** Helper Functions ********** 
     IEnumerator PlayVideo(RawImage rawImage)
     {
         videoPlayer.playOnAwake=false;
@@ -265,7 +314,7 @@ public class StepCanvas : MonoBehaviour
         return false;
     }
     
-    // Cleans up logic for reading the 'All Good' gesture
+    //********** Gesture Recognition Boolean Functions ********** 
     bool GetOkay()
     {
         if (GetGesture(MLHands.Left, MLHandKeyPose.Thumb) || GetGesture(MLHands.Right, MLHandKeyPose.Thumb))
@@ -295,6 +344,16 @@ public class StepCanvas : MonoBehaviour
 
         return false;
     }
+    
+    bool Instruction()
+        {
+            if (GetGesture(MLHands.Left, MLHandKeyPose.Finger) || GetGesture(MLHands.Right, MLHandKeyPose.Finger))
+            {
+                return true;
+            }
+    
+            return false;
+        }
 
     bool GetDone()
    {
