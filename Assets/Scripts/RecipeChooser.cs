@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR.MagicLeap;
 
-public class RecipeLoader : MonoBehaviour
+public class RecipeChooser : MonoBehaviour
 {
     
     #region Private Variables

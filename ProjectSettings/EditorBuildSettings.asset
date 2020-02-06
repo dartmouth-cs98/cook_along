@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/HelloCube.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
@@ -20,7 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/RecipeInformation.unity
     guid: a1dc9adbcf348450fa84466c24e6f8e1
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/StepDisplay.unity
     guid: d80d7b24b6f0948e4801692772090fbd
   - enabled: 1

@@ -10,7 +10,7 @@ using UnityEngine.XR.MagicLeap;
 using System.IO;
 
 
-public class DynamicText : MonoBehaviour
+public class StepDisplay : MonoBehaviour
 {
     private Text thisText;
     private int step_number=0;
@@ -33,7 +33,7 @@ public class DynamicText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      if(GetOkay() && RecipeInfo.RecipeVar != null && step_number < (RecipeInfo.RecipeVar.steps.Count - 1)) {
+      if(GetOkay() && RecipeInformation.RecipeVar != null && step_number < (RecipeInformation.RecipeVar.steps.Count - 1)) {
            step_number += 1;
            Hold(1);
       } else if (GetDone())
@@ -44,13 +44,13 @@ public class DynamicText : MonoBehaviour
             Hold(1);
       }
 
-      if (RecipeInfo.RecipeVar == null)
+      if (RecipeInformation.RecipeVar == null)
       {
           thisText.text = "No recipe downloaded at the moment";
       }
       else
       {
-          thisText.text = RecipeInfo.RecipeVar.steps[step_number].instruction;
+          thisText.text = RecipeInformation.RecipeVar.steps[step_number].instruction;
       }
       
     }

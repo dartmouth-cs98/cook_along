@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 using UnityEngine.XR.MagicLeap;
 
-public class RecipeInfo : MonoBehaviour
+public class RecipeInformation : MonoBehaviour
 {
     
     #region Private Variables
@@ -116,7 +116,7 @@ public class RecipeInfo : MonoBehaviour
     IEnumerator GetRecipe(Action<Recipe> onSuccess)
     {
         String url = "https://cookalong-api.herokuapp.com/recipes/5e30abbce81c2b0004a7b204";
-        if (!RecipeLoader.Recipe1Active)
+        if (!RecipeChooser.Recipe1Active)
         {
             url = "https://cookalong-api.herokuapp.com/recipes/5e30abc8e81c2b0004a7b205";
         }
