@@ -17,7 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/RecipeChooser.unity
     guid: 3dab30c44e24e43738fefa0c5a55986c
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/RecipeInformation.unity
     guid: a1dc9adbcf348450fa84466c24e6f8e1
   - enabled: 0

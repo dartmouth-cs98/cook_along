@@ -9,8 +9,7 @@ public class WelcomeStart : MonoBehaviour
 {
     
     public ControlInput controlInput;
-
-    // Start is called before the first frame update
+    
     private void Awake()
     {
         controlInput.OnTriggerDown.AddListener(HandleTrigger);
