@@ -14,6 +14,7 @@ using System.IO;
 
 public class StepCanvas : MonoBehaviour
 {
+    private GameObject canvas;
 
     //Setting up Variables used for video
 	public int yCoord;
@@ -25,7 +26,6 @@ public class StepCanvas : MonoBehaviour
     public VideoPlayer videoPlayer;
     private List<List<string>> URLsList;
     private List<string> URLs;
-    private GameObject canvas;  
     private bool videoInstruction = false;
     private VideoSource videoSource;
     public Button b;
@@ -60,6 +60,7 @@ public class StepCanvas : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        canvas = GameObject.Find("Canvas");
         //UnityEngine.Debug.Log("Started");
         yCoord=-20;
         xCoord= 210;
@@ -243,7 +244,7 @@ public class StepCanvas : MonoBehaviour
 
 
        //********** Work on Ingrdient Images ********** 
-       canvas = GameObject.Find("Canvas");
+      
        foreach (string currentURL in URLs)
        {
             GameObject NewObj = new GameObject(); //Create the GameObject
