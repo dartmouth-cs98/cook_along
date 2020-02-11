@@ -19,7 +19,7 @@ public class Control : MonoBehaviour {
   private const float _triggerThreshold = 0.2f;
   private const float _rotspeed = 10.0f;
   private const float _distance = 2.0f;
-  private bool _triggerPressed = false;
+  private bool _bumperPressed = false;
   private MLInputController _control;
   #endregion
   
@@ -67,15 +67,12 @@ public class Control : MonoBehaviour {
    /// Monitor the trigger input to "increment" the  world mode
    ///
    private void CheckControl() {
-     	if (_control.TriggerValue > _triggerThreshold) {
-       		_triggerPressed = true;
+     	if (_control.IsBumperDown) {
+       		_bumperPressed = true;
 			WorldCanvas.transform.position = Camera.transform.position + Camera.transform.forward * _distance;
 			WorldCanvas.transform.rotation = Camera.transform.rotation;
 			persistentBehavior.UpdateBinding();
      	}
-     	//else if (_control.TriggerValue == 0.0f && _triggerPressed) {
-		//	_triggerPressed = false;
-		//}   
 	}
     
    /// Reset
