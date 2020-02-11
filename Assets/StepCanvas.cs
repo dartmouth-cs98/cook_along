@@ -125,7 +125,7 @@ public class StepCanvas : MonoBehaviour
         
         if (Instruction()){
             visible = true;
-            showStart = 10;
+            showStart = 7;
         }
 
         if(timeLeft > 1 && timer_running)
@@ -153,21 +153,21 @@ public class StepCanvas : MonoBehaviour
      
           ges_instructions.GetComponent<RectTransform>().sizeDelta=new Vector2(300,300);
           UnityEngine.Debug.Log("Size Changed Changed");
-          ges_instructions.text = "Thumbs up to go to next step" + 
+          ges_instructions.text = "Thumbs Up:  go to next step" + 
                                       Environment.NewLine +
-                                      "L hand gesture to go back step" +
+                                      "L Gesture: go back a step" +
                                       Environment.NewLine +
-                                      "Ok gesture to go back to recipe chooser" +
+                                      "Ok Gesture: go back to recipe chooser" +
                                       Environment.NewLine +
-                                      "Open Hand to Start/Stop Timer" +
+                                      "Open Hand: Start/Stop Timer" +
                                       Environment.NewLine +
-                                      "Pinch to Reset Timer";
+                                      "Pinch: Reset Timer";
                                       
           showStart = showStart - Time.deltaTime; 
                                   
           if(showStart < 0){
              visible = false;
-             ges_instructions.GetComponent<RectTransform>().sizeDelta=new Vector2(160,30);
+             ges_instructions.GetComponent<RectTransform>().sizeDelta=new Vector2(300,30);
              UnityEngine.Debug.Log("Time Reached");
           }
           
