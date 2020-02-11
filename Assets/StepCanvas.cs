@@ -54,6 +54,7 @@ public class StepCanvas : MonoBehaviour
     private String niceTime; 
     
     //variables for ingredient instuctions
+    private Text ges_instructions;
     private bool visible = false;
     private float showStart;
  
@@ -90,8 +91,11 @@ public class StepCanvas : MonoBehaviour
         thisText = GameObject.Find("Recipe step").GetComponent<Text>();
         //UnityEngine.Debug.Log(thisText);
         countdown = GameObject.Find("Timer").GetComponent<Text>();
+        ges_instructions = GameObject.Find("Gesture instruction").GetComponent<Text>();
+       
         //UnityEngine.Debug.Log(countdown);
         timeLeft = (float)(-1);
+        
     }
     
     
@@ -120,7 +124,6 @@ public class StepCanvas : MonoBehaviour
         }
         
         if (Instruction()){
-            //UnityEngine.Debug.Log("RECOGNIZED THE FINGER");
             visible = true;
             showStart = 10;
         }
@@ -137,8 +140,9 @@ public class StepCanvas : MonoBehaviour
         niceTime = String.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
         
         countdown.text = ("" + niceTime); //Showing the Score on the Canvas
-
         }
+        
+        
         
         
     UnityEngine.Debug.Log("Before Visible");
@@ -146,15 +150,11 @@ public class StepCanvas : MonoBehaviour
       if(visible){
           
           UnityEngine.Debug.Log("IN GESTURE");
-          
-          GameObject NewInstruction = new GameObject(); //Create the GameObject
-          Text Gesture_Instructions = NewInstruction.AddComponent<Text>(); 
-          Gesture_Instructions.transform.SetParent(canvas.transform,false);
-          NewInstruction.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,0,0);
-          NewInstruction.GetComponent<RectTransform>().sizeDelta=new Vector2(500,500);
-          NewInstruction.SetActive(true); //Activate the GameObject
-          
-          Gesture_Instructions.text = "Thumbs up to go to next step" + 
+          MoveInstructionsUp();
+          UnityEngine.Debug.Log("Moved Up");
+          ges_instructions.GetComponent< RectTransform >().sizeDelta = new Vector2 (300, 300);
+          UnityEngine.Debug.Log("Size Changed Changed");
+          ges_instructions.text = "Thumbs up to go to next step" + 
                                       Environment.NewLine +
                                       "L hand gesture to go back step" +
                                       Environment.NewLine +
@@ -168,10 +168,18 @@ public class StepCanvas : MonoBehaviour
                                   
           if(showStart < 0){
              visible = false;
+             MoveInstructionsDown();
+             UnityEngine.Debug.Log("Moved Down");
+             ges_instructions.GetComponent< RectTransform >().sizeDelta = new Vector2 (160, 30);
              UnityEngine.Debug.Log("Time Reached");
           }
           
+       }else{
+        UnityEngine.Debug.Log("NO GESTURE");
+        ges_instructions.text = "Point up to see list of actions";
+        //UnityEngine.Debug.Log("AFTER GESTURE");
        }
+      
 
      
      //********** Work on Recipe Step Change ********** 
@@ -313,6 +321,22 @@ public class StepCanvas : MonoBehaviour
             }
         }
         return false;
+    }
+    
+     void MoveInstructionsUp()
+        {
+           UnityEngine.Debug.Log("In MoveInstructionsUp");
+           var instructions_1 = GameObject.Find("Gesture instruction").transform.Find("Canvas").GetComponent<RectTransform>();
+           var pos = instructions_1.localPosition;
+           instructions_1.localPosition = new Vector3(0, 0, pos.z);
+        }
+        
+    void MoveInstructionsDown()
+    {   
+           UnityEngine.Debug.Log("In MoveInstructionsDown");
+           var instructions_2 = GameObject.Find("Gesture instruction").transform.Find("Canvas").GetComponent<RectTransform>();
+           var pos = instructions_2.localPosition;
+           instructions_2.localPosition = new Vector3(200, -180, pos.z);
     }
     
     //********** Gesture Recognition Boolean Functions ********** 
