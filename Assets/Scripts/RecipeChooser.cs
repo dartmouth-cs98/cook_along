@@ -22,6 +22,7 @@ public class RecipeChooser : MonoBehaviour
     private void Awake()
     {
         controlInput.OnTriggerDown.AddListener(HandleTrigger);
+        controlInput.OnHomeButtonTap.AddListener(HandleHome);
         controlInput.OnSwipe.AddListener(HandleSwipe);
     }
 
@@ -44,6 +45,11 @@ public class RecipeChooser : MonoBehaviour
     void HandleTrigger()
     {
         Loader.Load(Loader.Scene.RecipeInformation);
+    }
+
+    void HandleHome()
+    {
+        Loader.Load(Loader.Scene.WelcomeScreen);
     }
     
     void HandleSwipe(MLInputControllerTouchpadGestureDirection direction)
