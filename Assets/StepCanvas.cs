@@ -150,9 +150,8 @@ public class StepCanvas : MonoBehaviour
       if(visible){
           
           UnityEngine.Debug.Log("IN GESTURE");
-          MoveInstructionsUp();
-          UnityEngine.Debug.Log("Moved Up");
-          ges_instructions.GetComponent< RectTransform >().sizeDelta = new Vector2 (300, 300);
+     
+          ges_instructions.GetComponent<RectTransform>().sizeDelta=new Vector2(300,300);
           UnityEngine.Debug.Log("Size Changed Changed");
           ges_instructions.text = "Thumbs up to go to next step" + 
                                       Environment.NewLine +
@@ -168,9 +167,7 @@ public class StepCanvas : MonoBehaviour
                                   
           if(showStart < 0){
              visible = false;
-             MoveInstructionsDown();
-             UnityEngine.Debug.Log("Moved Down");
-             ges_instructions.GetComponent< RectTransform >().sizeDelta = new Vector2 (160, 30);
+             ges_instructions.GetComponent<RectTransform>().sizeDelta=new Vector2(160,30);
              UnityEngine.Debug.Log("Time Reached");
           }
           
@@ -323,21 +320,6 @@ public class StepCanvas : MonoBehaviour
         return false;
     }
     
-     void MoveInstructionsUp()
-        {
-           UnityEngine.Debug.Log("In MoveInstructionsUp");
-           var instructions_1 = GameObject.Find("Gesture instruction").transform.Find("Canvas").GetComponent<RectTransform>();
-           var pos = instructions_1.localPosition;
-           instructions_1.localPosition = new Vector3(0, 0, pos.z);
-        }
-        
-    void MoveInstructionsDown()
-    {   
-           UnityEngine.Debug.Log("In MoveInstructionsDown");
-           var instructions_2 = GameObject.Find("Gesture instruction").transform.Find("Canvas").GetComponent<RectTransform>();
-           var pos = instructions_2.localPosition;
-           instructions_2.localPosition = new Vector3(200, -180, pos.z);
-    }
     
     //********** Gesture Recognition Boolean Functions ********** 
     bool GetOkay()
