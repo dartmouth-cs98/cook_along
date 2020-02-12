@@ -34,6 +34,7 @@ public class StepCanvas : MonoBehaviour
 
     //setting up variables used for steps
     private Text thisText;
+    private Text ingred;
     private int step_number=0;
     private string videoURL; 
     //private List<String> URLs;
@@ -51,6 +52,7 @@ public class StepCanvas : MonoBehaviour
     private String niceTime; 
     private bool called = true;
     private bool firstUpdate= true; 
+    private int previousURL =0 ; 
  
     // Start is called before the first frame update
     void Start()
@@ -84,9 +86,11 @@ public class StepCanvas : MonoBehaviour
         thisText = GameObject.Find("Recipe step").GetComponent<Text>();
         UnityEngine.Debug.Log(thisText);
         countdown = GameObject.Find("Timer").GetComponent<Text>();
+        ingred= GameObject.Find("Ingredients").GetComponent<Text>();
         UnityEngine.Debug.Log(countdown);
         timeLeft = (float)(-1);
         canvas = GameObject.Find("Canvas");
+
     }
     
     void Update()
@@ -112,26 +116,16 @@ public class StepCanvas : MonoBehaviour
         
     //UnityEngine.Debug.Log("Before First If Statement");
     if(GetOkay() && RecipeInfo.RecipeVar != null && step_number < (RecipeInfo.RecipeVar.steps.Count - 1)) {
-           UnityEngine.Debug.Log("Inside first if statement");
-           // UnityEngine.Debug.Log("NewObj" + canvas.Find("NewURLObj"));
-           // UnityEngine.Debug.Log("NewImage" +canvas.Find("NewImage"));
 
-           RawImage image = (RawImage)FindObjectOfType(typeof(RawImage));
-           UnityEngine.Debug.Log("NewImage" +image);
+           List<RawImage> SceneObject = new List<RawImage>();
+           foreach (RawImage go in Resources.FindObjectsOfTypeAll(typeof(RawImage)) as RawImage[]){
+           	RawImage image = go as RawImage; 
+           	Destroy(image);
+           	yCoord=-20;
 
-
-
-           // while (image){
-           //  Destroy(image);
-           //  yCoord=-20;
-           //  image = (RawImage)FindObjectOfType(typeof(RawImage));
-           // }
-
-           if (image){
-            UnityEngine.Debug.Log("Inside first if statement 2");
-            Destroy(image);
-            yCoord=-20;
            }
+           ingred.text ="";
+
            
            
            step_number += 1;
@@ -156,7 +150,6 @@ public class StepCanvas : MonoBehaviour
       }
       else
       {
-           UnityEngine.Debug.Log("trying to call and set variables");
             
            if (!called)
            {
@@ -204,18 +197,30 @@ public class StepCanvas : MonoBehaviour
        // if (URLs!= Null){
          foreach (string currentURL in URLs)
          {
-              // UnityEngine.Debug.Log("each URL string1 " + currentURL);
               // int length = currentURL.Length;
               // string currentURLcorrected = currentURL.Substring(1, -2);
               
               if (firstUpdate){
+
               // string currentURLcorrected = currentURL.Replace("\"","");
               string currentURLcorrected;
               currentURLcorrected = currentURL;
               int length = currentURLcorrected.Length;
-              if (length !=0){
-               currentURLcorrected = currentURLcorrected.Substring(1,  length-2 );
-              UnityEngine.Debug.Log("each URL string2 " + currentURLcorrected);
+              if (length >0){
+                ingred.text ="Ingredients:";
+
+              	int start = 0;
+              	int end = length; 
+              	if(currentURLcorrected[0]== ','){
+              		start =2;
+              	}
+              	if(currentURLcorrected[length-1]!='g'){
+              		end = length-1;   
+              	}
+                end = end - start;
+              	currentURLcorrected = currentURLcorrected.Substring(start, end);
+
+
               GameObject NewURLObj = new GameObject(); //Create the GameObject
               RawImage NewImage = NewURLObj.AddComponent<RawImage>(); //Add the Image Component script
               NewImage.transform.SetParent(canvas.transform, false);
@@ -224,6 +229,7 @@ public class StepCanvas : MonoBehaviour
               yCoord = yCoord - 50;
               NewURLObj.SetActive(true); //Activate the GameObject
               StartCoroutine(GetTexture(currentURLcorrected, NewURLObj));
+              previousURL = previousURL+1 ;
             }
             }
 

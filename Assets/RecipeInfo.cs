@@ -86,7 +86,9 @@ public class RecipeInfo : MonoBehaviour
                     }
                     else{
                         Debug.Log("not empty");
-                        string [] splitCurrent = current.Split(char.Parse(","));
+                        // string [] splitCurrent = current.Split(char.Parse("\",\""));
+                        string[] delimiter = new string[] {"\",\""};
+                        string[] splitCurrent = current.Split(delimiter, StringSplitOptions.None);
                         Debug.Log(splitCurrent[0]);
                         List<string> add = new List<string>(splitCurrent);
                         Debug.Log("adding:" + add);
