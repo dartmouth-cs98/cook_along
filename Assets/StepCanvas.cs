@@ -113,19 +113,28 @@ public class StepCanvas : MonoBehaviour
         
         if (Instruction()){
             visible = true;
-            showStart = 7;
+            showStart = 4;
         }
 
-        if(timeLeft > 1 && timer_running)
+        if(timeLeft > 1)
         {
-        timeLeft = timeLeft - Time.deltaTime;
+            if (timer_running)
+            {
+                timeLeft = timeLeft - Time.deltaTime;
+            }
         
         hours = Mathf.FloorToInt(timeLeft / 3600F);
         minutes = Mathf.FloorToInt((timeLeft - (hours * 3600)) / 60F);
         seconds = Mathf.FloorToInt(timeLeft - (hours * 3600) - (minutes * 60));
         niceTime = String.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
         
-        countdown.text = ("" + niceTime); //Showing the Score on the Canvas
+        if (!timer_running)
+             {
+                 countdown.text = ("Open hand to start timer: " + niceTime);
+             }
+         else
+        {countdown.text = ("" + niceTime); //Showing the Score on the Canvas
+        }
         }
      
       //********* Work on Gesture Instructions **********
@@ -161,22 +170,23 @@ public class StepCanvas : MonoBehaviour
            step_number += 1;
            called = false;
            Hold(1);
-           
+
            List<RawImage> SceneObject = new List<RawImage>();
            foreach (RawImage go in Resources.FindObjectsOfTypeAll(typeof(RawImage)) as RawImage[]){
-           	RawImage image = go as RawImage; 
-           	Destroy(image);
-           	yCoord=-20;
+                RawImage image = go as RawImage; 
+                Destroy(image);
+                yCoord=-20;
            }
            ingred.text = "" ;
-           firstUpdate=true;
+           firstUpdate = true;
            
       } else if (GetDone()) {
            SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().name);
            SceneManager.LoadSceneAsync("Recipe Chooser");
       } else if (GetGesture(MLHands.Left, MLHandKeyPose.L) || GetGesture(MLHands.Right, MLHandKeyPose.L)) {
             step_number -= 1;
-            Hold(1);
+            Hold(1);    
+           firstUpdate = true;
       }
        
 
@@ -192,6 +202,7 @@ public class StepCanvas : MonoBehaviour
                timeLeft = (float)RecipeInfo.RecipeVar.steps[step_number].time;
                called = true;
                stepTime = timeLeft;
+               
            }
        
            thisText.text = RecipeInfo.RecipeVar.steps[step_number].instruction;
