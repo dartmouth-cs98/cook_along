@@ -26,8 +26,7 @@ public class StepCanvas : MonoBehaviour
     private int VidWidth = 450;
     public VideoPlayer videoPlayer;
     private List<List<string>> URLsList;
-    private List<string> URLs;
-    private GameObject canvas;  
+    private List<string> URLs; 
     private VideoSource videoSource;
     public Button b;
     public RawImage mesh;
@@ -251,8 +250,6 @@ public class StepCanvas : MonoBehaviour
         mesh.GetComponent<RectTransform>().sizeDelta= new Vector2(1000,1000);
         videoPlayer.url = videoURL;
         StartCoroutine(PlayVideo(Screen));
-
-
       }
 
 
