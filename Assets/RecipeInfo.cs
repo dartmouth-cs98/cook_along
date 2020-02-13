@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 using UnityEngine.XR.MagicLeap;
 
+
 public class RecipeInfo : MonoBehaviour
 {
     
@@ -37,15 +38,18 @@ public class RecipeInfo : MonoBehaviour
 
     IEnumerator getURLs()
     {
-        String url = "https://cookalong-api.herokuapp.com/recipes/allingredients/1";
+        Debug.Log("Getting URLs");
+        String url = "https://cookalong-api.herokuapp.com/recipes/allingredients/5e30abbce81c2b0004a7b204";
         if (!RecipeLoader.Recipe1Active)
         {
-            url = "https://cookalong-api.herokuapp.com/recipes/allingredients/2";
+            url = "https://cookalong-api.herokuapp.com/recipes/allingredients/5e30abc8e81c2b0004a7b205";
         }
         
         using (UnityWebRequest req = UnityWebRequest.Get(url))
         {
             yield return req.SendWebRequest();
+            Debug.Log("req:");
+            Debug.Log(req);
             
             if (req.isHttpError || req.isNetworkError)
             {
@@ -56,8 +60,58 @@ public class RecipeInfo : MonoBehaviour
             {
                 //check this json handling is correct
                 string result = req.downloadHandler.text;
-                List<List<string>> ingredientURLs = JsonUtility.FromJson<List<List<string>>>(result);
-                ingredientURLlistoflist = ingredientURLs;
+                Debug.Log(result);
+                int length = result.Length;
+                result = result.Substring(1,length -2 );
+                Debug.Log(result);
+                result = result.Replace("[","");
+                Debug.Log(result);
+                // string toParse = "{\"name\":\"something\",\"urls:\":" + result + "}";
+                string[] splitResult = result.Split(char.Parse("]"));
+                Debug.Log(splitResult[0]);
+                Debug.Log(splitResult[1]);
+                Debug.Log(splitResult[2]);
+                ingredientURLlistoflist = new List<List<string>>();
+
+                foreach (string current in splitResult){
+                    
+                    Debug.Log("current is" + current);
+                    if (String.IsNullOrEmpty(current) || current.Equals(",")){
+                        Debug.Log("empty 1");
+                        List<string> empty = new List<string>();
+                        // empty.Add(" ");
+                        Debug.Log("empty 2");
+                        ingredientURLlistoflist.Add(empty);
+                        Debug.Log("empty 3");
+                    }
+                    else{
+                        Debug.Log("not empty");
+                        // string [] splitCurrent = current.Split(char.Parse("\",\""));
+                        string[] delimiter = new string[] {"\",\""};
+                        string[] splitCurrent = current.Split(delimiter, StringSplitOptions.None);
+                        Debug.Log(splitCurrent[0]);
+                        List<string> add = new List<string>(splitCurrent);
+                        Debug.Log("adding:" + add);
+                        Debug.Log(add[0]);
+                        ingredientURLlistoflist.Add(add);
+
+                    }
+                    Debug.Log("outside");
+                    // else
+                    // {
+                    //     Debug.Log("inside empty" );
+                    //     List<string> empty = new List<string>();
+                    //     ingredientURLlistoflist.Add(empty);
+
+                    // }
+                }
+
+                Debug.Log("At the end");
+                Debug.Log(ingredientURLlistoflist);
+                // Urls ingredientURLs = JsonUtility.FromJson<Urls>(toParse);
+                // ingredientURLlistoflist = ingredientURLs;
+                // Debug.Log("ingredients URL lsit of list: ");
+                // Debug.Log(ingredientURLlistoflist.name);
             }
         }
     }

@@ -46,6 +46,21 @@ MonoBehaviour:
     enabled: 0
   - name: Occlusion
     enabled: 0
+<<<<<<< HEAD
+=======
+  - name: PowerInfo
+    enabled: 1
+  - name: RegisterBackgroundMusicService
+    enabled: 1
+  - name: ScreensProvider
+    enabled: 1
+  - name: SecureBrowserWindow
+    enabled: 1
+  - name: WifiStatusRead
+    enabled: 0
+  - name: WorldReconstruction
+    enabled: 1
+>>>>>>> cc023c8ab9d6c4b7aacd67b0e50b5e846cd8e18e
   - name: AddressBookRead
     enabled: 0
   - name: AddressBookWrite

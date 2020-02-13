@@ -36,4 +36,11 @@ public class RecipeStep {
     public int time;
 }
 
+[Serializable]
+public class Urls
+{
+    public string name;
+    public List<List<string>> urls;
+}
+
 

@@ -10,6 +10,7 @@ using System.Diagnostics;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR.MagicLeap;
 using System.IO;
+using System.Text;
 
 
 public class StepCanvas : MonoBehaviour
@@ -26,14 +27,15 @@ public class StepCanvas : MonoBehaviour
     public VideoPlayer videoPlayer;
     private List<List<string>> URLsList;
     private List<string> URLs;
-    private bool videoInstruction = false;
+    private GameObject canvas;  
     private VideoSource videoSource;
     public Button b;
     public RawImage mesh;
 
     //setting up variables used for steps
     private Text thisText;
-    private int step_number = 0;
+    private Text ingred;
+    private int step_number=0;
     private string videoURL; 
     //private List<String> URLs;
     private MLHandKeyPose[] gestures;   // Holds the different gestures we will look for
@@ -45,7 +47,7 @@ public class StepCanvas : MonoBehaviour
     private float timeLeft; //Seconds Overall
     private float stepTime; //Seconds to hold per step
     private Text countdown; //UI Text Object
-    private bool called = true; //used to make sure time is called only once per new step
+    private bool mycalled = true; //used to make sure time is called only once per new step
     private bool timer_running = false; //used to toggle start and stop for timer
     // variables used for styling the display of time into hh:mm:ss
     private int hours;
@@ -57,6 +59,9 @@ public class StepCanvas : MonoBehaviour
     private Text ges_instructions;
     private bool visible = false;
     private float showStart;
+    
+    private bool firstUpdate= true; 
+    private int previousURL =0 ; 
  
     // Start is called before the first frame update
     void Start()
@@ -64,16 +69,11 @@ public class StepCanvas : MonoBehaviour
         canvas = GameObject.Find("Canvas");
         //UnityEngine.Debug.Log("Started");
         yCoord=-20;
-        xCoord= 210;
-        //UnityEngine.Debug.Log("Before URL List");
-        //URLsList= RecipeInfo.ingredientURLlistoflist;
-        //URLs=URLsList[0];
-        
-        
-        
-        // URLs.Add("https://food.fnr.sndimg.com/content/dam/images/food/fullset/2012/2/24/0/ZB0202H_classic-american-grilled-cheese_s4x3.jpg.rend.hgtvcom.616.462.suffix/1371603614279.jpeg");
-        // URLs.Add("https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/299/299147/cheese-varieties.jpg?w=1155&h=1537");
-        //UnityEngine.Debug.Log("Before Video URL");
+        xCoord= 210;        
+        URLsList= RecipeInfo.ingredientURLlistoflist;
+        UnityEngine.Debug.Log("After URL List");
+        //UnityEngine.Debug.Log(URLsList);
+        URLs=URLsList[0];
         videoURL= RecipeInfo.RecipeVar.steps[step_number].videoUrl;
 
         //UnityEngine.Debug.Log("Before ML Hands");
@@ -92,10 +92,9 @@ public class StepCanvas : MonoBehaviour
         //UnityEngine.Debug.Log(thisText);
         countdown = GameObject.Find("Timer").GetComponent<Text>();
         ges_instructions = GameObject.Find("Gesture instruction").GetComponent<Text>();
-       
+        ingred= GameObject.Find("Ingredients").GetComponent<Text>();
         //UnityEngine.Debug.Log(countdown);
         timeLeft = (float)(-1);
-        
     }
     
     
@@ -182,10 +181,20 @@ public class StepCanvas : MonoBehaviour
      //********** Work on Recipe Step Change ********** 
     //UnityEngine.Debug.Log("Before First If Statement");
     if(GetOkay() && RecipeInfo.RecipeVar != null && step_number < (RecipeInfo.RecipeVar.steps.Count - 1)) {
+
+           List<RawImage> SceneObject = new List<RawImage>();
+           foreach (RawImage go in Resources.FindObjectsOfTypeAll(typeof(RawImage)) as RawImage[]){
+           	RawImage image = go as RawImage; 
+           	Destroy(image);
+           	yCoord=-20;
+
+           }
+           ingred.text ="";
            step_number += 1;
-           called = false;
+           mycalled = false;
            Hold(1);
-           //UnityEngine.Debug.Log("Inside first if statement");
+           firstUpdate=true;
+           
       } else if (GetDone()) {
            SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().name);
            SceneManager.LoadSceneAsync("Recipe Chooser");
@@ -204,13 +213,11 @@ public class StepCanvas : MonoBehaviour
           thisText.text = "No recipe downloaded at the moment";
       }
       else
-      {
-           //UnityEngine.Debug.Log("trying to call and set variables");
-            
-           if (!called)
+      {     
+           if (!mycalled)
            {
                timeLeft = (float)RecipeInfo.RecipeVar.steps[step_number].time;
-               called = true;
+               mycalled = true;
                stepTime = timeLeft;
            }
            //UnityEngine.Debug.Log("timeLeft is:" +timeLeft);
@@ -229,9 +236,9 @@ public class StepCanvas : MonoBehaviour
            
       }
 
-       
-      //********** Work on Video ********** 
-      if (videoInstruction){
+     //********** Work on Video **********  //Ask reica
+      //if (videoInstruction){
+      if (false) {
         GameObject NewObj = new GameObject(); //Create the GameObject
         RawImage Screen = NewObj.AddComponent<RawImage>(); //Add the Image Component script
         Screen.transform.SetParent(canvas.transform,false);
@@ -245,22 +252,53 @@ public class StepCanvas : MonoBehaviour
         videoPlayer.url = videoURL;
         StartCoroutine(PlayVideo(Screen));
 
+
       }
 
 
-       //********** Work on Ingrdient Images ********** 
-      
-       foreach (string currentURL in URLs)
-       {
-            GameObject NewObj = new GameObject(); //Create the GameObject
-            RawImage NewImage = NewObj.AddComponent<RawImage>(); //Add the Image Component script
-            NewImage.transform.SetParent(canvas.transform, false);
-            NewObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(xCoord, yCoord, 0);
-            NewObj.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
-            yCoord = yCoord - 50;
-            NewObj.SetActive(true); //Activate the GameObject
-            StartCoroutine(GetTexture(currentURL, NewObj));
-       }
+       
+       // if (URLs!= Null){
+         foreach (string currentURL in URLs)
+         {
+              // int length = currentURL.Length;
+              // string currentURLcorrected = currentURL.Substring(1, -2);
+              
+              if (firstUpdate){
+
+              // string currentURLcorrected = currentURL.Replace("\"","");
+              string currentURLcorrected;
+              currentURLcorrected = currentURL;
+              int length = currentURLcorrected.Length;
+              if (length >0){
+                ingred.text ="Ingredients:";
+
+              	int start = 0;
+              	int end = length; 
+              	if(currentURLcorrected[0]== ','){
+              		start =2;
+              	}
+              	if(currentURLcorrected[length-1]!='g'){
+              		end = length-1;   
+              	}
+                end = end - start;
+              	currentURLcorrected = currentURLcorrected.Substring(start, end);
+
+
+              GameObject NewURLObj = new GameObject(); //Create the GameObject
+              RawImage NewImage = NewURLObj.AddComponent<RawImage>(); //Add the Image Component script
+              NewImage.transform.SetParent(canvas.transform, false);
+              NewURLObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(xCoord, yCoord, 0);
+              NewURLObj.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
+              yCoord = yCoord - 50;
+              NewURLObj.SetActive(true); //Activate the GameObject
+              StartCoroutine(GetTexture(currentURLcorrected, NewURLObj));
+              previousURL = previousURL+1 ;
+            }
+            }
+
+         }
+         firstUpdate=false;
+        // }
        
     }
     
