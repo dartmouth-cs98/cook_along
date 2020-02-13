@@ -130,7 +130,7 @@ public class StepCanvas : MonoBehaviour
         
         if (!timer_running)
              {
-                 countdown.text = ("Open hand to start timer: " + niceTime);
+                 countdown.text = ("Open hand to start/stop timer: " + niceTime);
              }
          else
         {countdown.text = ("" + niceTime); //Showing the Score on the Canvas
@@ -201,8 +201,8 @@ public class StepCanvas : MonoBehaviour
            {
                timeLeft = (float)RecipeInfo.RecipeVar.steps[step_number].time;
                called = true;
-               stepTime = timeLeft;
-               
+               stepTime = timeLeft;    
+               countdown.text = ("");
            }
        
            thisText.text = RecipeInfo.RecipeVar.steps[step_number].instruction;
