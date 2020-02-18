@@ -1763,7 +1763,7 @@ MonoBehaviour:
   OnTriggerDown:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: 0b50c291a3ba64ac3a810d7707da71e5, type: 3}
+      - m_Target: {fileID: 11500000, guid: 8e689ed757ed24ab0a5d6db5d81b21a3, type: 3}
         m_MethodName: 
         m_Mode: 1
         m_Arguments:
@@ -1879,7 +1879,7 @@ MonoBehaviour:
   OnSwipe:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: 0b50c291a3ba64ac3a810d7707da71e5, type: 3}
+      - m_Target: {fileID: 11500000, guid: 8e689ed757ed24ab0a5d6db5d81b21a3, type: 3}
         m_MethodName: 
         m_Mode: 1
         m_Arguments:
