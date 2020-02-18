@@ -20,8 +20,8 @@ public class StepCanvas : MonoBehaviour
     //Setting up Variables used for video
 	public int yCoord;
     public int xCoord;
-    private int height=50;
-    private int width=50;
+    private int height=75;
+    private int width=75;
     private int VidHeight =250;
     private int VidWidth = 450;
     public VideoPlayer videoPlayer;
@@ -185,6 +185,12 @@ public class StepCanvas : MonoBehaviour
            Loader.Load(Loader.Scene.RecipeChooser);
       } else if (GetGesture(MLHands.Left, MLHandKeyPose.L) || GetGesture(MLHands.Right, MLHandKeyPose.L)) {
             step_number -= 1;
+            foreach (RawImage go in Resources.FindObjectsOfTypeAll(typeof(RawImage)) as RawImage[]){
+                RawImage image = go as RawImage; 
+                Destroy(image);
+                yCoord=-20;
+           }
+           ingred.text = "" ;
             Hold(1);    
            firstUpdate = true;
       }
@@ -259,7 +265,7 @@ public class StepCanvas : MonoBehaviour
               NewImage.transform.SetParent(canvas.transform, false);
               NewURLObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(xCoord, yCoord, 0);
               NewURLObj.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
-              yCoord = yCoord - 50;
+              yCoord = yCoord - 75;
               NewURLObj.SetActive(true); //Activate the GameObject
               StartCoroutine(GetTexture(currentURLcorrected, NewURLObj));
               previousURL = previousURL+1 ;
