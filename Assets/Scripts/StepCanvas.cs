@@ -27,8 +27,8 @@ public class StepCanvas : MonoBehaviour
     public VideoPlayer videoPlayer;
     private List<List<string>> URLsList;
     private List<string> URLs; 
-    private VideoSource videoSource;
-    public Button b;
+    // private VideoSource videoSource;
+    // public Button b;
     public RawImage mesh;
 
     //setting up variables used for steps
@@ -61,6 +61,7 @@ public class StepCanvas : MonoBehaviour
     
     private bool firstUpdate= true; 
     private int previousURL =0 ; 
+    private bool firstvideo =true; 
  
     // Start is called before the first frame update
     void Start()
@@ -73,13 +74,14 @@ public class StepCanvas : MonoBehaviour
         videoURL= RecipeInformation.RecipeVar.steps[step_number].videoUrl;
 
         MLHands.Start();
-        gestures = new MLHandKeyPose[6];
+        gestures = new MLHandKeyPose[7];
         gestures[0] = MLHandKeyPose.Ok;
         gestures[1] = MLHandKeyPose.Thumb;
         gestures[2] = MLHandKeyPose.L;
 		gestures[3] = MLHandKeyPose.OpenHand;
 		gestures[4] = MLHandKeyPose.Pinch;
 		gestures[5] = MLHandKeyPose.Finger;
+     gestures[6]= MLHandKeyPose.Fist;
         MLHands.KeyPoseManager.EnableKeyPoses(gestures, true, false);
 
         thisText = GameObject.Find("Recipe step").GetComponent<Text>();
@@ -179,6 +181,7 @@ public class StepCanvas : MonoBehaviour
            }
            ingred.text = "" ;
            firstUpdate = true;
+           firstvideo=true;
            
       } else if (GetDone()) {
            SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().name);
@@ -193,6 +196,20 @@ public class StepCanvas : MonoBehaviour
            ingred.text = "" ;
             Hold(1);    
            firstUpdate = true;
+           firstvideo=true;
+      }
+      else if (GetGesture(MLHands.Left,MLHandKeyPose.Fist) || GetGesture(MLHands.Right,MLHandKeyPose.Fist)){
+        UnityEngine.Debug.Log("inside fist");
+
+        if (videoPlayer.isPlaying){
+            videoPlayer.Pause();
+
+        }
+        else if (videoPlayer.isPaused){
+          videoPlayer.Play();
+        }
+        Hold(1); 
+
       }
        
 
@@ -219,19 +236,26 @@ public class StepCanvas : MonoBehaviour
 
      //********** Work on Video **********  //Ask 
       //if (videoInstruction){
-      if (false) {
-        GameObject NewObj = new GameObject(); //Create the GameObject
-        RawImage Screen = NewObj.AddComponent<RawImage>(); //Add the Image Component script
-        Screen.transform.SetParent(canvas.transform,false);
-        NewObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,0,0);
-        NewObj.GetComponent<RectTransform>().sizeDelta=new Vector2(VidWidth,VidHeight);
-        NewObj.SetActive(true); //Activate the GameObject
-        Application.runInBackground=true;
-        videoPlayer.source=VideoSource.Url;
-        b.image.rectTransform.sizeDelta= new Vector2(30,30);
-        mesh.GetComponent<RectTransform>().sizeDelta= new Vector2(1000,1000);
-        videoPlayer.url = videoURL;
-        StartCoroutine(PlayVideo(Screen));
+      string s1=""; 
+      string s2=null;
+      if (videoURL !=s1 & videoURL!=s2) {
+        if (firstvideo){
+          GameObject NewObj = new GameObject(); //Create the GameObject
+          RawImage Screen = NewObj.AddComponent<RawImage>(); //Add the Image Component script
+          Screen.transform.SetParent(canvas.transform,false);
+          NewObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,0,0);
+          NewObj.GetComponent<RectTransform>().sizeDelta=new Vector2(VidWidth,VidHeight);
+          NewObj.SetActive(true); //Activate the GameObject
+          Application.runInBackground=true;
+          videoPlayer=gameObject.AddComponent<VideoPlayer>();
+          videoPlayer.source=VideoSource.Url;
+          // UnityEngine.Debug.Log("URL is:" +  videoURL);
+          // videoPlayer.url = videoURL;
+          // videoPlayer.url ="https://www.dropbox.com/s/f5suv9je1vya4pd/3%20Ways%20To%20Chop%20Onions%20Like%20A%20Pro.mp4?dl=0";
+          videoPlayer.url ="https://www.radiantmediaplayer.com/media/bbb-360p.mp4"
+          StartCoroutine(PlayVideo(Screen));
+          firstvideo=false; 
+        }
       }
 
          foreach (string currentURL in URLs)
@@ -287,9 +311,12 @@ public class StepCanvas : MonoBehaviour
         
         while (!videoPlayer.isPrepared)
         {
+        UnityEngine.Debug.Log("preparing");
         yield return null;
+
         }
         rawImage.texture = videoPlayer.texture;
+        UnityEngine.Debug.Log("Inside PlayVideo");
         videoPlayer.Play();
 
     }
@@ -307,16 +334,16 @@ public class StepCanvas : MonoBehaviour
         
     }
 
-    public void TaskOnClick(){
+    // public void TaskOnClick(){
 
-        if (videoPlayer.isPlaying){
-            videoPlayer.Pause();
+    //     if (videoPlayer.isPlaying){
+    //         videoPlayer.Pause();
 
-        }
-        else{
-          videoPlayer.Play();
-        }
-    }
+    //     }
+    //     else{
+    //       videoPlayer.Play();
+    //     }
+    // }
 
     void onDestroy () {
         MLHands.Stop();
