@@ -17,15 +17,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/RecipeChooser.unity
     guid: 3dab30c44e24e43738fefa0c5a55986c
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/RecipeInformation.unity
     guid: a1dc9adbcf348450fa84466c24e6f8e1
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/StepDisplay.unity
     guid: d80d7b24b6f0948e4801692772090fbd
   - enabled: 1
     path: Assets/Scenes/Loading.unity
     guid: 00415f299c8fa457bb0263a389057468
+  - enabled: 1
+    path: Assets/Scenes/TutorialLanding.unity
+    guid: 70bcb07fa16be4ef6bd38a40727c80d6
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 2ba4dbd235ed941bb8fdb5a40ab00f22,
       type: 2}

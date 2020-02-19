@@ -4,6 +4,7 @@ using System.Net;
 using System;
 using System.IO;
 using System.Text;
+using MagicLeapTools;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -13,8 +14,9 @@ using UnityEngine.XR.MagicLeap;
 public class RecipeInformation : MonoBehaviour
 {
     
+    public ControlInput controlInput;
+    
     #region Private Variables
-    private ControllerConnectionHandler _controllerConnectionHandler;
     public static Recipe RecipeVar;
     private Text _title;
     private Text _ingredients;
@@ -23,23 +25,21 @@ public class RecipeInformation : MonoBehaviour
     int number_to_show = 6;
     #endregion
     
+    private void Awake()
+    {
+        controlInput.OnHomeButtonTap.AddListener(HandleHomeTap);
+    }
+    
+    
     // Start is called before the first frame update
     void Start()
     {
-
-        _controllerConnectionHandler = GetComponent<ControllerConnectionHandler>();
-        MLInput.OnControllerButtonUp += HandleOnButtonUp;
         StartCoroutine(GetRecipe(SetRecipeInfo));
     }
 
     // Update is called once per frame
     void Update()
     {
-    }
-
-    void OnDestroy()
-    {
-        MLInput.OnControllerButtonUp -= HandleOnButtonUp;
     }
 
     String GetIngredientString(List<RecipeIngredient> ingredients)
@@ -139,19 +139,9 @@ public class RecipeInformation : MonoBehaviour
             }
         }
     }
-
-    /// <summary>
-    /// Handles the event for button up.
-    /// </summary>
-    /// <param name="controller_id">The id of the controller.</param>
-    /// <param name="button">The button that is being released.</param>
-    private void HandleOnButtonUp(byte controllerId, MLInputControllerButton button)
+    
+    private void HandleHomeTap()
     {
-        MLInputController controller = _controllerConnectionHandler.ConnectedController;
-        if (controller != null && controller.Id == controllerId &&
-            button == MLInputControllerButton.HomeTap)
-        {
-            Loader.Load(Loader.Scene.RecipeChooser);
-        }
+        Loader.Load(Loader.Scene.RecipeChooser);
     }
 }
