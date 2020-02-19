@@ -16,48 +16,60 @@ MonoBehaviour:
   m_Privileges:
   - name: LowLatencyLightwear
     enabled: 1
+  - name: AddressBookBasicAccess
+    enabled: 0
   - name: BackgroundDownload
-    enabled: 0
+    enabled: 1
   - name: BackgroundUpload
-    enabled: 0
+    enabled: 1
   - name: BatteryInfo
+    enabled: 0
+  - name: BluetoothAdapterExternalApp
+    enabled: 0
+  - name: BluetoothAdapterUser
+    enabled: 0
+  - name: BluetoothGattWrite
     enabled: 0
   - name: ConnectBackgroundMusicService
     enabled: 0
   - name: ControllerPose
-    enabled: 0
+    enabled: 1
   - name: DrmCertificates
     enabled: 0
   - name: GesturesConfig
-    enabled: 0
+    enabled: 1
   - name: GesturesSubscribe
-    enabled: 0
+    enabled: 1
   - name: HandMesh
-    enabled: 0
+    enabled: 1
   - name: IdentityRead
     enabled: 0
   - name: InAppPurchase
     enabled: 0
   - name: Internet
-    enabled: 0
+    enabled: 1
   - name: MusicService
     enabled: 0
   - name: NormalNotificationsUsage
     enabled: 0
   - name: Occlusion
+    enabled: 1
+  - name: PcfRead
     enabled: 0
   - name: PowerInfo
-    enabled: 1
-  - name: RegisterBackgroundMusicService
-    enabled: 1
-  - name: ScreensProvider
-    enabled: 1
-  - name: SecureBrowserWindow
-    enabled: 1
-  - name: WifiStatusRead
     enabled: 0
-  - name: WorldReconstruction
+  - name: RegisterBackgroundMusicService
+    enabled: 0
+  - name: ScreensProvider
+    enabled: 0
+  - name: SecureBrowserWindow
+    enabled: 0
+  - name: SocialConnectionsInvitesAccess
+    enabled: 0
+  - name: WifiStatusRead
     enabled: 1
+  - name: WorldReconstruction
+    enabled: 0
   - name: AddressBookRead
     enabled: 0
   - name: AddressBookWrite
@@ -69,8 +81,12 @@ MonoBehaviour:
   - name: AudioRecognizer
     enabled: 0
   - name: CameraCapture
+    enabled: 1
+  - name: ComputerVision
+    enabled: 0
+  - name: FineLocation
+    enabled: 0
+  - name: VoiceInput
     enabled: 0
   - name: CoarseLocation
-    enabled: 0
-  - name: ComputerVision
     enabled: 0
