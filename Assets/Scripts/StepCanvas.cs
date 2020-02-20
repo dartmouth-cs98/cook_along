@@ -188,6 +188,8 @@ public class StepCanvas : MonoBehaviour
            Loader.Load(Loader.Scene.RecipeChooser);
       } else if (GetGesture(MLHands.Left, MLHandKeyPose.L) || GetGesture(MLHands.Right, MLHandKeyPose.L)) {
             step_number -= 1;
+            called = false;
+                     
             foreach (RawImage go in Resources.FindObjectsOfTypeAll(typeof(RawImage)) as RawImage[]){
                 RawImage image = go as RawImage; 
                 Destroy(image);
@@ -252,7 +254,7 @@ public class StepCanvas : MonoBehaviour
           // UnityEngine.Debug.Log("URL is:" +  videoURL);
           // videoPlayer.url = videoURL;
           // videoPlayer.url ="https://www.dropbox.com/s/f5suv9je1vya4pd/3%20Ways%20To%20Chop%20Onions%20Like%20A%20Pro.mp4?dl=0";
-          videoPlayer.url ="https://www.radiantmediaplayer.com/media/bbb-360p.mp4"
+          videoPlayer.url ="https://www.radiantmediaplayer.com/media/bbb-360p.mp4";
           StartCoroutine(PlayVideo(Screen));
           firstvideo=false; 
         }
