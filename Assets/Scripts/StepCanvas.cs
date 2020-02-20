@@ -115,7 +115,7 @@ public class StepCanvas : MonoBehaviour
         
         if (Instruction()){
             visible = true;
-            showStart = 4;
+            showStart = 7;
         }
 
         if(timeLeft > 1)
@@ -173,6 +173,7 @@ public class StepCanvas : MonoBehaviour
 
            step_number += 1;
            called = false;
+           visible = false;
            Hold(1);
 
            List<RawImage> SceneObject = new List<RawImage>();
@@ -191,6 +192,7 @@ public class StepCanvas : MonoBehaviour
       } else if (GetGesture(MLHands.Left, MLHandKeyPose.L) || GetGesture(MLHands.Right, MLHandKeyPose.L)) {
             step_number -= 1;
             called = false;
+            visible = false;
                      
             foreach (RawImage go in Resources.FindObjectsOfTypeAll(typeof(RawImage)) as RawImage[]){
                 RawImage image = go as RawImage; 
