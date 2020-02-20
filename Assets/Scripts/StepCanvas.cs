@@ -192,6 +192,8 @@ public class StepCanvas : MonoBehaviour
            Loader.Load(Loader.Scene.RecipeChooser);
       } else if (GetGesture(MLHands.Left, MLHandKeyPose.L) || GetGesture(MLHands.Right, MLHandKeyPose.L)) {
             step_number -= 1;
+            called = false;
+                     
             foreach (RawImage go in Resources.FindObjectsOfTypeAll(typeof(RawImage)) as RawImage[]){
                 RawImage image = go as RawImage; 
                 Destroy(image);
