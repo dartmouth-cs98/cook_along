@@ -254,7 +254,7 @@ public class StepCanvas : MonoBehaviour
           // UnityEngine.Debug.Log("URL is:" +  videoURL);
           // videoPlayer.url = videoURL;
           // videoPlayer.url ="https://www.dropbox.com/s/f5suv9je1vya4pd/3%20Ways%20To%20Chop%20Onions%20Like%20A%20Pro.mp4?dl=0";
-          videoPlayer.url ="https://www.radiantmediaplayer.com/media/bbb-360p.mp4"
+          videoPlayer.url ="https://www.radiantmediaplayer.com/media/bbb-360p.mp4";
           StartCoroutine(PlayVideo(Screen));
           firstvideo=false; 
         }
