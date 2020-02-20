@@ -151,7 +151,9 @@ public class StepCanvas : MonoBehaviour
                                       Environment.NewLine +
                                       "Open Hand: Start/Stop Timer" +
                                       Environment.NewLine +
-                                      "Pinch: Reset Timer";
+                                      "Pinch: Reset Timer" +
+                                      Environment.NewLine +
+                                      "Closed Fist: Start/Stop Video";
                                       
           showStart = showStart - Time.deltaTime; 
                                   
