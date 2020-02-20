@@ -143,13 +143,13 @@ public class StepCanvas : MonoBehaviour
       if(visible){
           
          ges_instructions.GetComponent<RectTransform>().sizeDelta=new Vector2(300,300);
-         ges_instructions.text = "Thumbs Up:  go to next step" + 
+         ges_instructions.text = "Thumbs Up: go to next step" + 
                                       Environment.NewLine +
                                       "L Gesture: go back a step" +
                                       Environment.NewLine +
                                       "Ok Gesture: go back to recipe chooser" +
                                       Environment.NewLine +
-                                      "Open Hand: Start/Stop Timer" +
+                                      "High Five: Start/Stop Timer" +
                                       Environment.NewLine +
                                       "Pinch: Reset Timer" +
                                       Environment.NewLine +
