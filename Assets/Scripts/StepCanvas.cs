@@ -6,116 +6,329 @@ using UnityEngine.UI;
 using System;
 using UnityEngine.Video;
 using UnityEngine.EventSystems;
+using System.Diagnostics;
+using UnityEngine.SceneManagement;
+using UnityEngine.XR.MagicLeap;
+using System.IO;
+using System.Text;
 
 
 public class StepCanvas : MonoBehaviour
 {
+    private GameObject canvas;
 
+    //Setting up Variables used for video
 	public int yCoord;
     public int xCoord;
+    private int height=75;
+    private int width=75;
+    private int VidHeight =250;
+    private int VidWidth = 450;
     public VideoPlayer videoPlayer;
-    private List<string> URLs = new List<string>();
-    private GameObject canvas;  
-    private bool videoInstruction = true;
-    private VideoSource videoSource;
-    public Button b;
+    private List<List<string>> URLsList;
+    private List<string> URLs; 
+    // private VideoSource videoSource;
+    // public Button b;
     public RawImage mesh;
 
+    //setting up variables used for steps
+    private Text thisText;
+    private Text ingred;
+    private int step_number=0;
+    private string videoURL; 
+    //private List<String> URLs;
+    private MLHandKeyPose[] gestures;   // Holds the different gestures we will look for
+    private AssetBundle myLoadedAssetBundle;
+    int numsteps;
 
-    // Start is called before the first frame update
-    //Timer work below under contruction
 
-    public float timeLeft; //Seconds Overall
-    public Text countdown; //UI Text Object
-    public int hours;
-    public int minutes;
-    public int seconds;
-    public String niceTime; 
+    //setting up variables used for timer
+    private float timeLeft; //Seconds Overall
+    private float stepTime; //Seconds to hold per step
+    private Text countdown; //UI Text Object
+    private bool called = true; //used to make sure time is called only once per new step
+    private bool timer_running = false; //used to toggle start and stop for timer
+    // variables used for styling the display of time into hh:mm:ss
+    private int hours;
+    private int minutes;
+    private int seconds;
+    private String niceTime; 
+    
+    //variables for ingredient instuctions
+    private Text ges_instructions;
+    private bool visible = false;
+    private float showStart;
+    
+    private bool firstUpdate= true; 
+    private int previousURL =0 ; 
+    private bool firstvideo =true; 
  
-
+    // Start is called before the first frame update
     void Start()
     {
-        yCoord=-20;
-        xCoord= 210;
-        int height=50;
-        int width=50;
-        int VidHeight =250;
-        int VidWidth =450;
-        URLs.Add("https://food.fnr.sndimg.com/content/dam/images/food/fullset/2012/2/24/0/ZB0202H_classic-american-grilled-cheese_s4x3.jpg.rend.hgtvcom.616.462.suffix/1371603614279.jpeg");
-        URLs.Add("https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/299/299147/cheese-varieties.jpg?w=1155&h=1537");
-
         canvas = GameObject.Find("Canvas");
-        foreach (string currentURL in URLs)
-        {
-            GameObject NewObj = new GameObject(); //Create the GameObject
-            RawImage NewImage = NewObj.AddComponent<RawImage>(); //Add the Image Component script
-            NewImage.transform.SetParent(canvas.transform, false);
-            NewObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(xCoord, yCoord, 0);
-            NewObj.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
-            yCoord = yCoord - 50;
-            NewObj.SetActive(true); //Activate the GameObject
-            StartCoroutine(GetTexture(currentURL, NewObj));
-        }
+        yCoord=-20;
+        xCoord= 210;        
+        URLsList= RecipeInformation.ingredientURLlistoflist;
+        URLs=URLsList[0];
+        videoURL= RecipeInformation.RecipeVar.steps[step_number].videoUrl;
 
+        MLHands.Start();
+        gestures = new MLHandKeyPose[7];
+        gestures[0] = MLHandKeyPose.Ok;
+        gestures[1] = MLHandKeyPose.Thumb;
+        gestures[2] = MLHandKeyPose.L;
+		gestures[3] = MLHandKeyPose.OpenHand;
+		gestures[4] = MLHandKeyPose.Pinch;
+		gestures[5] = MLHandKeyPose.Finger;
+     gestures[6]= MLHandKeyPose.Fist;
+        MLHands.KeyPoseManager.EnableKeyPoses(gestures, true, false);
+
+        thisText = GameObject.Find("Recipe step").GetComponent<Text>();
         countdown = GameObject.Find("Timer").GetComponent<Text>();
-        timeLeft = 120;
-
-        if (videoInstruction){
-            GameObject NewObj = new GameObject(); //Create the GameObject
-            RawImage Screen = NewObj.AddComponent<RawImage>(); //Add the Image Component script
-            Screen.transform.SetParent(canvas.transform,false);
-            NewObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,0,0);
-            NewObj.GetComponent<RectTransform>().sizeDelta=new Vector2(VidWidth,VidHeight);
-            NewObj.SetActive(true); //Activate the GameObject
-         Application.runInBackground=true;
-          videoPlayer.source=VideoSource.Url;
-          b.image.rectTransform.sizeDelta= new Vector2(30,30);
-          mesh.GetComponent<RectTransform>().sizeDelta= new Vector2(1000,1000);
-
-          videoPlayer.url = "https:/dl.dropbox.com/s/f5suv9je1vya4pd/3%20Ways%20To%20Chop%20Onions%20Like%20A%20Pro.mp4?dl=1";
-          StartCoroutine(PlayVideo(Screen));
-
-        }
-
+        ges_instructions = GameObject.Find("Gesture instruction").GetComponent<Text>();
+        ingred= GameObject.Find("Ingredients").GetComponent<Text>();
+        timeLeft = (float)(-1);
     }
     
+    
+    //********** Update ********** 
     void Update()
     {
-        Debug.Log("In Update");
-        timeLeft = timeLeft - Time.deltaTime;
-        //Debug.Log(timeLeft);
+         //********* Work on Timer **********
+        if(Time_Switch()){
+        	if(timer_running){
+        		timer_running = false;
+        	}
+        	else{
+        		timer_running = true;
+        	}
+        	Hold(1);
+        }
+
+        if(Time_Reset()){
+        	timer_running = false;
+        	countdown.text = ("");
+        	timeLeft = stepTime;
+        	Hold(1);
+        }
         
-        //yield return ("it works"); new WaitForSeconds(1.0f);
+        if (Instruction()){
+            visible = true;
+            showStart = 4;
+        }
+
+        if(timeLeft > 1)
+        {
+            if (timer_running)
+            {
+                timeLeft = timeLeft - Time.deltaTime;
+            }
+        
         hours = Mathf.FloorToInt(timeLeft / 3600F);
-        minutes = Mathf.FloorToInt((timeLeft - (hours*3600)) / 60F);
+        minutes = Mathf.FloorToInt((timeLeft - (hours * 3600)) / 60F);
         seconds = Mathf.FloorToInt(timeLeft - (hours * 3600) - (minutes * 60));
         niceTime = String.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
         
-        countdown.text = ("" + niceTime); //Showing the Score on the Canvas
+        if (!timer_running)
+             {
+                 countdown.text = ("Open hand to start/stop timer: " + niceTime);
+             }
+         else
+        {countdown.text = ("" + niceTime); //Showing the Score on the Canvas
+        }
+        }
+     
+      //********* Work on Gesture Instructions **********
+      if(visible){
+          
+         ges_instructions.GetComponent<RectTransform>().sizeDelta=new Vector2(300,300);
+         ges_instructions.text = "Thumbs Up:  go to next step" + 
+                                      Environment.NewLine +
+                                      "L Gesture: go back a step" +
+                                      Environment.NewLine +
+                                      "Ok Gesture: go back to recipe chooser" +
+                                      Environment.NewLine +
+                                      "Open Hand: Start/Stop Timer" +
+                                      Environment.NewLine +
+                                      "Pinch: Reset Timer";
+                                      
+          showStart = showStart - Time.deltaTime; 
+                                  
+          if(showStart < 0){
+             visible = false;
+             ges_instructions.GetComponent<RectTransform>().sizeDelta=new Vector2(300,30);
+          }
+          
+       }else{
+        ges_instructions.text = "Point up to see list of actions";
+       }
+      
 
+     
+     //********** Work on Recipe Step Change ********** 
+   if(GetOkay() && RecipeInformation.RecipeVar != null && step_number < (RecipeInformation.RecipeVar.steps.Count - 1)) {
+
+           step_number += 1;
+           called = false;
+           Hold(1);
+
+           List<RawImage> SceneObject = new List<RawImage>();
+           foreach (RawImage go in Resources.FindObjectsOfTypeAll(typeof(RawImage)) as RawImage[]){
+                RawImage image = go as RawImage; 
+                Destroy(image);
+                yCoord=-20;
+           }
+           ingred.text = "" ;
+           firstUpdate = true;
+           firstvideo=true;
+           
+      } else if (GetDone()) {
+           SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().name);
+           Loader.Load(Loader.Scene.RecipeChooser);
+      } else if (GetGesture(MLHands.Left, MLHandKeyPose.L) || GetGesture(MLHands.Right, MLHandKeyPose.L)) {
+            step_number -= 1;
+            called = false;
+                     
+            foreach (RawImage go in Resources.FindObjectsOfTypeAll(typeof(RawImage)) as RawImage[]){
+                RawImage image = go as RawImage; 
+                Destroy(image);
+                yCoord=-20;
+           }
+           ingred.text = "" ;
+            Hold(1);    
+           firstUpdate = true;
+           firstvideo=true;
+      }
+      else if (GetGesture(MLHands.Left,MLHandKeyPose.Fist) || GetGesture(MLHands.Right,MLHandKeyPose.Fist)){
+        UnityEngine.Debug.Log("inside fist");
+
+        if (videoPlayer.isPlaying){
+            videoPlayer.Pause();
+
+        }
+        else if (videoPlayer.isPaused){
+          videoPlayer.Play();
+        }
+        Hold(1); 
+
+      }
+       
+
+      //********** Work on Populating Recipe ********** 
+      if (RecipeInformation.RecipeVar == null)
+      {
+          thisText.text = "No recipe downloaded at the moment";
+      }
+      else
+      {     
+           if (!called)
+           {
+               timeLeft = (float)RecipeInformation.RecipeVar.steps[step_number].time;
+               called = true;
+               stepTime = timeLeft;    
+               countdown.text = ("");
+           }
+       
+           thisText.text = RecipeInformation.RecipeVar.steps[step_number].instruction;
+           videoURL= RecipeInformation.RecipeVar.steps[step_number].videoUrl;
+           URLs=URLsList[step_number]; 
+           
+      }
+
+     //********** Work on Video **********  //Ask 
+      //if (videoInstruction){
+      string s1=""; 
+      string s2=null;
+      if (videoURL !=s1 & videoURL!=s2) {
+        if (firstvideo){
+          GameObject NewObj = new GameObject(); //Create the GameObject
+          RawImage Screen = NewObj.AddComponent<RawImage>(); //Add the Image Component script
+          Screen.transform.SetParent(canvas.transform,false);
+          NewObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,0,0);
+          NewObj.GetComponent<RectTransform>().sizeDelta=new Vector2(VidWidth,VidHeight);
+          NewObj.SetActive(true); //Activate the GameObject
+          Application.runInBackground=true;
+          videoPlayer=gameObject.AddComponent<VideoPlayer>();
+          videoPlayer.source=VideoSource.Url;
+          // UnityEngine.Debug.Log("URL is:" +  videoURL);
+          // videoPlayer.url = videoURL;
+          // videoPlayer.url ="https://www.dropbox.com/s/f5suv9je1vya4pd/3%20Ways%20To%20Chop%20Onions%20Like%20A%20Pro.mp4?dl=0";
+          videoPlayer.url ="https://www.radiantmediaplayer.com/media/bbb-360p.mp4";
+          StartCoroutine(PlayVideo(Screen));
+          firstvideo=false; 
+        }
+      }
+
+         foreach (string currentURL in URLs)
+         {
+              // int length = currentURL.Length;
+              // string currentURLcorrected = currentURL.Substring(1, -2);
+              
+              if (firstUpdate){
+
+              // string currentURLcorrected = currentURL.Replace("\"","");
+              string currentURLcorrected;
+              currentURLcorrected = currentURL;
+              int length = currentURLcorrected.Length;
+              if (length >0){
+                ingred.text ="Ingredients:";
+
+              	int start = 0;
+              	int end = length; 
+              	if(currentURLcorrected[0]== ','){
+              		start =2;
+              	}
+              	if(currentURLcorrected[length-1]!='g'){
+              		end = length-1;   
+              	}
+                end = end - start;
+              	currentURLcorrected = currentURLcorrected.Substring(start, end);
+
+
+              GameObject NewURLObj = new GameObject(); //Create the GameObject
+              RawImage NewImage = NewURLObj.AddComponent<RawImage>(); //Add the Image Component script
+              NewImage.transform.SetParent(canvas.transform, false);
+              NewURLObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(xCoord, yCoord, 0);
+              NewURLObj.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
+              yCoord = yCoord - 75;
+              NewURLObj.SetActive(true); //Activate the GameObject
+              StartCoroutine(GetTexture(currentURLcorrected, NewURLObj));
+              previousURL = previousURL+1 ;
+            }
+            }
+
+         }
+         firstUpdate=false;
+       
     }
     
 
-      IEnumerator PlayVideo(RawImage rawImage)
-     {
-          videoPlayer.playOnAwake=false;
-          videoPlayer.Prepare();
-          
-          while (!videoPlayer.isPrepared)
-          {
-            yield return null;
-          }
-          rawImage.texture = videoPlayer.texture;
-          videoPlayer.Play();
 
-     }
+    //********** Helper Functions ********** 
+    IEnumerator PlayVideo(RawImage rawImage)
+    {
+        videoPlayer.playOnAwake=false;
+        videoPlayer.Prepare();
+        
+        while (!videoPlayer.isPrepared)
+        {
+        UnityEngine.Debug.Log("preparing");
+        yield return null;
+
+        }
+        rawImage.texture = videoPlayer.texture;
+        UnityEngine.Debug.Log("Inside PlayVideo");
+        videoPlayer.Play();
+
+    }
 
     IEnumerator GetTexture(string thisURL, GameObject currrentImage) {
         UnityWebRequest www = UnityWebRequestTexture.GetTexture(thisURL);
     	yield return www.SendWebRequest();
 
         if(www.isNetworkError) {
-            Debug.Log(www.error);
+           UnityEngine.Debug.Log(www.error);
         }
         else {
             currrentImage.GetComponent<RawImage>().texture = DownloadHandlerTexture.GetContent(www);
@@ -123,15 +336,93 @@ public class StepCanvas : MonoBehaviour
         
     }
 
-    public void TaskOnClick(){
+    // public void TaskOnClick(){
 
-        if (videoPlayer.isPlaying){
-            videoPlayer.Pause();
+    //     if (videoPlayer.isPlaying){
+    //         videoPlayer.Pause();
 
-        }
-        else{
-          videoPlayer.Play();
-        }
+    //     }
+    //     else{
+    //       videoPlayer.Play();
+    //     }
+    // }
+
+    void onDestroy () {
+        MLHands.Stop();
     }
+    
+    bool GetGesture(MLHand hand, MLHandKeyPose type) {
+        if (hand != null) {
+            if (hand.KeyPose == type) {
+                if (hand.KeyPoseConfidence > 0.9f) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    
+    //********** Gesture Recognition Boolean Functions ********** 
+    bool GetOkay()
+    {
+        if (GetGesture(MLHands.Left, MLHandKeyPose.Thumb) || GetGesture(MLHands.Right, MLHandKeyPose.Thumb))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    bool Time_Switch()
+    {
+        if (GetGesture(MLHands.Left, MLHandKeyPose.OpenHand) || GetGesture(MLHands.Right, MLHandKeyPose.OpenHand))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    bool Time_Reset()
+    {
+        if (GetGesture(MLHands.Left, MLHandKeyPose.Pinch) || GetGesture(MLHands.Right, MLHandKeyPose.Pinch))
+        {
+            return true;
+        }
+
+        return false;
+    }
+    
+    bool Instruction()
+        {
+            if (GetGesture(MLHands.Left, MLHandKeyPose.Finger) || GetGesture(MLHands.Right, MLHandKeyPose.Finger))
+            {
+                return true;
+            }
+    
+            return false;
+        }
+
+    bool GetDone()
+   {
+       if (GetGesture(MLHands.Left, MLHandKeyPose.Ok) || GetGesture(MLHands.Right, MLHandKeyPose.Ok)) 
+       {
+           return true;
+       }
+
+       return false;
+   }
+
+   void Hold(int delay){
+       Stopwatch stopWatch = new Stopwatch();
+       stopWatch.Start();
+       float curr = stopWatch.ElapsedMilliseconds / 1000;
+       while (curr < delay)
+       {
+           curr = stopWatch.ElapsedMilliseconds / 1000;
+       }
+       stopWatch.Stop();
+   }
 
 }
