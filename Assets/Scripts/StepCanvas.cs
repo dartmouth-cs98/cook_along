@@ -115,6 +115,7 @@ public class StepCanvas : MonoBehaviour
         if (Instruction()){
             visible = true;
             showStart = 7;
+            Hold(1);
         }
 
         if(timeLeft > 1)
