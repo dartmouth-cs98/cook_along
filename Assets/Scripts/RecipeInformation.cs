@@ -18,6 +18,7 @@ public class RecipeInformation : MonoBehaviour
     
     #region Private Variables
     public static Recipe RecipeVar;
+    public static List<List<string>> ingredientURLlistoflist;
     private Text _title;
     private Text _ingredients;
     private Text _tools;
@@ -35,6 +36,52 @@ public class RecipeInformation : MonoBehaviour
     void Start()
     {
         StartCoroutine(GetRecipe(SetRecipeInfo));
+        StartCoroutine(getURLs());
+    }
+
+    IEnumerator getURLs()
+    {
+        Debug.Log("Getting URLs");
+        String url = "https://cookalong-api.herokuapp.com/recipes/allingredients/5e30abbce81c2b0004a7b204";
+        if (!RecipeChooser.Recipe1Active)
+        {
+            url = "https://cookalong-api.herokuapp.com/recipes/allingredients/5e30abc8e81c2b0004a7b205";
+        }
+        
+        using (UnityWebRequest req = UnityWebRequest.Get(url))
+        {
+            yield return req.SendWebRequest();
+
+            if (req.isHttpError || req.isNetworkError)
+            {
+                Debug.Log("HIT ERROR");
+                Debug.Log(req.error);
+            }
+            else
+            {
+                //check this json handling is correct
+                string result = req.downloadHandler.text;
+                int length = result.Length;
+                result = result.Substring(1,length -2 );
+                result = result.Replace("[","");
+                string[] splitResult = result.Split(char.Parse("]"));
+                ingredientURLlistoflist = new List<List<string>>();
+
+                foreach (string current in splitResult){
+                    if (String.IsNullOrEmpty(current) || current.Equals(",")){
+                        List<string> empty = new List<string>();
+                        ingredientURLlistoflist.Add(empty);
+                    }
+                    else{
+                        string[] delimiter = new string[] {"\",\""};
+                        string[] splitCurrent = current.Split(delimiter, StringSplitOptions.None);
+                        List<string> add = new List<string>(splitCurrent);
+                        ingredientURLlistoflist.Add(add);
+
+                    }
+                }
+            }
+        }
     }
 
     // Update is called once per frame
@@ -110,6 +157,7 @@ public class RecipeInformation : MonoBehaviour
         else {
             GameObject.Find("Recipe Photo").GetComponent<RawImage>().texture = DownloadHandlerTexture.GetContent(www);
         }
+
     }
 
     // https://www.red-gate.com/simple-talk/dotnet/c-programming/calling-restful-apis-unity3d/

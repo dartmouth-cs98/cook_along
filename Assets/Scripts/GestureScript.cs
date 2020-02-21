@@ -39,7 +39,7 @@ public class GestureScript : MonoBehaviour {
 			// unload active scene, then load recipe information
       		string scene = SceneManager.GetActiveScene().name;
             
-      		if (Equals(scene, "RecipeInformation"))
+      		if (Equals(scene, Loader.Scene.RecipeInformation.ToString()))
             {
 	            Loader.Load(Loader.Scene.StepDisplay);
         		Hold(1);

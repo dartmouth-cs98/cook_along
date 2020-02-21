@@ -729,7 +729,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 761123169}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b50c291a3ba64ac3a810d7707da71e5, type: 3}
+  m_Script: {fileID: 11500000, guid: 8e689ed757ed24ab0a5d6db5d81b21a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   controlInput: {fileID: 2110342379}
@@ -1205,7 +1205,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Use the touchpad to scroll between recipes.
 
-    Click the bumper to select'
+    Click the trigger to select a recipe'
 --- !u!222 &1165757138
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1762,7 +1762,18 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   OnTriggerDown:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11500000, guid: 8e689ed757ed24ab0a5d6db5d81b21a3, type: 3}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   OnDoubleTrigger:
@@ -1890,7 +1901,7 @@ MonoBehaviour:
   OnSwipe:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: 0b50c291a3ba64ac3a810d7707da71e5, type: 3}
+      - m_Target: {fileID: 11500000, guid: 8e689ed757ed24ab0a5d6db5d81b21a3, type: 3}
         m_MethodName: 
         m_Mode: 1
         m_Arguments:
