@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:ml="magicleap" ml:package="com.test.cookalong" ml:version_code="1" ml:version_name="">
+  <application ml:sdk_version="1" ml:visible_name="Cook Along" ml:min_api_level="4">
+    <component ml:binary_name="bin/Player.elf" ml:name=".fullscreen" ml:type="Fullscreen" ml:visible_name="Cook Along">
+      <icon ml:model_folder="Icon/Model" ml:portal_folder="Icon/Portal" />
+    </component>
+    <uses-privilege ml:name="LowLatencyLightwear" />
+    <uses-privilege ml:name="BackgroundDownload" />
+    <uses-privilege ml:name="BackgroundUpload" />
+    <uses-privilege ml:name="ControllerPose" />
+    <uses-privilege ml:name="GesturesConfig" />
+    <uses-privilege ml:name="GesturesSubscribe" />
+    <uses-privilege ml:name="HandMesh" />
+    <uses-privilege ml:name="Internet" />
+    <uses-privilege ml:name="Occlusion" />
+    <uses-privilege ml:name="WifiStatusRead" />
+    <uses-privilege ml:name="CameraCapture" />
+  </application>
+</manifest>
