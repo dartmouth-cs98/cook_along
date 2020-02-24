@@ -159,7 +159,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: X cal| Yhr Zmin
+  m_Text: X cal | Yhr Zmin
 --- !u!1 &7707406183852000432
 GameObject:
   m_ObjectHideFlags: 0
