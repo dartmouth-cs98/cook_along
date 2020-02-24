@@ -289,7 +289,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 159178639}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7eab7450c48ed499da46ad8280b0ac28, type: 3}
+  m_Script: {fileID: 11500000, guid: f939cfb3986744f9ea3da3d046e9ae83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   controlInput: {fileID: 1107156848}
@@ -549,18 +549,7 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   OnTriggerPressEnded:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11500000, guid: 7eab7450c48ed499da46ad8280b0ac28, type: 3}
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   OnTriggerHold:
@@ -576,7 +565,7 @@ MonoBehaviour:
   OnHomeButtonTap:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: 7eab7450c48ed499da46ad8280b0ac28, type: 3}
+      - m_Target: {fileID: 11500000, guid: f939cfb3986744f9ea3da3d046e9ae83, type: 3}
         m_MethodName: 
         m_Mode: 1
         m_Arguments:
@@ -611,18 +600,7 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   OnBumperHold:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11500000, guid: 7eab7450c48ed499da46ad8280b0ac28, type: 3}
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   OnTouchDown:
@@ -633,7 +611,7 @@ MonoBehaviour:
   OnDoubleTap:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: 7eab7450c48ed499da46ad8280b0ac28, type: 3}
+      - m_Target: {fileID: 11500000, guid: f939cfb3986744f9ea3da3d046e9ae83, type: 3}
         m_MethodName: 
         m_Mode: 1
         m_Arguments:
@@ -726,7 +704,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 153, y: -41}
-  m_SizeDelta: {x: 400, y: 225}
+  m_SizeDelta: {x: 400, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1167040528
 MonoBehaviour:
@@ -755,13 +733,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 4
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: The trigger selects an item. Pull the trigger.
+  m_Text: Instructions still under development
 --- !u!222 &1167040529
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -915,8 +893,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Cook Along uses the buttons on the Magic Leap Controller to navigate the
-    initial menus.
+  m_Text: Once you begin cooking, Cook Along uses hand gestures for navigation.
 --- !u!222 &2109622086
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -995,7 +972,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Exit: Double tap touchpad'
+  m_Text: 'Exit: Double tap home button'
 --- !u!222 &2110042289
 CanvasRenderer:
   m_ObjectHideFlags: 0
