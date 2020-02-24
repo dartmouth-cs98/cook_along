@@ -114,7 +114,8 @@ public class StepCanvas : MonoBehaviour
         
         if (Instruction()){
             visible = true;
-            showStart = 4;
+            showStart = 7;
+            Hold(1);
         }
 
         if(timeLeft > 1)
@@ -142,15 +143,17 @@ public class StepCanvas : MonoBehaviour
       if(visible){
           
          ges_instructions.GetComponent<RectTransform>().sizeDelta=new Vector2(300,300);
-         ges_instructions.text = "Thumbs Up:  go to next step" + 
+         ges_instructions.text = "Thumbs Up: go to next step" + 
                                       Environment.NewLine +
                                       "L Gesture: go back a step" +
                                       Environment.NewLine +
                                       "Ok Gesture: go back to recipe chooser" +
                                       Environment.NewLine +
-                                      "Open Hand: Start/Stop Timer" +
+                                      "High Five: Start/Stop Timer" +
                                       Environment.NewLine +
-                                      "Pinch: Reset Timer";
+                                      "Pinch: Reset Timer" +
+                                      Environment.NewLine +
+                                      "Closed Fist: Start/Stop Video";
                                       
           showStart = showStart - Time.deltaTime; 
                                   
@@ -171,6 +174,7 @@ public class StepCanvas : MonoBehaviour
            step_number += 1;
 
            called = false;
+           visible = false;
            Hold(1);
 
            List<RawImage> SceneObject = new List<RawImage>();
@@ -193,6 +197,7 @@ public class StepCanvas : MonoBehaviour
       } else if (GetGesture(MLHands.Left, MLHandKeyPose.L) || GetGesture(MLHands.Right, MLHandKeyPose.L)) {
             step_number -= 1;
             called = false;
+            visible = false;
                      
             foreach (RawImage go in Resources.FindObjectsOfTypeAll(typeof(RawImage)) as RawImage[]){
                 RawImage image = go as RawImage; 
