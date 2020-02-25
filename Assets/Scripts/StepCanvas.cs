@@ -66,8 +66,8 @@ public class StepCanvas : MonoBehaviour
     void Start()
     {
         canvas = GameObject.Find("Canvas");
-        yCoord=-20;
-        xCoord= 210;        
+        yCoord=-60;
+        xCoord= 255;        
         URLsList= RecipeInformation.ingredientURLlistoflist;
         URLs=URLsList[0];
         videoURL= RecipeInformation.RecipeVar.steps[step_number].videoUrl;
@@ -132,7 +132,7 @@ public class StepCanvas : MonoBehaviour
         
         if (!timer_running)
              {
-                 countdown.text = ("Open hand to start/stop timer: " + niceTime);
+                 countdown.text = (niceTime);
              }
          else
         {countdown.text = ("" + niceTime); //Showing the Score on the Canvas
@@ -181,7 +181,7 @@ public class StepCanvas : MonoBehaviour
            foreach (RawImage go in Resources.FindObjectsOfTypeAll(typeof(RawImage)) as RawImage[]){
                 RawImage image = go as RawImage; 
                 Destroy(image);
-                yCoord=-20;
+                yCoord=-60;
            }
            ingred.text = "" ;
            firstUpdate = true;
@@ -202,7 +202,7 @@ public class StepCanvas : MonoBehaviour
             foreach (RawImage go in Resources.FindObjectsOfTypeAll(typeof(RawImage)) as RawImage[]){
                 RawImage image = go as RawImage; 
                 Destroy(image);
-                yCoord=-20;
+                yCoord=-60;
            }
            ingred.text = "" ;
             Hold(1);    
@@ -247,8 +247,8 @@ public class StepCanvas : MonoBehaviour
           NewObj = new GameObject(); //Create the GameObject
           RawImage Screen = NewObj.AddComponent<RawImage>(); //Add the Image Component script
           Screen.transform.SetParent(canvas.transform,false);
-          NewObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,0,0);
-          NewObj.GetComponent<RectTransform>().sizeDelta=new Vector2(100,100);
+          NewObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,-100,0);
+          NewObj.GetComponent<RectTransform>().sizeDelta=new Vector2(175,100);
           NewObj.SetActive(true); //Activate the GameObject
           Application.runInBackground=true;
           videoPlayer=gameObject.AddComponent<VideoPlayer>();
