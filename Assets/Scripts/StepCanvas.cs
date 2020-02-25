@@ -84,7 +84,7 @@ public class StepCanvas : MonoBehaviour
         MLHands.KeyPoseManager.EnableKeyPoses(gestures, true, false);
 
         thisText = GameObject.Find("Recipe step").GetComponent<Text>();
-        countdown = GameObject.Find("Timer").GetComponent<Text>();
+        countdown = GameObject.Find("Timer_1").GetComponent<Text>();
         ges_instructions = GameObject.Find("Gesture instruction").GetComponent<Text>();
         ingred= GameObject.Find("Ingredients").GetComponent<Text>();
         timeLeft = (float)(-1);
