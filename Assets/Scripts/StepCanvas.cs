@@ -247,8 +247,8 @@ public class StepCanvas : MonoBehaviour
           NewObj = new GameObject(); //Create the GameObject
           RawImage Screen = NewObj.AddComponent<RawImage>(); //Add the Image Component script
           Screen.transform.SetParent(canvas.transform,false);
-          NewObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,-100,0);
-          NewObj.GetComponent<RectTransform>().sizeDelta=new Vector2(175,100);
+          NewObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,-150,0);
+          NewObj.GetComponent<RectTransform>().sizeDelta=new Vector2(125,100);
           NewObj.SetActive(true); //Activate the GameObject
           Application.runInBackground=true;
           videoPlayer=gameObject.AddComponent<VideoPlayer>();
