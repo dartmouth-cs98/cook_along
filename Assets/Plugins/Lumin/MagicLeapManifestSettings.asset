@@ -19,9 +19,9 @@ MonoBehaviour:
   - name: AddressBookBasicAccess
     enabled: 0
   - name: BackgroundDownload
-    enabled: 0
+    enabled: 1
   - name: BackgroundUpload
-    enabled: 0
+    enabled: 1
   - name: BatteryInfo
     enabled: 0
   - name: BluetoothAdapterExternalApp
@@ -53,7 +53,7 @@ MonoBehaviour:
   - name: NormalNotificationsUsage
     enabled: 0
   - name: Occlusion
-    enabled: 1
+    enabled: 0
   - name: PcfRead
     enabled: 0
   - name: PowerInfo
@@ -67,14 +67,12 @@ MonoBehaviour:
   - name: SocialConnectionsInvitesAccess
     enabled: 0
   - name: WifiStatusRead
-    enabled: 0
+    enabled: 1
   - name: WorldReconstruction
     enabled: 0
   - name: AddressBookRead
     enabled: 0
   - name: AddressBookWrite
-    enabled: 0
-  - name: CoarseLocation
     enabled: 0
   - name: LocalAreaNetwork
     enabled: 0
@@ -83,10 +81,12 @@ MonoBehaviour:
   - name: AudioRecognizer
     enabled: 0
   - name: CameraCapture
-    enabled: 0
+    enabled: 1
   - name: ComputerVision
     enabled: 0
   - name: FineLocation
     enabled: 0
   - name: VoiceInput
+    enabled: 0
+  - name: CoarseLocation
     enabled: 0
