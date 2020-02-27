@@ -22,8 +22,8 @@ public class StepCanvas : MonoBehaviour
     private int xCoord;
     private int height=75;
     private int width=75;
-    private int VidHeight =250;
-    private int VidWidth = 450;
+    private int VidHeight =200;
+    private int VidWidth = 400;
     private VideoPlayer videoPlayer;
     private List<List<string>> URLsList;
     private List<string> URLs; 
@@ -66,7 +66,7 @@ public class StepCanvas : MonoBehaviour
     void Start()
     {
         canvas = GameObject.Find("Canvas");
-        yCoord=-60;
+        yCoord=90;
         xCoord= 255;        
         URLsList= RecipeInformation.ingredientURLlistoflist;
         URLs=URLsList[0];
@@ -181,7 +181,7 @@ public class StepCanvas : MonoBehaviour
            foreach (RawImage go in Resources.FindObjectsOfTypeAll(typeof(RawImage)) as RawImage[]){
                 RawImage image = go as RawImage; 
                 Destroy(image);
-                yCoord=-60;
+                yCoord=90;
            }
            ingred.text = "" ;
            firstUpdate = true;
@@ -196,6 +196,9 @@ public class StepCanvas : MonoBehaviour
            Loader.Load(Loader.Scene.RecipeChooser);
       } else if (GetGesture(MLHands.Left, MLHandKeyPose.L) || GetGesture(MLHands.Right, MLHandKeyPose.L)) {
             step_number -= 1;
+            if (step_number<0){
+              step_number=0;
+            }
             called = false;
             visible = false;
                      
@@ -208,10 +211,12 @@ public class StepCanvas : MonoBehaviour
             Hold(1);    
            firstUpdate = true;
            firstvideo=true;
-            if (previousVideo){
+            // if (previousVideo){
+
+            Destroy(videoPlayer);
             Destroy(NewObj);
-            previousVideo=false;
-           }
+           //  previousVideo=false;
+           // }
       }
   
        
