@@ -644,7 +644,7 @@ PlayerSettings:
     m_ModelFolderPath: 
     m_PortalFolderPath: 
   luminCert:
-    m_CertPath: /Users/briantomasco/Desktop/CS/CS98/finalproject/cs98.cert
+    m_CertPath: /Users/dani/Documents/College/20W/CS98/cubetemplate.cert
     m_SignPackage: 1
   luminIsChannelApp: 0
   luminVersion:

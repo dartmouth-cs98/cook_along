@@ -132,11 +132,14 @@ public class StepCanvas : MonoBehaviour
         
         if (!timer_running)
              {
-                 countdown.text = (niceTime);
+                countdown.color = new Color(1f, 0.0f, 0.0f);
+                countdown.text = (niceTime);
              }
          else
-        {countdown.text = ("" + niceTime); //Showing the Score on the Canvas
-        }
+            {
+                countdown.color = new Color(1f, 1.0f, 1.0f);
+                countdown.text = ("" + niceTime); //Showing the Score on the Canvas
+            }
         }
      
       //********* Work on Gesture Instructions **********
