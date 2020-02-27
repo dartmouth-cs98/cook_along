@@ -427,6 +427,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 365542411}
   m_CullTransparentMesh: 0
+--- !u!114 &372811710 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7707406183443843752, guid: 7093de739154b4c5dac85252ab727bcc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1514427227}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &405285225 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7707406183852000433, guid: 7093de739154b4c5dac85252ab727bcc,
@@ -467,6 +479,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controlInput: {fileID: 0}
+  _recipe1: {fileID: 0}
+  _recipe1Image: {fileID: 0}
+  _recipe2: {fileID: 0}
+  _recipe2Image: {fileID: 0}
 --- !u!114 &430632777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -720,6 +736,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24158fb1437dc8e418d893939758764d, type: 3}
+--- !u!114 &1176790585 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2777787854343709767, guid: 7093de739154b4c5dac85252ab727bcc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1514427227}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!20 &1208728289 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 20294507499185110, guid: 24158fb1437dc8e418d893939758764d,
@@ -816,6 +844,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1229926570}
   m_CullTransparentMesh: 0
+--- !u!114 &1375293275 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7707406184604418535, guid: 7093de739154b4c5dac85252ab727bcc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1514427227}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1514427227
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1260,8 +1300,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   titleText: {fileID: 516573153}
-  caloriesTimeText: {fileID: 0}
-  descriptionText: {fileID: 0}
+  caloriesTimeText: {fileID: 372811710}
+  descriptionText: {fileID: 1176790585}
+  recipeImage: {fileID: 1375293275}
 --- !u!1 &1996981354
 GameObject:
   m_ObjectHideFlags: 0
