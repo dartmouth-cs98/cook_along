@@ -39,16 +39,16 @@ public class StepCanvas : MonoBehaviour
 
 
     //setting up variables used for timer
-    private float timeLeft; //Seconds Overall
-    private float stepTime; //Seconds to hold per step
-    private Text countdown; //UI Text Object
-    private bool called = true; //used to make sure time is called only once per new step
-    private bool timer_running = false; //used to toggle start and stop for timer
+    private List<List<float>> timeLeft; //Seconds Overall From Step //Going to be List of string of stepNum and TimeLeft
+    private List<float> stepTime; //Seconds to hold per step
+    private List<GameObject> countdown; //UI Text Object
+    private List<bool> called; //used to make sure time is called only once per new step
+    private List<bool> timer_running; //used to toggle start and stop for timer
     // variables used for styling the display of time into hh:mm:ss
-    private int hours;
-    private int minutes;
-    private int seconds;
-    private String niceTime; 
+    private List<int> hours;
+    private List<int> minutes;
+    private List<int> seconds;
+    private List<string> niceTime; 
     
     //variables for ingredient instuctions
     private Text ges_instructions;
@@ -65,7 +65,7 @@ public class StepCanvas : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        canvas = GameObject.Find("Canvas");
+        canvas = GameObject.Find("Canvas");     
         yCoord=90;
         xCoord= 255;        
         URLsList= RecipeInformation.ingredientURLlistoflist;
@@ -80,11 +80,11 @@ public class StepCanvas : MonoBehaviour
 		gestures[3] = MLHandKeyPose.OpenHand;
 		gestures[4] = MLHandKeyPose.Pinch;
 		gestures[5] = MLHandKeyPose.Finger;
-     gestures[6]= MLHandKeyPose.Fist;
+        gestures[6]= MLHandKeyPose.Fist;
         MLHands.KeyPoseManager.EnableKeyPoses(gestures, true, false);
 
         thisText = GameObject.Find("Recipe step").GetComponent<Text>();
-        countdown = GameObject.Find("Timer_1").GetComponent<Text>();
+        startPopulateTimers();
         ges_instructions = GameObject.Find("Gesture instruction").GetComponent<Text>();
         ingred= GameObject.Find("Ingredients").GetComponent<Text>();
         timeLeft = (float)(-1);
@@ -419,6 +419,19 @@ public class StepCanvas : MonoBehaviour
        return false;
    }
 
+    void startPopulateTimers(){   
+            countdown.Add(GameObject.Find("Timer_1").GetComponent<Text>());
+            countdown.Add(GameObject.Find("Timer_2").GetComponent<Text>());
+            countdown.Add(GameObject.Find("Timer_3").GetComponent<Text>());
+            called.Add(true);
+            called.Add(true);
+            called.Add(true); 
+            timer_running.Add(false); 
+            timer_running.Add(false); 
+            timer_running.Add(false); 
+    }
+    
+    
    void Hold(int delay){
        Stopwatch stopWatch = new Stopwatch();
        stopWatch.Start();
