@@ -22,8 +22,8 @@ public class StepCanvas : MonoBehaviour
     private int xCoord;
     private int height=75;
     private int width=75;
-    private int VidHeight =250;
-    private int VidWidth = 450;
+    private int VidHeight =200;
+    private int VidWidth = 400;
     private VideoPlayer videoPlayer;
     private List<List<string>> URLsList;
     private List<string> URLs; 
@@ -66,8 +66,8 @@ public class StepCanvas : MonoBehaviour
     void Start()
     {
         canvas = GameObject.Find("Canvas");
-        yCoord=-20;
-        xCoord= 210;        
+        yCoord=90;
+        xCoord= 255;        
         URLsList= RecipeInformation.ingredientURLlistoflist;
         URLs=URLsList[0];
         videoURL= RecipeInformation.RecipeVar.steps[step_number].videoUrl;
@@ -84,7 +84,7 @@ public class StepCanvas : MonoBehaviour
         MLHands.KeyPoseManager.EnableKeyPoses(gestures, true, false);
 
         thisText = GameObject.Find("Recipe step").GetComponent<Text>();
-        countdown = GameObject.Find("Timer").GetComponent<Text>();
+        countdown = GameObject.Find("Timer_1").GetComponent<Text>();
         ges_instructions = GameObject.Find("Gesture instruction").GetComponent<Text>();
         ingred= GameObject.Find("Ingredients").GetComponent<Text>();
         timeLeft = (float)(-1);
@@ -132,7 +132,7 @@ public class StepCanvas : MonoBehaviour
         
         if (!timer_running)
              {
-                 countdown.text = ("Open hand to start/stop timer: " + niceTime);
+                 countdown.text = (niceTime);
              }
          else
         {countdown.text = ("" + niceTime); //Showing the Score on the Canvas
@@ -181,7 +181,7 @@ public class StepCanvas : MonoBehaviour
            foreach (RawImage go in Resources.FindObjectsOfTypeAll(typeof(RawImage)) as RawImage[]){
                 RawImage image = go as RawImage; 
                 Destroy(image);
-                yCoord=-20;
+                yCoord=90;
            }
            ingred.text = "" ;
            firstUpdate = true;
@@ -196,22 +196,27 @@ public class StepCanvas : MonoBehaviour
            Loader.Load(Loader.Scene.RecipeChooser);
       } else if (GetGesture(MLHands.Left, MLHandKeyPose.L) || GetGesture(MLHands.Right, MLHandKeyPose.L)) {
             step_number -= 1;
+            if (step_number<0){
+              step_number=0;
+            }
             called = false;
             visible = false;
                      
             foreach (RawImage go in Resources.FindObjectsOfTypeAll(typeof(RawImage)) as RawImage[]){
                 RawImage image = go as RawImage; 
                 Destroy(image);
-                yCoord=-20;
+                yCoord=-60;
            }
            ingred.text = "" ;
             Hold(1);    
            firstUpdate = true;
            firstvideo=true;
-            if (previousVideo){
+            // if (previousVideo){
+
+            Destroy(videoPlayer);
             Destroy(NewObj);
-            previousVideo=false;
-           }
+           //  previousVideo=false;
+           // }
       }
   
        
@@ -247,8 +252,8 @@ public class StepCanvas : MonoBehaviour
           NewObj = new GameObject(); //Create the GameObject
           RawImage Screen = NewObj.AddComponent<RawImage>(); //Add the Image Component script
           Screen.transform.SetParent(canvas.transform,false);
-          NewObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,0,0);
-          NewObj.GetComponent<RectTransform>().sizeDelta=new Vector2(100,100);
+          NewObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,-150,0);
+          NewObj.GetComponent<RectTransform>().sizeDelta=new Vector2(125,100);
           NewObj.SetActive(true); //Activate the GameObject
           Application.runInBackground=true;
           videoPlayer=gameObject.AddComponent<VideoPlayer>();
