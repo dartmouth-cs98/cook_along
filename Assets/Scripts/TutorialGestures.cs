@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using MagicLeapTools;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,10 +10,21 @@ public class TutorialGestures : MonoBehaviour
 {
     
     public ControlInput controlInput;
-    public Text instructionText;
+    public Text instruction;
     public Image gestureImage;
+    public Sprite openHand;
+    public Sprite fist;
+    public Sprite okay;
+    public Sprite thumb;
+    public Sprite pinch;
+    public Sprite l;
+    public Sprite finger;
+    public Sprite check;
     private int _textIndex;
     private List<string> _instructions;
+    private List<Sprite> _images;
+    private bool _checkForGesture;
+    
     private MLHandKeyPose[] _gestures;   // Holds the different gestures we will look for
     
 
@@ -29,12 +41,18 @@ public class TutorialGestures : MonoBehaviour
             "The thumbs up sign takes you to the next step. Make a thumbs up.",
             "The closed pinch resets a timer if one exits/has been started. Make a closed pinch.",
             "The relaxed point (L sign) takes you to the previous step. Make a relaxed point.",
-            "The closed point (point upwards) shows you a help menu for these gestures. Make a closed point."
+            "The closed point (point upwards) shows you a help menu for these gestures. Make a closed point.",
+            "Good job! Now make a thumbs up to move to the next phase of the tutorial"
         };
+        _images = new List<Sprite>()
+        {
+            openHand, fist, okay, thumb, pinch, l, finger, check
+        };
+        _checkForGesture = true;
         StartMlHands();
     }
     
-    void onDestroy () {
+    void OnDestroy () {
         MLHands.Stop();
     }
 
@@ -42,18 +60,18 @@ public class TutorialGestures : MonoBehaviour
     {
         MLHands.Start();
         _gestures = new MLHandKeyPose[7];
-        _gestures[0] = MLHandKeyPose.Ok;
-        _gestures[1] = MLHandKeyPose.Thumb;
-        _gestures[2] = MLHandKeyPose.L;
-        _gestures[3] = MLHandKeyPose.OpenHand;
+        _gestures[0] = MLHandKeyPose.OpenHand;
+        _gestures[1] = MLHandKeyPose.Fist;
+        _gestures[2] = MLHandKeyPose.Ok;
+        _gestures[3] = MLHandKeyPose.Thumb;
         _gestures[4] = MLHandKeyPose.Pinch;
-        _gestures[5] = MLHandKeyPose.Finger;
-        _gestures[6]= MLHandKeyPose.Fist;
+        _gestures[5] = MLHandKeyPose.L;
+        _gestures[6]= MLHandKeyPose.Finger;
         MLHands.KeyPoseManager.EnableKeyPoses(_gestures, true, false);
     }
 
 
-    bool CheckGesture(MLHandKeyPose type)
+    bool CheckForGesture(MLHandKeyPose type)
     {
         return (DoesGestureMatch(MLHands.Left, type) || DoesGestureMatch(MLHands.Right, type));
     }
@@ -73,21 +91,38 @@ public class TutorialGestures : MonoBehaviour
         Loader.Load(Loader.Scene.WelcomeScreen);
     }
     
-    void NextGesture()
+    IEnumerator NextGesture()
     {
+        yield return new WaitForSeconds(2);
         _textIndex += 1;
-        instructionText.text = _instructions[_textIndex];
+        instruction.text = _instructions[_textIndex];
+        gestureImage.sprite = _images[_textIndex];
+        _checkForGesture = true;
     }
 
     void PreviousGesture()
     {
-        _textIndex -= 1;
-        instructionText.text = _instructions[_textIndex];
+        if (_textIndex != 0)
+        {
+            _textIndex -= 1;
+            instruction.text = _instructions[_textIndex];
+            gestureImage.sprite = _images[_textIndex];
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (_checkForGesture && _textIndex < _gestures.Length && CheckForGesture(_gestures[_textIndex]))
+        {
+            instruction.text = "That's perfect!";
+            _checkForGesture = false;
+            StartCoroutine(NextGesture());
+        }
+
+        if (_checkForGesture && _textIndex == _gestures.Length && CheckForGesture(MLHandKeyPose.Thumb))
+        {
+          Loader.Load(Loader.Scene.TutorialStep);  
+        }
     }
 }

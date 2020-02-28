@@ -289,20 +289,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 159178639}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f939cfb3986744f9ea3da3d046e9ae83, type: 3}
+  m_Script: {fileID: 11500000, guid: dd84ab43c4be545c2b6422748881bf7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   controlInput: {fileID: 1107156848}
-  instruction: {fileID: 1167040528}
-  gestureImage: {fileID: 1965754803}
-  openHand: {fileID: 21300000, guid: 3d63617855bf4487381f8db511f0275e, type: 3}
-  fist: {fileID: 21300000, guid: f01106158cda54dfb8c0f3c9ddddd873, type: 3}
-  okay: {fileID: 21300000, guid: 7b78ffe70bf804f6b8800910e23e8cfa, type: 3}
-  thumb: {fileID: 21300000, guid: 575eddf7db2f246e4a638104d0f5bf6b, type: 3}
-  pinch: {fileID: 21300000, guid: 9f8bdbff97e494aaa9930e1c1eebd9d0, type: 3}
-  l: {fileID: 21300000, guid: e88ad68e93c294f3d944859bd417308f, type: 3}
-  finger: {fileID: 21300000, guid: a73c02d2b567442088df0eaed20e9d43, type: 3}
-  check: {fileID: 21300000, guid: b8494645fd2184b169af8a5c7299be6f, type: 3}
 --- !u!1 &342710518
 GameObject:
   m_ObjectHideFlags: 0
@@ -655,7 +645,7 @@ MonoBehaviour:
   OnHomeButtonTap:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: f939cfb3986744f9ea3da3d046e9ae83, type: 3}
+      - m_Target: {fileID: 11500000, guid: dd84ab43c4be545c2b6422748881bf7b, type: 3}
         m_MethodName: 
         m_Mode: 1
         m_Arguments:
@@ -700,18 +690,7 @@ MonoBehaviour:
       PublicKeyToken=null
   OnDoubleTap:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11500000, guid: f939cfb3986744f9ea3da3d046e9ae83, type: 3}
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: MagicLeapTools.Vector4Event, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   OnTouchUp:
@@ -829,8 +808,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: The open hand starts or stops a timer if that step requires it. Make an
-    open hand.
+  m_Text: Step section under development
 --- !u!222 &1167040529
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -953,7 +931,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -224, y: -41}
-  m_SizeDelta: {x: 175, y: 175}
+  m_SizeDelta: {x: 250, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1965754803
 MonoBehaviour:
@@ -975,7 +953,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 3d63617855bf4487381f8db511f0275e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f2bbd401ea70a476687e3e294e6c0d75, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

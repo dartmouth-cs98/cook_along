@@ -32,6 +32,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TutorialGestures.unity
     guid: 20d7c4c7bcb504bf18b40aa81a62ac62
+  - enabled: 1
+    path: Assets/Scenes/TutorialStep.unity
+    guid: 61c6055bdb7024e1ca2838f36d1c00dd
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 2ba4dbd235ed941bb8fdb5a40ab00f22,
       type: 2}
