@@ -320,7 +320,18 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   OnBumperDown:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11500000, guid: 80f36f09dafd4428c955f6611952f759, type: 3}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   OnDoubleBumper:
@@ -596,6 +607,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24158fb1437dc8e418d893939758764d, type: 3}
+--- !u!1 &516777185 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1011244501761250, guid: 24158fb1437dc8e418d893939758764d,
+    type: 3}
+  m_PrefabInstance: {fileID: 516777184}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &787544023
 GameObject:
   m_ObjectHideFlags: 0
@@ -856,6 +873,8 @@ GameObject:
   - component: {fileID: 1286997064}
   - component: {fileID: 1286997065}
   - component: {fileID: 1286997066}
+  - component: {fileID: 1286997067}
+  - component: {fileID: 1286997068}
   m_Layer: 0
   m_Name: '[LOGIC]'
   m_TagString: Untagged
@@ -902,6 +921,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60ddef4dc497341f3a839d7c1961a6b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1286997067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286997063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80f36f09dafd4428c955f6611952f759, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controlInput: {fileID: 309859246}
+  WorldCanvas: {fileID: 1576443967}
+  persistentBehavior: {fileID: 1576443972}
+  Camera: {fileID: 516777185}
+--- !u!114 &1286997068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286997063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c890bdf354698ba429472b626542bcc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _privileges: c9000000
 --- !u!1 &1416705438
 GameObject:
   m_ObjectHideFlags: 0
@@ -995,6 +1043,7 @@ GameObject:
   - component: {fileID: 1576443970}
   - component: {fileID: 1576443969}
   - component: {fileID: 1576443968}
+  - component: {fileID: 1576443972}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1085,9 +1134,25 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.67, y: -0.26}
+  m_AnchoredPosition: {x: -0.013000011, y: 0.0010000467}
   m_SizeDelta: {x: 1314, y: 522}
-  m_Pivot: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1576443972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576443967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 060932cc11c484c25ac9a2214df40470, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UniqueId: RecipeInformation
+  TimeOutInSeconds: 5
+  RetryDelayInSeconds: 2
+  NumRetriesForRestore: 3
 --- !u!1 &1647849397
 GameObject:
   m_ObjectHideFlags: 0
