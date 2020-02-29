@@ -28,7 +28,15 @@ public class TutorialStep : MonoBehaviour
     
     void HandleHomeTap()
     {
-        Loader.Load(Loader.Scene.TutorialGestures);
+        if (_textIndex == 0)
+        {
+            Loader.Load(Loader.Scene.TutorialGestures); 
+        }
+        else
+        {
+            PreviousInstruction();
+        }
+
     }
 
     void HandleDoubleTap(Vector4 param)
@@ -38,7 +46,26 @@ public class TutorialStep : MonoBehaviour
 
     void HandleTrigger()
     {
-        
+        if (_textIndex >= _instructions.Count - 1)
+        {
+            Loader.Load(Loader.Scene.TutorialSuccess);
+        }
+        else
+        {
+            NextInstruction();
+        }
+    }
+
+    void NextInstruction()
+    {
+        _textIndex += 1;
+        instructionText.text = _instructions[_textIndex];
+    }
+
+    void PreviousInstruction()
+    {
+        _textIndex -= 1;
+        instructionText.text = _instructions[_textIndex];
     }
 
     // Update is called once per frame

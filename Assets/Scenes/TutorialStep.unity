@@ -293,7 +293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controlInput: {fileID: 1107156848}
-  instructionText: {fileID: 0}
+  instructionText: {fileID: 1167040528}
 --- !u!1 &271419268
 GameObject:
   m_ObjectHideFlags: 0
