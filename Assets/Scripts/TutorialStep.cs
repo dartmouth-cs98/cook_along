@@ -8,31 +8,37 @@ public class TutorialStep : MonoBehaviour
 {
     
     public ControlInput controlInput;
-    // public Text instructionText;
-    // private int _textIndex;
-    // private List<string> _instructions;
+    public Text instructionText;
+    private int _textIndex;
+    private List<string> _instructions;
     
     
     private void Awake()
     {
         controlInput.OnHomeButtonTap.AddListener(HandleHomeTap);
-        // _textIndex = 0;
-        // _instructions = new List<string>()
-        // {
-        //     "The open hand starts or stops a timer if that step requires it. Make an open hand.",
-        //     "The closed fist starts or stops the video if that step contains one. Make a closed fist.",
-        //     "The okay sign takes you back to the recipe chooser. Make an okay sign.",
-        //     "The thumbs up sign takes you to the next step. Make a thumbs up.",
-        //     "The closed pinch resets a timer if one exits/has been started. Make a closed pinch.",
-        //     "The relaxed point (L sign) takes you to the previous step. Make a relaxed point.",
-        //     "The closed point (point upwards) shows you a help menu for these gestures. Make a closed point.",
-        //     "Good job! Now make a thumbs up to move to the next phase of the tutorial"
-        // };
+        controlInput.OnDoubleTap.AddListener(HandleDoubleTap);
+        controlInput.OnTriggerPressEnded.AddListener(HandleTrigger);
+        _textIndex = 0;
+        _instructions = new List<string>()
+        {
+            "Swipe left to access list of steps. Scroll up and down to choose a step. Pull trigger to go to that step.",
+            "Swipe up to access the list of timers. Scroll left and right to switch between timers. Use the open hand to start/top and the pinch to reset."
+        };
     }
     
     void HandleHomeTap()
     {
         Loader.Load(Loader.Scene.TutorialGestures);
+    }
+
+    void HandleDoubleTap(Vector4 param)
+    {
+        Loader.Load(Loader.Scene.WelcomeScreen);
+    }
+
+    void HandleTrigger()
+    {
+        
     }
 
     // Update is called once per frame
