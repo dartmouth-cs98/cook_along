@@ -17,9 +17,9 @@ public class RepositionScript : MonoBehaviour
 
 	private void Awake()
 	{
-		controlInput.OnBumperDown.AddListener(HandleBumperDown);
+		controlInput.OnBumperHold.AddListener(HandleBumperHold);
 	}
-	public void HandleBumperDown()
+	public void HandleBumperHold()
   {
 		WorldCanvas.transform.position = Camera.transform.position + Camera.transform.forward * _distance;
 		WorldCanvas.transform.rotation = Camera.transform.rotation;
