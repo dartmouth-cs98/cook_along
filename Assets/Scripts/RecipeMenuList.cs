@@ -15,7 +15,8 @@ public class RecipeMenuList : MonoBehaviour
     private List<Recipe> _recipes;
     private List<GameObject> _cards;
     public ControlInput controlInput;
-    
+    private ScrollRect _scrollRect;
+
     [SerializeField]
     private GameObject cardTemplate;
 
@@ -25,6 +26,7 @@ public class RecipeMenuList : MonoBehaviour
         controlInput.OnSwipe.AddListener(HandleSwipe);
         _activeIndex = 0;
         _cards = new List<GameObject>();
+        _scrollRect = GetComponent<ScrollRect>();
     }
 
     void HandleTrigger()
@@ -36,12 +38,13 @@ public class RecipeMenuList : MonoBehaviour
     {
         if (direction == MLInputControllerTouchpadGestureDirection.Up && _activeIndex > 0)
         {
+            _scrollRect.verticalNormalizedPosition += 0.5f;
             UpdateActiveRecipe(direction);
-            Debug.Log("Swipe Up");
         }
 
         if (direction == MLInputControllerTouchpadGestureDirection.Down && _activeIndex < _recipes.Count - 1)
         {
+            _scrollRect.verticalNormalizedPosition -= 0.5f;
             UpdateActiveRecipe(direction);
         }
     }
