@@ -42,7 +42,6 @@ public class RecipeMenuList : MonoBehaviour
 
     void HandleTrigger()
     {
-        Debug.Log("Trigger pressed");
         SelectedRecipe = _recipes[_activeIndex];
         Loader.Load	(Loader.Scene.RecipeInformation);
     }
@@ -99,6 +98,8 @@ public class RecipeMenuList : MonoBehaviour
             card.transform.SetParent(cardTemplate.transform.parent, false);
             _cards.Add(card);
         }
+        
+        GetComponent<Image>().enabled = false;
     }
 
     IEnumerator GetRecipes(Action<List<Recipe>> onSuccess)
