@@ -17,7 +17,6 @@ public class RecipeInformation : MonoBehaviour
     public ControlInput controlInput;
     
     #region Private Variables
-    public static Recipe RecipeVar;
     public static List<List<string>> ingredientURLlistoflist;
     private Text _title;
     private Text _ingredients;
@@ -35,19 +34,15 @@ public class RecipeInformation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(GetRecipe(SetRecipeInfo));
+        SetRecipeInfo(RecipeMenuList.SelectedRecipe);
         StartCoroutine(getURLs());
     }
 
     IEnumerator getURLs()
     {
         Debug.Log("Getting URLs");
-        String url = "https://cookalong-api.herokuapp.com/recipes/allingredients/5e30abbce81c2b0004a7b204";
-        if (!RecipeChooser.Recipe1Active)
-        {
-            url = "https://cookalong-api.herokuapp.com/recipes/allingredients/5e30abc8e81c2b0004a7b205";
-        }
-        
+        String url = "https://cookalong-api.herokuapp.com/recipes/allingredients/" + RecipeMenuList.SelectedRecipe.id;
+
         using (UnityWebRequest req = UnityWebRequest.Get(url))
         {
             yield return req.SendWebRequest();
@@ -133,7 +128,6 @@ public class RecipeInformation : MonoBehaviour
 
     void SetRecipeInfo(Recipe recipeObj)
     {
-        RecipeVar = recipeObj;
         _title = GameObject.Find("Header").GetComponent<Text>();
         _title.text = recipeObj.name;
         _ingredients = GameObject.Find("Ingredients").GetComponent<Text>();
@@ -147,7 +141,7 @@ public class RecipeInformation : MonoBehaviour
 
     IEnumerator GetTexture()
     {
-        UnityWebRequest www = UnityWebRequestTexture.GetTexture(RecipeVar.imgUrl);
+        UnityWebRequest www = UnityWebRequestTexture.GetTexture(RecipeMenuList.SelectedRecipe.imgUrl);
 
         yield return www.SendWebRequest();
 
@@ -160,36 +154,8 @@ public class RecipeInformation : MonoBehaviour
 
     }
 
-    // https://www.red-gate.com/simple-talk/dotnet/c-programming/calling-restful-apis-unity3d/
-    IEnumerator GetRecipe(Action<Recipe> onSuccess)
-    {
-        String url = "https://cookalong-api.herokuapp.com/recipes/5e30abbce81c2b0004a7b204";
-        if (!RecipeChooser.Recipe1Active)
-        {
-            url = "https://cookalong-api.herokuapp.com/recipes/5e30abc8e81c2b0004a7b205";
-        }
-        
-        using (UnityWebRequest req = UnityWebRequest.Get(url))
-        {
-            yield return req.SendWebRequest();
-            
-            if (req.isHttpError || req.isNetworkError)
-            {
-                Debug.Log("HIT ERROR");
-                Debug.Log(req.error);
-            }
-            else
-            {
-                string result = req.downloadHandler.text;
-                Recipe info = JsonUtility.FromJson<Recipe>(result);
-                RecipeVar = info;
-                onSuccess(info);
-            }
-        }
-    }
-    
     private void HandleHomeTap()
     {
-        Loader.Load(Loader.Scene.RecipeChooser);
+        Loader.Load(Loader.Scene.RecipeMenu);
     }
 }

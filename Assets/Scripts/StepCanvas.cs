@@ -70,7 +70,7 @@ public class StepCanvas : MonoBehaviour
         xCoord= 255;        
         URLsList= RecipeInformation.ingredientURLlistoflist;
         URLs=URLsList[0];
-        videoURL= RecipeInformation.RecipeVar.steps[step_number].videoUrl;
+        videoURL= RecipeMenuList.SelectedRecipe.steps[step_number].videoUrl;
 
         MLHands.Start();
         gestures = new MLHandKeyPose[7];
@@ -169,7 +169,7 @@ public class StepCanvas : MonoBehaviour
 
      
      //********** Work on Recipe Step Change ********** 
-   if(GetOkay() && RecipeInformation.RecipeVar != null && step_number < (RecipeInformation.RecipeVar.steps.Count - 1)) {
+   if(GetOkay() && RecipeMenuList.SelectedRecipe != null && step_number < (RecipeMenuList.SelectedRecipe.steps.Count - 1)) {
 
            step_number += 1;
 
@@ -222,7 +222,7 @@ public class StepCanvas : MonoBehaviour
        
 
       //********** Work on Populating Recipe ********** 
-      if (RecipeInformation.RecipeVar == null)
+      if (RecipeMenuList.SelectedRecipe == null)
       {
           thisText.text = "No recipe downloaded at the moment";
       }
@@ -230,14 +230,14 @@ public class StepCanvas : MonoBehaviour
       {     
            if (!called)
            {
-               timeLeft = (float)RecipeInformation.RecipeVar.steps[step_number].time;
+               timeLeft = (float)RecipeMenuList.SelectedRecipe.steps[step_number].time;
                called = true;
                stepTime = timeLeft;    
                countdown.text = ("");
            }
        
-           thisText.text = RecipeInformation.RecipeVar.steps[step_number].instruction;
-           videoURL= RecipeInformation.RecipeVar.steps[step_number].videoUrl;
+           thisText.text = RecipeMenuList.SelectedRecipe.steps[step_number].instruction;
+           videoURL= RecipeMenuList.SelectedRecipe.steps[step_number].videoUrl;
            URLs=URLsList[step_number]; 
            
       }

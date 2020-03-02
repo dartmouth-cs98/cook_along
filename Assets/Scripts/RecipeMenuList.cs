@@ -16,6 +16,7 @@ public class RecipeMenuList : MonoBehaviour
     private List<GameObject> _cards;
     public ControlInput controlInput;
     private ScrollRect _scrollRect;
+    public static Recipe SelectedRecipe;
 
     [SerializeField]
     private GameObject cardTemplate;
@@ -32,6 +33,7 @@ public class RecipeMenuList : MonoBehaviour
     void HandleTrigger()
     {
         Debug.Log("Trigger pressed");
+        SelectedRecipe = _recipes[_activeIndex];
     }
 
     void HandleSwipe(MLInputControllerTouchpadGestureDirection direction)
