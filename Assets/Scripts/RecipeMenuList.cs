@@ -9,12 +9,15 @@ using UnityEngine.XR.MagicLeap;
 
 public class RecipeMenuList : MonoBehaviour
 {
-    [SerializeField] public ControlInput controlInput;
-    private GameObject cardTemplate;
+    
     private int _activeIndex;
     private List<int> intList;
     private List<Recipe> _recipes;
     private List<GameObject> _cards;
+    public ControlInput controlInput;
+    
+    [SerializeField]
+    private GameObject cardTemplate;
 
     private void Awake()
     {
@@ -34,6 +37,7 @@ public class RecipeMenuList : MonoBehaviour
         if (direction == MLInputControllerTouchpadGestureDirection.Up && _activeIndex > 0)
         {
             UpdateActiveRecipe(direction);
+            Debug.Log("Swipe Up");
         }
 
         if (direction == MLInputControllerTouchpadGestureDirection.Down && _activeIndex < _recipes.Count - 1)

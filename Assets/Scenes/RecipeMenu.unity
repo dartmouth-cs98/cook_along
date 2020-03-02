@@ -1365,6 +1365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controlInput: {fileID: 818176406}
+  cardTemplate: {fileID: 1949880928}
 --- !u!1 &1901018721
 GameObject:
   m_ObjectHideFlags: 0
