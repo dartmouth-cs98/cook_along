@@ -17,6 +17,8 @@ public class RecipeMenuList : MonoBehaviour
     public ControlInput controlInput;
     private ScrollRect _scrollRect;
     public static Recipe SelectedRecipe;
+    private Color _highlightedColor;
+    private Color _baseColor;
 
     [SerializeField]
     private GameObject cardTemplate;
@@ -25,15 +27,24 @@ public class RecipeMenuList : MonoBehaviour
     {
         controlInput.OnTriggerPressEnded.AddListener(HandleTrigger);
         controlInput.OnSwipe.AddListener(HandleSwipe);
+        controlInput.OnHomeButtonTap.AddListener(HandleHomeTap); 
         _activeIndex = 0;
         _cards = new List<GameObject>();
         _scrollRect = GetComponent<ScrollRect>();
+        _highlightedColor = new Color(0.937f, 0.741f, 0.42f);
+        _baseColor = new Color(1f, 1f, 1f);
+    }
+
+    void HandleHomeTap()
+    {
+        Loader.Load	(Loader.Scene.WelcomeScreen);
     }
 
     void HandleTrigger()
     {
         Debug.Log("Trigger pressed");
         SelectedRecipe = _recipes[_activeIndex];
+        Loader.Load	(Loader.Scene.RecipeInformation);
     }
 
     void HandleSwipe(MLInputControllerTouchpadGestureDirection direction)
@@ -66,8 +77,8 @@ public class RecipeMenuList : MonoBehaviour
         }
         
         GameObject nextCard = _cards[_activeIndex];
-        previousCard.GetComponent<Image>().color = Color.white;
-        nextCard.GetComponent	<Image>().color = Color.yellow;
+        previousCard.GetComponent<Image>().color = _baseColor;
+        nextCard.GetComponent	<Image>().color = _highlightedColor;
     }  
 
     void Start()
@@ -84,7 +95,7 @@ public class RecipeMenuList : MonoBehaviour
             card.SetActive(true);
             card.GetComponent<RecipeMenuCard>().SetInfo(recipe);
             Image cardImage = card.GetComponent<Image>();
-            cardImage.color = i == 0 ? Color.yellow : Color.white;
+            cardImage.color = i == 0 ? _highlightedColor : _baseColor;
             card.transform.SetParent(cardTemplate.transform.parent, false);
             _cards.Add(card);
         }

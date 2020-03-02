@@ -192,8 +192,7 @@ public class StepCanvas : MonoBehaviour
            }
            
       } else if (GetDone()) {
-           SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().name);
-           Loader.Load(Loader.Scene.RecipeChooser);
+            Loader.Load(Loader.Scene.RecipeMenu);
       } else if (GetGesture(MLHands.Left, MLHandKeyPose.L) || GetGesture(MLHands.Right, MLHandKeyPose.L)) {
             step_number -= 1;
             if (step_number<0){
