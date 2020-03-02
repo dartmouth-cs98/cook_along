@@ -1957,7 +1957,7 @@ MonoBehaviour:
   controlInput: {fileID: 622119681}
   WorldCanvas: {fileID: 1730654183}
   persistentBehavior: {fileID: 1730654189}
-  Camera: {fileID: 818013171}
+  _camera: {fileID: 818013171}
 --- !u!114 &2053130543
 MonoBehaviour:
   m_ObjectHideFlags: 0

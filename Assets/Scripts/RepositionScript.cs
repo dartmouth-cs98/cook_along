@@ -11,23 +11,30 @@ public class RepositionScript : MonoBehaviour
 	public ControlInput controlInput;
   public GameObject WorldCanvas;
   public MLPersistentBehavior persistentBehavior;
-  public GameObject Camera;
+  public GameObject _camera;
 
 	private const float _distance = 2.0f;
 
 	private void Awake()
 	{
-		controlInput.OnBumperHold.AddListener(HandleBumperHold);
+		controlInput.OnBumperDown.AddListener(HandleBumperDown);
 	}
-	public void HandleBumperHold()
+/*	void start()
+	{
+		WorldCanvas = GameObject.Find("Canvas");
+		_camera = Camera.main.gameObject;
+	}*/
+	public void HandleBumperDown()
   {
-		WorldCanvas.transform.position = Camera.transform.position + Camera.transform.forward * _distance;
-		WorldCanvas.transform.rotation = Camera.transform.rotation;
-		persistentBehavior.UpdateBinding();
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
+		if (controlInput.Bumper) {
+			WorldCanvas.transform.position = _camera.transform.position + _camera.transform.forward * _distance;
+			WorldCanvas.transform.rotation = _camera.transform.rotation;
+			persistentBehavior.UpdateBinding();
+		}
 	}
 }

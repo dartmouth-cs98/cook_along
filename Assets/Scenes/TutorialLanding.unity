@@ -330,7 +330,7 @@ MonoBehaviour:
   controlInput: {fileID: 1107156848}
   WorldCanvas: {fileID: 835056718}
   persistentBehavior: {fileID: 835056723}
-  Camera: {fileID: 67730636}
+  _camera: {fileID: 67730636}
 --- !u!1 &737294900
 GameObject:
   m_ObjectHideFlags: 0
