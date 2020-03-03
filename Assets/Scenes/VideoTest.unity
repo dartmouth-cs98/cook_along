@@ -264,6 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59463fdc82a3f40ff8301d5fabec2a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  notification: {fileID: 8300000, guid: e00d63f2e8c6e4e3fb724ae5943b5b11, type: 3}
 --- !u!114 &1260880422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -429,8 +430,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df6b84260700042e8a5adc72564dd86a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rawImage: {fileID: 1561960893}
-  videoPlayer: {fileID: 2125252340}
 --- !u!1 &1879680343
 GameObject:
   m_ObjectHideFlags: 0
