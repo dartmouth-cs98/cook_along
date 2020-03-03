@@ -87,7 +87,6 @@ public class StepCanvas : MonoBehaviour
         startPopulateTimers();
         ges_instructions = GameObject.Find("Gesture instruction").GetComponent<Text>();
         ingred= GameObject.Find("Ingredients").GetComponent<Text>();
-        timeLeft = (float)(-1);
     }
     
     
@@ -423,12 +422,12 @@ public class StepCanvas : MonoBehaviour
             countdown.Add(GameObject.Find("Timer_1").GetComponent<Text>());
             countdown.Add(GameObject.Find("Timer_2").GetComponent<Text>());
             countdown.Add(GameObject.Find("Timer_3").GetComponent<Text>());
-            called.Add(true);
-            called.Add(true);
-            called.Add(true); 
-            timer_running.Add(false); 
-            timer_running.Add(false); 
-            timer_running.Add(false); 
+            for (int i = 0; i < 3; i++){
+                called.Add(true);
+                timer_running.Add(false); 
+                List<float> currTimer = new List<float> {(i+0.0), -1.0 }; 
+                timeLeft.Add(currTimer);    
+            }                 
     }
     
     
