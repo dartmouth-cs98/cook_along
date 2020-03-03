@@ -18,7 +18,7 @@ public class TutorialSuccess : MonoBehaviour
 
     void HandleTrigger()
     {
-        Loader.Load(Loader.Scene.RecipeChooser);
+        Loader.Load(Loader.Scene.RecipeMenu);
     }
 
     void HandleHomeTap()

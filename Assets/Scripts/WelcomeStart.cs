@@ -39,7 +39,7 @@ public class WelcomeStart : MonoBehaviour
     {
         if (_startActivated)
         {
-            Loader.Load(Loader.Scene.RecipeChooser);
+            Loader.Load(Loader.Scene.RecipeMenu);
         }
         else
         {
