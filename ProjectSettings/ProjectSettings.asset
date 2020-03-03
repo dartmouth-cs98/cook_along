@@ -644,7 +644,7 @@ PlayerSettings:
     m_ModelFolderPath: 
     m_PortalFolderPath: 
   luminCert:
-    m_CertPath: /Users/briantomasco/Desktop/CS/CS98/finalproject/cs98.cert
+    m_CertPath: /Users/zacharyjohnson/Downloads/CodingThings/CS98/cook_along/privatekey/zackjohnson.cert
     m_SignPackage: 1
   luminIsChannelApp: 0
   luminVersion:
