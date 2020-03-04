@@ -168,7 +168,16 @@ public class StepCanvas : MonoBehaviour
             step_number += 1;
             called = false;
             visible = false;
-            StepListControl.Selecting = false;
+            if (StepListControl.Selecting)
+            {
+                StepListControl.Selecting = false;
+                StepListControl.ScrollRect.verticalNormalizedPosition = StepListControl.PrevNormPosition - 0.2f;
+                GameObject.Find("Viewport").GetComponent<Image>().color = Color.white;
+            }
+            else
+            {
+                StepListControl.ScrollRect.verticalNormalizedPosition -= 0.2f;
+            }
             Hold(1);
 
             List<RawImage> SceneObject = new List<RawImage>();
@@ -192,7 +201,16 @@ public class StepCanvas : MonoBehaviour
               step_number=0;
             }
 
-            StepListControl.Selecting = false;
+            if (StepListControl.Selecting)
+            {
+                StepListControl.Selecting = false;
+                StepListControl.ScrollRect.verticalNormalizedPosition = StepListControl.PrevNormPosition + 0.2f;
+                GameObject.Find("Viewport").GetComponent<Image>().color = Color.white;
+            }
+            else
+            {
+                StepListControl.ScrollRect.verticalNormalizedPosition += 0.2f; 
+            }
             called = false;
             visible = false;
             

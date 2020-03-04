@@ -15,8 +15,8 @@ public class StepListControl : MonoBehaviour
     public ControlInput controlInput;
     public static bool Selecting;
     private int _selectingRecipeIndex;
-    private float _prevNormPosition;
-    private ScrollRect _scrollRect;
+    public static float PrevNormPosition;
+    public static ScrollRect ScrollRect;
     [SerializeField] private GameObject buttonTemplate;
     
     private void Awake()
@@ -24,7 +24,7 @@ public class StepListControl : MonoBehaviour
         controlInput.OnSwipe.AddListener(HandleSwipe);
         controlInput.OnTriggerPressEnded.AddListener(HandleTrigger);
         Selecting = false;
-        _scrollRect = GetComponent<ScrollRect>();
+        ScrollRect = GetComponent<ScrollRect>();
     }
 
     void HandleTrigger()
@@ -47,7 +47,7 @@ public class StepListControl : MonoBehaviour
             viewportImage.color = _viewportActiveColor;
             Selecting = true;
             _selectingRecipeIndex = StepCanvas.step_number;
-            _prevNormPosition = _scrollRect.verticalNormalizedPosition;
+            PrevNormPosition = ScrollRect.verticalNormalizedPosition;
         }
 
         if (Selecting && direction == MLInputControllerTouchpadGestureDirection.Right)
@@ -56,20 +56,20 @@ public class StepListControl : MonoBehaviour
             Selecting = false;
             if (_selectingRecipeIndex != StepCanvas.step_number)
             {
-                _scrollRect.verticalNormalizedPosition = _prevNormPosition;
+                ScrollRect.verticalNormalizedPosition = PrevNormPosition;
             }
         }
 
-        if (Selecting && direction == MLInputControllerTouchpadGestureDirection.Up)
+        if (Selecting && direction == MLInputControllerTouchpadGestureDirection.Up && _selectingRecipeIndex	> 0)
         {
-            _scrollRect.verticalNormalizedPosition += 0.2f;
+            ScrollRect.verticalNormalizedPosition += 0.2f;
             UpdateListRecipe(direction);
 
         }
 
-        if (Selecting && direction == MLInputControllerTouchpadGestureDirection.Down)
+        if (Selecting && direction == MLInputControllerTouchpadGestureDirection.Down && _selectingRecipeIndex < _buttons.Count - 1)
         {
-            _scrollRect.verticalNormalizedPosition -= 0.2f;
+            ScrollRect.verticalNormalizedPosition -= 0.2f;
             UpdateListRecipe(direction);
         }
     }
@@ -125,7 +125,7 @@ public class StepListControl : MonoBehaviour
             buttonImage.color = i == 0 ? _highlightedColor : _baseColor;
             int stepNumber = i + 1;
             RecipeStep step = steps[i];
-            button.GetComponent	<StepListButton>().SetText	(stepNumber + ". " + step.instruction);
+            button.GetComponent	<StepListButton>().SetText	("  " + stepNumber + ". " + step.instruction);
             button.transform.SetParent	(buttonTemplate.transform.parent, false);
             _buttons.Add(button);
         }
