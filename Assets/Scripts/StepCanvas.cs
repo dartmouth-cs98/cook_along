@@ -63,6 +63,8 @@ public class StepCanvas : MonoBehaviour
     private AudioSource audio;
     private List<bool> play;
     
+    public ControlInput controlInput;
+    
     //variables for ingredient instuctions
     private Text ges_instructions;
     private bool visible = false;
@@ -104,7 +106,7 @@ public class StepCanvas : MonoBehaviour
         startPopulateTimers();
         
         //**********DEBUG********** 
-        Debug.Log(timeLeft); //****
+        UnityEngine.Debug.Log(timeLeft); //****
         //**********DEBUG********** 
         
         ges_instructions = GameObject.Find("Gesture instruction").GetComponent<Text>();
@@ -137,15 +139,20 @@ public class StepCanvas : MonoBehaviour
         }
         
         if (Instruction()){
-            visible = true;
-            //showStart = 7;
+            if(visible){
+                visible = false;
+            }
+            else
+            {
+                visible = true;
+            }
             Hold(1);
         }
 
         for (int i = 0; i < countdown.Count; i++)
         {
             //**********DEBUG************** 
-            Debug.Log(timeLeft[i]); //****
+            UnityEngine.Debug.Log(timeLeft[i]); //****
             //**********DEBUG************ 
             
             if(timeLeft[i][1] > 1)
@@ -197,6 +204,7 @@ public class StepCanvas : MonoBehaviour
                         timerCountdown[i] = (float)10;
                         countdown[i].text = ("");
                         timer_notifs[i].text = "";
+                        play[i] = true;
                         timer_notifs[i].GetComponent<RectTransform>().sizeDelta=new Vector2(170,0);
                     }
                 }
@@ -295,10 +303,9 @@ public class StepCanvas : MonoBehaviour
       {     
            if (!called)
            {
-
                 called = true;
                 int i = 0;
-                while(timeLeft[i][0] == -1.0 && i < 3.0)
+                while(timeLeft[i][0] == -50.0 && i < 3.0)
                 {
                     i++;
                 }
