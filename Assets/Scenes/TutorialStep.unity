@@ -289,20 +289,90 @@ MonoBehaviour:
   m_GameObject: {fileID: 159178639}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f939cfb3986744f9ea3da3d046e9ae83, type: 3}
+  m_Script: {fileID: 11500000, guid: dd84ab43c4be545c2b6422748881bf7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   controlInput: {fileID: 1107156848}
-  instruction: {fileID: 1167040528}
-  gestureImage: {fileID: 1965754803}
-  openHand: {fileID: 21300000, guid: 3d63617855bf4487381f8db511f0275e, type: 3}
-  fist: {fileID: 21300000, guid: f01106158cda54dfb8c0f3c9ddddd873, type: 3}
-  okay: {fileID: 21300000, guid: 7b78ffe70bf804f6b8800910e23e8cfa, type: 3}
-  thumb: {fileID: 21300000, guid: 575eddf7db2f246e4a638104d0f5bf6b, type: 3}
-  pinch: {fileID: 21300000, guid: 9f8bdbff97e494aaa9930e1c1eebd9d0, type: 3}
-  l: {fileID: 21300000, guid: e88ad68e93c294f3d944859bd417308f, type: 3}
-  finger: {fileID: 21300000, guid: a73c02d2b567442088df0eaed20e9d43, type: 3}
-  check: {fileID: 21300000, guid: b8494645fd2184b169af8a5c7299be6f, type: 3}
+  instructionText: {fileID: 1167040528}
+--- !u!1 &271419268
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 271419269}
+  - component: {fileID: 271419271}
+  - component: {fileID: 271419270}
+  m_Layer: 5
+  m_Name: NextText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &271419269
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 271419268}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 835056722}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 28, y: -174}
+  m_SizeDelta: {x: 200, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &271419270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 271419268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Next: trigger'
+--- !u!222 &271419271
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 271419268}
+  m_CullTransparentMesh: 0
 --- !u!1 &342710518
 GameObject:
   m_ObjectHideFlags: 0
@@ -333,7 +403,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 835056722}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -373,7 +443,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Previous gesture: home button'
+  m_Text: 'Previous instruction: home button'
 --- !u!222 &342710521
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -552,8 +622,8 @@ RectTransform:
   - {fileID: 1167040527}
   - {fileID: 1965754802}
   - {fileID: 2110042287}
-  - {fileID: 1693686746}
   - {fileID: 342710519}
+  - {fileID: 271419269}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -639,7 +709,18 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   OnTriggerPressEnded:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11500000, guid: dd84ab43c4be545c2b6422748881bf7b, type: 3}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   OnTriggerHold:
@@ -655,7 +736,7 @@ MonoBehaviour:
   OnHomeButtonTap:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: f939cfb3986744f9ea3da3d046e9ae83, type: 3}
+      - m_Target: {fileID: 11500000, guid: dd84ab43c4be545c2b6422748881bf7b, type: 3}
         m_MethodName: 
         m_Mode: 1
         m_Arguments:
@@ -701,7 +782,7 @@ MonoBehaviour:
   OnDoubleTap:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: f939cfb3986744f9ea3da3d046e9ae83, type: 3}
+      - m_Target: {fileID: 11500000, guid: dd84ab43c4be545c2b6422748881bf7b, type: 3}
         m_MethodName: 
         m_Mode: 1
         m_Arguments:
@@ -829,8 +910,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: The open hand starts or stops a timer if that step requires it. Make an
-    open hand.
+  m_Text: Swipe left to access list of steps. Scroll up and down to choose a step.
+    Pull trigger to go to that step.
 --- !u!222 &1167040529
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -838,85 +919,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1167040526}
-  m_CullTransparentMesh: 0
---- !u!1 &1693686745
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1693686746}
-  - component: {fileID: 1693686748}
-  - component: {fileID: 1693686747}
-  m_Layer: 5
-  m_Name: GestureHelp
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1693686746
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1693686745}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 835056722}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4, y: 90}
-  m_SizeDelta: {x: 500, y: 30}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1693686747
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1693686745}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: Be sure to make the gesture directly in front of the headset!
---- !u!222 &1693686748
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1693686745}
   m_CullTransparentMesh: 0
 --- !u!1 &1965754801
 GameObject:
@@ -953,7 +955,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -224, y: -41}
-  m_SizeDelta: {x: 175, y: 175}
+  m_SizeDelta: {x: 250, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1965754803
 MonoBehaviour:
@@ -975,7 +977,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 3d63617855bf4487381f8db511f0275e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 54eff173b8a764415a71f054dc1f6e08, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1027,7 +1029,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3, y: 155}
+  m_AnchoredPosition: {x: 3, y: 130}
   m_SizeDelta: {x: 600, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2109622085
@@ -1063,8 +1065,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Once you begin cooking, Cook Along uses hand gestures for navigation and
-    control.
+  m_Text: When cooking, Cook Along uses the controller touchpad to handle some actions
 --- !u!222 &2109622086
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1143,7 +1144,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Exit: Double tap touchpad'
+  m_Text: 'Exit: double tap touchpad'
 --- !u!222 &2110042289
 CanvasRenderer:
   m_ObjectHideFlags: 0

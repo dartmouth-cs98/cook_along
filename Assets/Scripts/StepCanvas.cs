@@ -77,7 +77,7 @@ public class StepCanvas : MonoBehaviour
         xCoord= 255;        
         URLsList= RecipeInformation.ingredientURLlistoflist;
         URLs=URLsList[0];
-        videoURL= RecipeInformation.RecipeVar.steps[step_number].videoUrl;
+        videoURL= RecipeMenuList.SelectedRecipe.steps[step_number].videoUrl;
 
         MLHands.Start();
         gestures = new MLHandKeyPose[7];
@@ -180,7 +180,7 @@ public class StepCanvas : MonoBehaviour
 
      
      //********** Work on Recipe Step Change ********** 
-   if(GetOkay() && RecipeInformation.RecipeVar != null && step_number < (RecipeInformation.RecipeVar.steps.Count - 1)) {
+   if(GetOkay() && RecipeMenuList.SelectedRecipe != null && step_number < (RecipeMenuList.SelectedRecipe.steps.Count - 1)) {
 
            step_number += 1;
 
@@ -203,8 +203,7 @@ public class StepCanvas : MonoBehaviour
            }
            
       } else if (GetDone()) {
-           SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().name);
-           Loader.Load(Loader.Scene.RecipeChooser);
+            Loader.Load(Loader.Scene.RecipeMenu);
       } else if (GetGesture(MLHands.Left, MLHandKeyPose.L) || GetGesture(MLHands.Right, MLHandKeyPose.L)) {
             step_number -= 1;
             if (step_number<0){
@@ -233,7 +232,7 @@ public class StepCanvas : MonoBehaviour
        
 
       //********** Work on Populating Recipe ********** 
-      if (RecipeInformation.RecipeVar == null)
+      if (RecipeMenuList.SelectedRecipe == null)
       {
           thisText.text = "No recipe downloaded at the moment";
       }
@@ -241,6 +240,7 @@ public class StepCanvas : MonoBehaviour
       {     
            if (!called)
            {
+
                 called = true;
                 int i = 0;
                 while(timeLeft[i][0] == -1.0 && i < 3.0)
@@ -253,8 +253,8 @@ public class StepCanvas : MonoBehaviour
                countdown[i].text = ("");
            }
        
-           thisText.text = RecipeInformation.RecipeVar.steps[step_number].instruction;
-           videoURL= RecipeInformation.RecipeVar.steps[step_number].videoUrl;
+           thisText.text = RecipeMenuList.SelectedRecipe.steps[step_number].instruction;
+           videoURL= RecipeMenuList.SelectedRecipe.steps[step_number].videoUrl;
            URLs=URLsList[step_number]; 
            
       }
