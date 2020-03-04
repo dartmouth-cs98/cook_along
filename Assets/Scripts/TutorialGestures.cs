@@ -32,7 +32,7 @@ public class TutorialGestures : MonoBehaviour
     {
         controlInput.OnHomeButtonTap.AddListener(HandleHomeTap);
         controlInput.OnDoubleTap.AddListener(HandleDoubleTap);
-        _textIndex = 0;
+        _textIndex = TutorialStep.WentBackToGestures ? _instructions.Count - 1 : 0;
         _instructions = new List<string>()
         {
             "The thumbs up sign takes you to the next step. Make a thumbs up.",

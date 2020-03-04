@@ -11,6 +11,7 @@ public class TutorialStep : MonoBehaviour
     public Text instructionText;
     private int _textIndex;
     private List<string> _instructions;
+    public static bool WentBackToGestures;
     
     
     private void Awake()
@@ -19,6 +20,7 @@ public class TutorialStep : MonoBehaviour
         controlInput.OnDoubleTap.AddListener(HandleDoubleTap);
         controlInput.OnTriggerPressEnded.AddListener(HandleTrigger);
         _textIndex = 0;
+        WentBackToGestures = false;
         _instructions = new List<string>()
         {
             "To move through the instructions in this section, pull the trigger. To go back, click the home button",
@@ -38,6 +40,7 @@ public class TutorialStep : MonoBehaviour
     {
         if (_textIndex == 0)
         {
+            WentBackToGestures = true;
             Loader.Load(Loader.Scene.TutorialGestures); 
         }
         else
