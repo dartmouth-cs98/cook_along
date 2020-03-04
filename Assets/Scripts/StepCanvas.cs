@@ -58,7 +58,7 @@ public class StepCanvas : MonoBehaviour
     private int active_timer;
     
     //scroller for timer
-    //public ControlInput controlInput;
+    public ControlInput controlInput;
     
     // Audio for Timers
     public AudioClip notification;
@@ -183,9 +183,9 @@ public class StepCanvas : MonoBehaviour
                     }
                     else
                     {   
-                        timeLeft[i][1] = -1.0;
-                        timeLeft[i][0] = -50.0;
-                        timerCountdown[i] = 10;
+                        timeLeft[i][1] = (float)-1.0;
+                        timeLeft[i][0] = (float)-50.0;
+                        timerCountdown[i] = (float)10;
                         countdown[i].text = ("");
                         timer_notifs[i].text = "";
                         timer_notifs[i].GetComponent<RectTransform>().sizeDelta=new Vector2(170,0);
