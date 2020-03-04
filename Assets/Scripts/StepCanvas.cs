@@ -11,14 +11,12 @@ using UnityEngine.SceneManagement;
 using UnityEngine.XR.MagicLeap;
 using System.IO;
 using System.Text;
-using MagicLeapTools;
 using Debug = UnityEngine.Debug;
 
 
 public class StepCanvas : MonoBehaviour
 {
     private GameObject canvas;
-    public ControlInput controlInput;
 
     //Setting up Variables used for video
 	 private int yCoord;
@@ -34,7 +32,7 @@ public class StepCanvas : MonoBehaviour
     //setting up variables used for steps
     private Text thisText;
     private Text ingred;
-    private int step_number=0;
+    public static int step_number=0;
     private string videoURL; 
     private MLHandKeyPose[] gestures;   // Holds the different gestures we will look for
     private AssetBundle myLoadedAssetBundle;
@@ -64,17 +62,6 @@ public class StepCanvas : MonoBehaviour
     private bool firstvideo =true; 
     private GameObject NewObj;
     private bool previousVideo = false;
-    
-    
-    private void Awake()
-    {
-        controlInput.OnSwipe.AddListener(HandleSwipe);
-    }
-
-    void HandleSwipe(MLInputControllerTouchpadGestureDirection direction)
-    {
-        Debug.Log("Swiped");
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -181,6 +168,7 @@ public class StepCanvas : MonoBehaviour
             step_number += 1;
             called = false;
             visible = false;
+            StepListControl.Selecting = false;
             Hold(1);
 
             List<RawImage> SceneObject = new List<RawImage>();
@@ -203,6 +191,8 @@ public class StepCanvas : MonoBehaviour
             if (step_number < 0){
               step_number=0;
             }
+
+            StepListControl.Selecting = false;
             called = false;
             visible = false;
             
