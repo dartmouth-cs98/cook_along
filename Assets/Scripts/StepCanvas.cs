@@ -484,7 +484,7 @@ public class StepCanvas : MonoBehaviour
         return false;
    }
     
-<
+
     bool Instruction()
     {
         if (GetGesture(MLHands.Left, MLHandKeyPose.Finger) || GetGesture(MLHands.Right, MLHandKeyPose.Finger))
