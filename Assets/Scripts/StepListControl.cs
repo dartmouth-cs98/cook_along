@@ -111,8 +111,8 @@ public class StepListControl : MonoBehaviour
     void Start()
     {
         _highlightedColor = new Color(0.937f, 0.741f, 0.42f);
-        _viewportActiveColor = new Color(0f, 0.9f, 0.9f);
-        _selectingColor = new Color	(0f, 0.7f, 0.9f);
+        _viewportActiveColor = new Color(1f, 0.96f, 0.83f);
+        _selectingColor = new Color	(1f, 0.87f, 0.5f);
         _baseColor = new Color(1f, 1f, 1f);
         _buttons = new List<GameObject>();
         
