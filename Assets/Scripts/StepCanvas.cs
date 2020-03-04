@@ -11,9 +11,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.XR.MagicLeap;
 using System.IO;
 using System.Text;
-using MagicLeapTools;
-using UnityEngine.XR.MagicLeap;
-
+using Debug = UnityEngine.Debug;
 
 
 public class StepCanvas : MonoBehaviour
@@ -34,7 +32,7 @@ public class StepCanvas : MonoBehaviour
     //setting up variables used for steps
     private Text thisText;
     private Text ingred;
-    private int step_number=0;
+    public static int step_number=0;
     private string videoURL; 
     private MLHandKeyPose[] gestures;   // Holds the different gestures we will look for
     private AssetBundle myLoadedAssetBundle;
@@ -76,9 +74,7 @@ public class StepCanvas : MonoBehaviour
     private bool firstvideo =true; 
     private GameObject NewObj;
     private bool previousVideo = false;
-    
-    
- 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -106,7 +102,7 @@ public class StepCanvas : MonoBehaviour
         startPopulateTimers();
         
         //**********DEBUG********** 
-        UnityEngine.Debug.Log(timeLeft); //****
+        Debug.Log(timeLeft); //****
         //**********DEBUG********** 
         
         ges_instructions = GameObject.Find("Gesture instruction").GetComponent<Text>();
@@ -152,7 +148,7 @@ public class StepCanvas : MonoBehaviour
         for (int i = 0; i < countdown.Count; i++)
         {
             //**********DEBUG************** 
-            UnityEngine.Debug.Log(timeLeft[i]); //****
+            Debug.Log(timeLeft[i]); //****
             //**********DEBUG************ 
             
             if(timeLeft[i][1] > 1)
@@ -212,7 +208,7 @@ public class StepCanvas : MonoBehaviour
         }
          
             
-     
+    
       //********* Work on Gesture Instructions **********
       if(visible)
       {
@@ -229,6 +225,7 @@ public class StepCanvas : MonoBehaviour
                                       "Pinch: Reset Timer" +
                                       Environment.NewLine +
                                       "Closed Fist: Start/Stop Video";
+
           //showStart = showStart - Time.deltaTime; 
                                             
             /*if(showStart < 0){
@@ -241,15 +238,26 @@ public class StepCanvas : MonoBehaviour
           ges_instructions.text = "Point up to see list of actions";
       }
                                       
-     
+ //*********    
          //********** Work on Recipe Step Change ********** 
-       if(GetOkay() && RecipeMenuList.SelectedRecipe != null && step_number < (RecipeMenuList.SelectedRecipe.steps.Count - 1)) {
-    
-               step_number += 1;
-    
+       if(GetOkay() && RecipeMenuList.SelectedRecipe != null && step_number < (RecipeMenuList.SelectedRecipe.steps.Count - 1)) {   
+               step_number += 1;  
                called = false;
                visible = false;
+               
+               if (StepListControl.Selecting)
+               {
+                   StepListControl.Selecting = false;
+                   StepListControl.ScrollRect.verticalNormalizedPosition = StepListControl.PrevNormPosition - 0.2f;
+                   GameObject.Find("Viewport").GetComponent<Image>().color = Color.white;
+               }
+               else
+               {
+                   StepListControl.ScrollRect.verticalNormalizedPosition -= 0.2f;
+               }
                Hold(1);
+               
+
     
                List<RawImage> SceneObject = new List<RawImage>();
                foreach (RawImage go in Resources.FindObjectsOfTypeAll(typeof(RawImage)) as RawImage[]){
@@ -265,13 +273,24 @@ public class StepCanvas : MonoBehaviour
                 previousVideo=false;
                }
                
-          } else if (GetDone()) {
+          }else if (GetDone()) {
                 Loader.Load(Loader.Scene.RecipeMenu);
           } else if (GetGesture(MLHands.Left, MLHandKeyPose.L) || GetGesture(MLHands.Right, MLHandKeyPose.L)) {
                 step_number -= 1;
                 if (step_number<0){
                   step_number=0;
                 }
+                
+                if (StepListControl.Selecting)
+                {
+                    StepListControl.Selecting = false;
+                    StepListControl.ScrollRect.verticalNormalizedPosition = StepListControl.PrevNormPosition + 0.2f;
+                    GameObject.Find("Viewport").GetComponent<Image>().color = Color.white;
+                }
+                else
+                {
+                    StepListControl.ScrollRect.verticalNormalizedPosition += 0.2f; 
+                }          
                 called = false;
                 visible = false;
                          
@@ -284,23 +303,17 @@ public class StepCanvas : MonoBehaviour
                 Hold(1);    
                firstUpdate = true;
                firstvideo=true;
-                // if (previousVideo){
-    
-                Destroy(videoPlayer);
-                Destroy(NewObj);
-               //  previousVideo=false;
-               // }
-          }
-  
-       
+               Destroy(videoPlayer);
+               Destroy(NewObj);
 
-      //********** Work on Populating Recipe ********** 
-      if (RecipeMenuList.SelectedRecipe == null)
-      {
-          thisText.text = "No recipe downloaded at the moment";
-      }
-      else
-      {     
+          }
+
+        //********** Work on Populating Recipe ********** 
+        if (RecipeMenuList.SelectedRecipe == null)
+        {
+            thisText.text = "No recipe downloaded at the moment";
+        } else
+        {     
            if (!called)
            {
                 called = true;
@@ -317,82 +330,76 @@ public class StepCanvas : MonoBehaviour
        
            thisText.text = RecipeMenuList.SelectedRecipe.steps[step_number].instruction;
            videoURL= RecipeMenuList.SelectedRecipe.steps[step_number].videoUrl;
-           URLs=URLsList[step_number]; 
-           
-      }
+           URLs=URLsList[step_number];
+        }
 
-     //********** Work on Video **********  
-      string s1=""; 
-      string s2=null;
-      if (videoURL !=s1 & videoURL!=s2) {
-        previousVideo=true;
+        //********** Work on Video **********  
+        string s1=""; 
+        string s2=null;
+        if (videoURL !=s1 & videoURL!=s2) {
+            previousVideo=true;
         
-        if (firstvideo){
-          NewObj = new GameObject(); //Create the GameObject
-          RawImage Screen = NewObj.AddComponent<RawImage>(); //Add the Image Component script
-          Screen.transform.SetParent(canvas.transform,false);
-          NewObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,-150,0);
-          NewObj.GetComponent<RectTransform>().sizeDelta=new Vector2(125,100);
-          NewObj.SetActive(true); //Activate the GameObject
-          Application.runInBackground=true;
-          videoPlayer=gameObject.AddComponent<VideoPlayer>();
-          videoPlayer.source=VideoSource.Url;
-          videoPlayer.url = videoURL;
-          StartCoroutine(PlayVideo(Screen));
-          firstvideo=false; 
+            if (firstvideo){
+              NewObj = new GameObject(); //Create the GameObject
+              RawImage Screen = NewObj.AddComponent<RawImage>(); //Add the Image Component script
+              Screen.transform.SetParent(canvas.transform,false);
+              NewObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,-150,0);
+              NewObj.GetComponent<RectTransform>().sizeDelta=new Vector2(125,100);
+              NewObj.SetActive(true); //Activate the GameObject
+              Application.runInBackground=true;
+              videoPlayer=gameObject.AddComponent<VideoPlayer>();
+              videoPlayer.source=VideoSource.Url;
+              videoPlayer.url = videoURL;
+              StartCoroutine(PlayVideo(Screen));
+              firstvideo=false; 
+            }
+
+            if (GetGesture(MLHands.Left,MLHandKeyPose.Fist) || GetGesture(MLHands.Right,MLHandKeyPose.Fist)){
+                NewObj.GetComponent<RectTransform>().sizeDelta=new Vector2(VidWidth,VidHeight);
+
+                if (videoPlayer.isPlaying){
+                    videoPlayer.Pause();
+                } else if (videoPlayer.isPaused){
+                  videoPlayer.Play();
+                }
+                Hold(1);
+            }
         }
-
-        if (GetGesture(MLHands.Left,MLHandKeyPose.Fist) || GetGesture(MLHands.Right,MLHandKeyPose.Fist)){
-        NewObj.GetComponent<RectTransform>().sizeDelta=new Vector2(VidWidth,VidHeight);
-
-        if (videoPlayer.isPlaying){
-            videoPlayer.Pause();
-
-        }
-        else if (videoPlayer.isPaused){
-          videoPlayer.Play();
-        }
-        Hold(1); 
-
-      }
-
-
-      }
 
          foreach (string currentURL in URLs)
-         {
-              if (firstUpdate){
-              string currentURLcorrected;
-              currentURLcorrected = currentURL;
-              int length = currentURLcorrected.Length;
-              if (length >0){
-                ingred.text ="Ingredients:";
+         { 
+             if (firstUpdate){ 
+                 string currentURLcorrected; 
+                 currentURLcorrected = currentURL; 
+                 int length = currentURLcorrected.Length; 
+                 if (length >0){
+                    ingred.text ="Ingredients:";
+                    int start = 0;
+              	    int end = length; 
+              	    
+                    if(currentURLcorrected[0]== ','){
+              		    start =2;
+              	    }
+              	
+                    if(currentURLcorrected[length-1]!='g'){
+              		    end = length-1;   
+              	    }
+                
+                    end = end - start;
+              	    currentURLcorrected = currentURLcorrected.Substring(start, end);
 
-              	int start = 0;
-              	int end = length; 
-              	if(currentURLcorrected[0]== ','){
-              		start =2;
-              	}
-              	if(currentURLcorrected[length-1]!='g'){
-              		end = length-1;   
-              	}
-                end = end - start;
-              	currentURLcorrected = currentURLcorrected.Substring(start, end);
-
-
-              GameObject NewURLObj = new GameObject(); //Create the GameObject
-              RawImage NewImage = NewURLObj.AddComponent<RawImage>(); //Add the Image Component script
-              NewImage.transform.SetParent(canvas.transform, false);
-              NewURLObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(xCoord, yCoord, 0);
-              NewURLObj.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
-              yCoord = yCoord - 75;
-              NewURLObj.SetActive(true); //Activate the GameObject
-              StartCoroutine(GetTexture(currentURLcorrected, NewURLObj));
-              previousURL = previousURL+1 ;
-            }
-            }
-
-         }
+                    GameObject NewURLObj = new GameObject(); //Create the GameObject
+                    RawImage NewImage = NewURLObj.AddComponent<RawImage>(); //Add the Image Component script
+                    NewImage.transform.SetParent(canvas.transform, false);
+                    NewURLObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(xCoord, yCoord, 0);
+                    NewURLObj.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
+                    yCoord = yCoord - 75;
+                    NewURLObj.SetActive(true); //Activate the GameObject
+                    StartCoroutine(GetTexture(currentURLcorrected, NewURLObj));
+                    previousURL = previousURL+1; 
+                 }
+             } 
+         } 
          firstUpdate=false;  
    }
 
@@ -407,12 +414,14 @@ public class StepCanvas : MonoBehaviour
         {
             yield return null;
         }
+        
         rawImage.texture = videoPlayer.texture;
         videoPlayer.Play();
         Hold(1);
         videoPlayer.Pause();
 
    }
+
 
    IEnumerator GetTexture(string thisURL, GameObject currrentImage) {
         UnityWebRequest www = UnityWebRequestTexture.GetTexture(thisURL);
@@ -427,7 +436,8 @@ public class StepCanvas : MonoBehaviour
         
    }
 
-   void onDestroy () {
+
+    void OnDestroy () {
         MLHands.Stop();
    }
     
@@ -474,8 +484,9 @@ public class StepCanvas : MonoBehaviour
         return false;
    }
     
-   bool Instruction()
-   {
+<
+    bool Instruction()
+    {
         if (GetGesture(MLHands.Left, MLHandKeyPose.Finger) || GetGesture(MLHands.Right, MLHandKeyPose.Finger))
         {
             return true;
@@ -483,6 +494,7 @@ public class StepCanvas : MonoBehaviour
     
         return false;
    }
+
 
    bool GetDone()
    {
@@ -556,8 +568,7 @@ public class StepCanvas : MonoBehaviour
                 play.Add(true);   
             }     
             
-            active_timer = 0;   
-            controlInput.OnSwipe.AddListener(HandleSwipe);         
+            active_timer = 0;            
    }
     
  
