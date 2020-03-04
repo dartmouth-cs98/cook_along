@@ -21,8 +21,16 @@ public class TutorialStep : MonoBehaviour
         _textIndex = 0;
         _instructions = new List<string>()
         {
-            "Swipe left to access list of steps. Scroll up and down to choose a step. Pull trigger to go to that step.",
-            "Swipe up to access the list of timers. Scroll left and right to switch between timers. Use the open hand to start/top and the pinch to reset."
+            "To move through the instructions in this section, pull the trigger. To go back, click the home button",
+            "Step List: \n You can jump to any step in the recipe at any time. Swipe left on the touchpad to activate step selection.",
+            "Step List: \n Once activated, scroll up and down on the touchpad to choose which step to go to. Pull trigger to go to that step.",
+            "Step List: \n You can exit step selection at any time by swiping right on the touchpad.",
+            "Step List: \n If you make either the thumbs-up or L gesture, step selection will automatically exit.",
+            "Timers: \n Your currently running timers are located at the top of the screen.",
+            "Timers: \n By default, your most recently created timer is selected.",
+            "Timers: \n To change that, swipe up to activate timer selection. Swipe down to exit timer selection.",
+            "Timers: \n Swipe right and left to choose the timer. Pull trigger to select.",
+            "Timers: \n Remember, use the open hand to start/stop the selected timer and the pinch to reset."
         };
     }
     
