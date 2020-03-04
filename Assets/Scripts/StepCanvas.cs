@@ -21,7 +21,7 @@ public class StepCanvas : MonoBehaviour
     private GameObject canvas;
 
     //Setting up Variables used for video
-	 private int yCoord;
+	private int yCoord;
     private int xCoord;
     private int height=75;
     private int width=75;
@@ -46,6 +46,7 @@ public class StepCanvas : MonoBehaviour
     private List<List<float>> timeLeft; //Seconds Overall From Step //Going to be List of string of stepNum and TimeLeft
     private List<float> stepTime; //Seconds to hold per step
     private List<Text> countdown; //UI Text Object
+    private List<Text> timer_notifs;
     private bool called; //used to make sure time is called only once per new step
     private List<bool> timer_running; //used to toggle start and stop for timer
     // variables used for styling the display of time into hh:mm:ss
@@ -53,9 +54,16 @@ public class StepCanvas : MonoBehaviour
     private List<int> minutes;
     private List<int> seconds;
     private List<string> niceTime; 
+    private List<float> timerCountdown;
     private int active_timer;
     
-    public ControlInput controlInput;
+    //scroller for timer
+    //public ControlInput controlInput;
+    
+    // Audio for Timers
+    public AudioClip notification;
+    private AudioSource audio;
+    private List<bool> play;
     
     //variables for ingredient instuctions
     private Text ges_instructions;
@@ -68,6 +76,8 @@ public class StepCanvas : MonoBehaviour
     private bool firstvideo =true; 
     private GameObject NewObj;
     private bool previousVideo = false;
+    
+    
  
     // Start is called before the first frame update
     void Start()
@@ -91,6 +101,8 @@ public class StepCanvas : MonoBehaviour
         MLHands.KeyPoseManager.EnableKeyPoses(gestures, true, false);
 
         thisText = GameObject.Find("Recipe step").GetComponent<Text>();
+        audio= gameObject.AddComponent<AudioSource>();
+        audio.clip = notification;
         startPopulateTimers();
         ges_instructions = GameObject.Find("Gesture instruction").GetComponent<Text>();
         ingred= GameObject.Find("Ingredients").GetComponent<Text>();
@@ -115,6 +127,7 @@ public class StepCanvas : MonoBehaviour
         	timer_running[active_timer] = false;
         	countdown[active_timer].text = ("");
         	timeLeft[active_timer][1] = stepTime[active_timer];
+        	timerCountdown[active_timer] = 10;
         	Hold(1);
         }
         
@@ -125,6 +138,7 @@ public class StepCanvas : MonoBehaviour
         }
 
         for (int i = 0; i < countdown.Count; i++)
+        {
             if(timeLeft[i][1] > 1)
             {
                 if (timer_running[i])
@@ -132,22 +146,54 @@ public class StepCanvas : MonoBehaviour
                     timeLeft[i][1] = timeLeft[i][1] - Time.deltaTime;
                 }
             
-            hours[i] = Mathf.FloorToInt(timeLeft[i][1] / 3600F);
-            minutes[i] = Mathf.FloorToInt((timeLeft[i][1] - (hours[i] * 3600)) / 60F);
-            seconds[i] = Mathf.FloorToInt(timeLeft[i][1] - (hours[i] * 3600) - (minutes[i] * 60));
-            niceTime[i] = String.Format("{0:00}:{1:00}:{2:00}", hours[i], minutes[i], seconds[i]);
+                hours[i] = Mathf.FloorToInt(timeLeft[i][1] / 3600F);
+                minutes[i] = Mathf.FloorToInt((timeLeft[i][1] - (hours[i] * 3600)) / 60F);
+                seconds[i] = Mathf.FloorToInt(timeLeft[i][1] - (hours[i] * 3600) - (minutes[i] * 60));
+                niceTime[i] = String.Format("{0:00}:{1:00}:{2:00}", hours[i], minutes[i], seconds[i]);
+                
+                if (!timer_running[i])
+                 {
+                    countdown[i].color = new Color(1f, 1.0f, 1.0f);
+                    countdown[i].text = ((int)timeLeft[i][0] + ". " + niceTime[i]);
+                 }
+                 
+                else
+                {
+                    countdown[i].color = new Color(0.56f, 0.56f, 0.75f);
+                    countdown[i].text = ((int)timeLeft[i][0] + ". " + niceTime[i]); //Showing the Score on the Canvas
+                }
+            }
             
-            if (!timer_running[i])
-                     {
-                        countdown[i].color = new Color(1f, 1.0f, 1.0f);
-                        countdown[i].text = (niceTime+"");
-                     }
-             else
+            else 
+            {
+                if(timeLeft[i][1] != -1.0)
+                {
+                    timerCountdown[i] -=  Time.deltaTime; 
+                    if(timerCountdown[i] > 0)
                     {
-                        countdown[i].color = new Color(0.56f, 0.56f, 0.75f);
-                        countdown[i].text = ("" + niceTime); //Showing the Score on the Canvas
+                        if (play[i])
+                        {
+                                audio.PlayOneShot(notification);
+                                play[i] = false; 
+                        }
+                         countdown[i].color = new Color(1f, 0f, 0f);
+                         countdown[i].text = ((int)timeLeft[i][0] + ". " + "00:00:00"); //Showing the Score on the Canvas
+                         timer_notifs[i].GetComponent<RectTransform>().sizeDelta=new Vector2(170,50);
+                         timer_notifs[i].text = "Timer has run out for step: " + timeLeft[i][0];        
                     }
-             }
+                    else
+                    {   
+                        timeLeft[i][1] = -1.0;
+                        timeLeft[i][0] = -50.0;
+                        timerCountdown[i] = 10;
+                        countdown[i].text = ("");
+                        timer_notifs[i].text = "";
+                        timer_notifs[i].GetComponent<RectTransform>().sizeDelta=new Vector2(170,0);
+                    }
+                }
+            }
+        }
+         
             
      
       //********* Work on Gesture Instructions **********
@@ -247,7 +293,7 @@ public class StepCanvas : MonoBehaviour
                 {
                     i++;
                 }
-               timeLeft[i][1] = (float)RecipeInformation.RecipeVar.steps[step_number].time;
+               timeLeft[i][1] = (float)RecipeMenuList.SelectedRecipe.steps[step_number].time;
                timeLeft[i][0] = (float)step_number;
                stepTime[i] = timeLeft[i][1];    
                countdown[i].text = ("");
@@ -465,6 +511,7 @@ public class StepCanvas : MonoBehaviour
    void startPopulateTimers()
    {
             countdown = new List<Text>(); 
+            timer_notifs = new List<Text>(); 
             timeLeft = new List<List<float>>(); 
             hours = new List<int>(); 
             minutes = new List<int>(); 
@@ -472,17 +519,25 @@ public class StepCanvas : MonoBehaviour
             niceTime = new List<string>(); 
             timer_running = new List<bool>();
             stepTime = new List<float>();
+            timerCountdown = new List<float>();
+            play = new List<bool>();
             
             countdown.Add(GameObject.Find("Timer_1").GetComponent<Text>());
             countdown.Add(GameObject.Find("Timer_2").GetComponent<Text>());
             countdown.Add(GameObject.Find("Timer_3").GetComponent<Text>());
             
+            timer_notifs.Add(GameObject.Find("Notice1").GetComponent<Text>());
+            timer_notifs.Add(GameObject.Find("Notice2").GetComponent<Text>());
+            timer_notifs.Add(GameObject.Find("Notice3").GetComponent<Text>());
+            
             for (int i = 0; i < 3; i++){
                 timer_running.Add(false); 
                 List<float> currTimer = new List<float>(); 
                 currTimer.Add((float)-1.0);
-                currTimer.Add((float)-1.0);
-                timeLeft.Add(currTimer);    
+                currTimer.Add((float)-50.0);
+                timeLeft.Add(currTimer); 
+                timerCountdown.Add(10);
+                play.Add(true);   
             }     
             active_timer = 0;   
             controlInput.OnSwipe.AddListener(HandleSwipe);         
