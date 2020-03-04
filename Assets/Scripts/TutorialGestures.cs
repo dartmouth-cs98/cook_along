@@ -35,18 +35,18 @@ public class TutorialGestures : MonoBehaviour
         _textIndex = 0;
         _instructions = new List<string>()
         {
-            "The open hand starts or stops a timer if that step requires it. Make an open hand.",
-            "The closed fist starts or stops the video if that step contains one. Make a closed fist.",
-            "The okay sign takes you back to the recipe chooser. Make an okay sign.",
             "The thumbs up sign takes you to the next step. Make a thumbs up.",
-            "The closed pinch resets a timer if one exits/has been started. Make a closed pinch.",
             "The relaxed point (L sign) takes you to the previous step. Make a relaxed point.",
+            "The open hand starts or stops a timer if that step requires it. Make an open hand.",
+            "The closed pinch resets a timer if one has been started. Make a closed pinch.",
+            "The closed fist starts or stops the video if that step contains one. Make a closed fist.",
+            "The okay sign exits back to the recipe menu. Make an okay sign.",
             "The closed point (point upwards) shows you a help menu for these gestures. Make a closed point.",
             "Good job! Now make a thumbs up to move to the next phase of the tutorial"
         };
         _images = new List<Sprite>()
         {
-            openHand, fist, okay, thumb, pinch, l, finger, check
+            thumb, l, openHand, pinch, fist, okay, finger, check
         };
         _checkForGesture = true;
         StartMlHands();
@@ -60,12 +60,12 @@ public class TutorialGestures : MonoBehaviour
     {
         MLHands.Start();
         _gestures = new MLHandKeyPose[7];
-        _gestures[0] = MLHandKeyPose.OpenHand;
-        _gestures[1] = MLHandKeyPose.Fist;
-        _gestures[2] = MLHandKeyPose.Ok;
-        _gestures[3] = MLHandKeyPose.Thumb;
-        _gestures[4] = MLHandKeyPose.Pinch;
-        _gestures[5] = MLHandKeyPose.L;
+        _gestures[0] = MLHandKeyPose.Thumb;
+        _gestures[1] = MLHandKeyPose.L;
+        _gestures[2] = MLHandKeyPose.OpenHand;
+        _gestures[3] = MLHandKeyPose.Pinch;
+        _gestures[4] = MLHandKeyPose.Fist;
+        _gestures[5] = MLHandKeyPose.Ok;
         _gestures[6]= MLHandKeyPose.Finger;
         MLHands.KeyPoseManager.EnableKeyPoses(_gestures, true, false);
     }
@@ -83,7 +83,15 @@ public class TutorialGestures : MonoBehaviour
 
     void HandleHomeTap()
     {
-        PreviousGesture();
+        if (_textIndex == 0)
+        {
+            Loader.Load(Loader.Scene.TutorialLanding);
+        }
+        else
+        {
+            PreviousGesture();
+        }
+        
     }
 
     void HandleDoubleTap(Vector4 param)
