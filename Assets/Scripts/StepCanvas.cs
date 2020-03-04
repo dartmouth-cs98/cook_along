@@ -42,25 +42,23 @@ public class StepCanvas : MonoBehaviour
 
 
     //setting up variables used for timer
-    private List<GameObject> _timers;
     private List<List<float>> timeLeft; //Seconds Overall From Step //Going to be List of string of stepNum and TimeLeft
     private List<float> stepTime; //Seconds to hold per step
     private List<Text> countdown; //UI Text Object
-    private List<Text> timer_notifs;
     private bool called; //used to make sure time is called only once per new step
     private List<bool> timer_running; //used to toggle start and stop for timer
+    
     // variables used for styling the display of time into hh:mm:ss
     private List<int> hours;
     private List<int> minutes;
     private List<int> seconds;
     private List<string> niceTime; 
     private List<float> timerCountdown;
+    
     private int active_timer;
     
-    //scroller for timer
-    public ControlInput controlInput;
-    
-    // Audio for Timers
+    // Audio for Timer Notifications
+    private List<Text> timer_notifs;
     public AudioClip notification;
     private AudioSource audio;
     private List<bool> play;
@@ -68,7 +66,7 @@ public class StepCanvas : MonoBehaviour
     //variables for ingredient instuctions
     private Text ges_instructions;
     private bool visible = false;
-    private float showStart;
+    //private float showStart;
     
     //variables for video 
     private bool firstUpdate= true; 
@@ -104,6 +102,11 @@ public class StepCanvas : MonoBehaviour
         audio= gameObject.AddComponent<AudioSource>();
         audio.clip = notification;
         startPopulateTimers();
+        
+        //**********DEBUG********** 
+        Debug.Log(timeLeft); //****
+        //**********DEBUG********** 
+        
         ges_instructions = GameObject.Find("Gesture instruction").GetComponent<Text>();
         ingred= GameObject.Find("Ingredients").GetComponent<Text>();
     }
@@ -116,11 +119,13 @@ public class StepCanvas : MonoBehaviour
         if(Time_Switch()){
         	if(timer_running[active_timer]){
         		timer_running[active_timer] = false;
+        		Hold(1);
         	}
         	else{
         		timer_running[active_timer] = true;
+        		Hold(1);
         	}
-        	Hold(1);
+        	
         }
 
         if(Time_Reset()){
@@ -133,12 +138,16 @@ public class StepCanvas : MonoBehaviour
         
         if (Instruction()){
             visible = true;
-            showStart = 7;
+            //showStart = 7;
             Hold(1);
         }
 
         for (int i = 0; i < countdown.Count; i++)
         {
+            //**********DEBUG************** 
+            Debug.Log(timeLeft[i]); //****
+            //**********DEBUG************ 
+            
             if(timeLeft[i][1] > 1)
             {
                 if (timer_running[i])
@@ -166,7 +175,7 @@ public class StepCanvas : MonoBehaviour
             
             else 
             {
-                if(timeLeft[i][1] != -1.0)
+                if(timeLeft[i][1] != -50.0)
                 {
                     timerCountdown[i] -=  Time.deltaTime; 
                     if(timerCountdown[i] > 0)
@@ -197,7 +206,8 @@ public class StepCanvas : MonoBehaviour
             
      
       //********* Work on Gesture Instructions **********
-      if(visible){
+      if(visible)
+      {
           
          ges_instructions.GetComponent<RectTransform>().sizeDelta=new Vector2(300,300);
          ges_instructions.text = "Thumbs Up: go to next step" + 
@@ -211,69 +221,68 @@ public class StepCanvas : MonoBehaviour
                                       "Pinch: Reset Timer" +
                                       Environment.NewLine +
                                       "Closed Fist: Start/Stop Video";
-                                      
-          showStart = showStart - Time.deltaTime; 
-                                  
-          if(showStart < 0){
-             visible = false;
-             ges_instructions.GetComponent<RectTransform>().sizeDelta=new Vector2(300,30);
-          }
-          
-       }else{
-        ges_instructions.text = "Point up to see list of actions";
-       }
-      
-
-     
-     //********** Work on Recipe Step Change ********** 
-   if(GetOkay() && RecipeMenuList.SelectedRecipe != null && step_number < (RecipeMenuList.SelectedRecipe.steps.Count - 1)) {
-
-           step_number += 1;
-
-           called = false;
-           visible = false;
-           Hold(1);
-
-           List<RawImage> SceneObject = new List<RawImage>();
-           foreach (RawImage go in Resources.FindObjectsOfTypeAll(typeof(RawImage)) as RawImage[]){
-                RawImage image = go as RawImage; 
-                Destroy(image);
-                yCoord=90;
-           }
-           ingred.text = "" ;
-           firstUpdate = true;
-           firstvideo=true;
-           if (previousVideo){
-            Destroy(NewObj);
-            previousVideo=false;
-           }
-           
-      } else if (GetDone()) {
-            Loader.Load(Loader.Scene.RecipeMenu);
-      } else if (GetGesture(MLHands.Left, MLHandKeyPose.L) || GetGesture(MLHands.Right, MLHandKeyPose.L)) {
-            step_number -= 1;
-            if (step_number<0){
-              step_number=0;
-            }
-            called = false;
-            visible = false;
-                     
-            foreach (RawImage go in Resources.FindObjectsOfTypeAll(typeof(RawImage)) as RawImage[]){
-                RawImage image = go as RawImage; 
-                Destroy(image);
-                yCoord=-60;
-           }
-           ingred.text = "" ;
-            Hold(1);    
-           firstUpdate = true;
-           firstvideo=true;
-            // if (previousVideo){
-
-            Destroy(videoPlayer);
-            Destroy(NewObj);
-           //  previousVideo=false;
-           // }
+          //showStart = showStart - Time.deltaTime; 
+                                            
+            /*if(showStart < 0){
+               visible = false;
+               ges_instructions.GetComponent<RectTransform>().sizeDelta=new Vector2(300,30);
+            }*/
+      }else
+      {
+          ges_instructions.GetComponent<RectTransform>().sizeDelta=new Vector2(300,30);
+          ges_instructions.text = "Point up to see list of actions";
       }
+                                      
+     
+         //********** Work on Recipe Step Change ********** 
+       if(GetOkay() && RecipeMenuList.SelectedRecipe != null && step_number < (RecipeMenuList.SelectedRecipe.steps.Count - 1)) {
+    
+               step_number += 1;
+    
+               called = false;
+               visible = false;
+               Hold(1);
+    
+               List<RawImage> SceneObject = new List<RawImage>();
+               foreach (RawImage go in Resources.FindObjectsOfTypeAll(typeof(RawImage)) as RawImage[]){
+                    RawImage image = go as RawImage; 
+                    Destroy(image);
+                    yCoord=90;
+               }
+               ingred.text = "" ;
+               firstUpdate = true;
+               firstvideo=true;
+               if (previousVideo){
+                Destroy(NewObj);
+                previousVideo=false;
+               }
+               
+          } else if (GetDone()) {
+                Loader.Load(Loader.Scene.RecipeMenu);
+          } else if (GetGesture(MLHands.Left, MLHandKeyPose.L) || GetGesture(MLHands.Right, MLHandKeyPose.L)) {
+                step_number -= 1;
+                if (step_number<0){
+                  step_number=0;
+                }
+                called = false;
+                visible = false;
+                         
+                foreach (RawImage go in Resources.FindObjectsOfTypeAll(typeof(RawImage)) as RawImage[]){
+                    RawImage image = go as RawImage; 
+                    Destroy(image);
+                    yCoord=-60;
+               }
+               ingred.text = "" ;
+                Hold(1);    
+               firstUpdate = true;
+               firstvideo=true;
+                // if (previousVideo){
+    
+                Destroy(videoPlayer);
+                Destroy(NewObj);
+               //  previousVideo=false;
+               // }
+          }
   
        
 
@@ -539,6 +548,7 @@ public class StepCanvas : MonoBehaviour
                 timerCountdown.Add(10);
                 play.Add(true);   
             }     
+            
             active_timer = 0;   
             controlInput.OnSwipe.AddListener(HandleSwipe);         
    }
