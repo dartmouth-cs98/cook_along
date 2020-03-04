@@ -11,6 +11,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.XR.MagicLeap;
 using System.IO;
 using System.Text;
+using MagicLeapTools;
+using UnityEngine.XR.MagicLeap;
+
 
 
 public class StepCanvas : MonoBehaviour
@@ -39,16 +42,20 @@ public class StepCanvas : MonoBehaviour
 
 
     //setting up variables used for timer
+    private List<GameObject> _timers;
     private List<List<float>> timeLeft; //Seconds Overall From Step //Going to be List of string of stepNum and TimeLeft
     private List<float> stepTime; //Seconds to hold per step
-    private List<GameObject> countdown; //UI Text Object
-    private List<bool> called; //used to make sure time is called only once per new step
+    private List<Text> countdown; //UI Text Object
+    private bool called; //used to make sure time is called only once per new step
     private List<bool> timer_running; //used to toggle start and stop for timer
     // variables used for styling the display of time into hh:mm:ss
     private List<int> hours;
     private List<int> minutes;
     private List<int> seconds;
     private List<string> niceTime; 
+    private int active_timer;
+    
+    public ControlInput controlInput;
     
     //variables for ingredient instuctions
     private Text ges_instructions;
@@ -95,19 +102,19 @@ public class StepCanvas : MonoBehaviour
     {
          //********* Work on Timer **********
         if(Time_Switch()){
-        	if(timer_running){
-        		timer_running = false;
+        	if(timer_running[active_timer]){
+        		timer_running[active_timer] = false;
         	}
         	else{
-        		timer_running = true;
+        		timer_running[active_timer] = true;
         	}
         	Hold(1);
         }
 
         if(Time_Reset()){
-        	timer_running = false;
-        	countdown.text = ("");
-        	timeLeft = stepTime;
+        	timer_running[active_timer] = false;
+        	countdown[active_timer].text = ("");
+        	timeLeft[active_timer][1] = stepTime[active_timer];
         	Hold(1);
         }
         
@@ -117,29 +124,31 @@ public class StepCanvas : MonoBehaviour
             Hold(1);
         }
 
-        if(timeLeft > 1)
-        {
-            if (timer_running)
+        for (int i = 0; i < countdown.Count; i++)
+            if(timeLeft[i][1] > 1)
             {
-                timeLeft = timeLeft - Time.deltaTime;
-            }
-        
-        hours = Mathf.FloorToInt(timeLeft / 3600F);
-        minutes = Mathf.FloorToInt((timeLeft - (hours * 3600)) / 60F);
-        seconds = Mathf.FloorToInt(timeLeft - (hours * 3600) - (minutes * 60));
-        niceTime = String.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
-        
-        if (!timer_running)
-             {
-                countdown.color = new Color(1f, 0.0f, 0.0f);
-                countdown.text = (niceTime);
+                if (timer_running[i])
+                {
+                    timeLeft[i][1] = timeLeft[i][1] - Time.deltaTime;
+                }
+            
+            hours[i] = Mathf.FloorToInt(timeLeft[i][1] / 3600F);
+            minutes[i] = Mathf.FloorToInt((timeLeft[i][1] - (hours[i] * 3600)) / 60F);
+            seconds[i] = Mathf.FloorToInt(timeLeft[i][1] - (hours[i] * 3600) - (minutes[i] * 60));
+            niceTime[i] = String.Format("{0:00}:{1:00}:{2:00}", hours[i], minutes[i], seconds[i]);
+            
+            if (!timer_running[i])
+                     {
+                        countdown[i].color = new Color(1f, 1.0f, 1.0f);
+                        countdown[i].text = (niceTime+"");
+                     }
+             else
+                    {
+                        countdown[i].color = new Color(0.56f, 0.56f, 0.75f);
+                        countdown[i].text = ("" + niceTime); //Showing the Score on the Canvas
+                    }
              }
-         else
-            {
-                countdown.color = new Color(1f, 1.0f, 1.0f);
-                countdown.text = ("" + niceTime); //Showing the Score on the Canvas
-            }
-        }
+            
      
       //********* Work on Gesture Instructions **********
       if(visible){
@@ -232,10 +241,16 @@ public class StepCanvas : MonoBehaviour
       {     
            if (!called)
            {
-               timeLeft = (float)RecipeInformation.RecipeVar.steps[step_number].time;
-               called = true;
-               stepTime = timeLeft;    
-               countdown.text = ("");
+                called = true;
+                int i = 0;
+                while(timeLeft[i][0] == -1.0 && i < 3.0)
+                {
+                    i++;
+                }
+               timeLeft[i][1] = (float)RecipeInformation.RecipeVar.steps[step_number].time;
+               timeLeft[i][0] = (float)step_number;
+               stepTime[i] = timeLeft[i][1];    
+               countdown[i].text = ("");
            }
        
            thisText.text = RecipeInformation.RecipeVar.steps[step_number].instruction;
@@ -317,28 +332,27 @@ public class StepCanvas : MonoBehaviour
 
          }
          firstUpdate=false;  
-    }
+   }
 
 
     //********** Helper Functions ********** 
-    IEnumerator PlayVideo(RawImage rawImage)
-    {
+   IEnumerator PlayVideo(RawImage rawImage)
+   {
         videoPlayer.playOnAwake=false;
         videoPlayer.Prepare();
         
         while (!videoPlayer.isPrepared)
         {
-        yield return null;
-
+            yield return null;
         }
         rawImage.texture = videoPlayer.texture;
         videoPlayer.Play();
         Hold(1);
         videoPlayer.Pause();
 
-    }
+   }
 
-    IEnumerator GetTexture(string thisURL, GameObject currrentImage) {
+   IEnumerator GetTexture(string thisURL, GameObject currrentImage) {
         UnityWebRequest www = UnityWebRequestTexture.GetTexture(thisURL);
     	yield return www.SendWebRequest();
 
@@ -349,13 +363,13 @@ public class StepCanvas : MonoBehaviour
             currrentImage.GetComponent<RawImage>().texture = DownloadHandlerTexture.GetContent(www);
         }
         
-    }
+   }
 
-    void onDestroy () {
+   void onDestroy () {
         MLHands.Stop();
-    }
+   }
     
-    bool GetGesture(MLHand hand, MLHandKeyPose type) {
+   bool GetGesture(MLHand hand, MLHandKeyPose type) {
         if (hand != null) {
             if (hand.KeyPose == type) {
                 if (hand.KeyPoseConfidence > 0.9f) {
@@ -364,72 +378,117 @@ public class StepCanvas : MonoBehaviour
             }
         }
         return false;
-    }
+   }
     
     
-    //********** Gesture Recognition Boolean Functions ********** 
-    bool GetOkay()
-    {
+   //********** Gesture Recognition Boolean Functions ********** 
+   bool GetOkay()
+   {
         if (GetGesture(MLHands.Left, MLHandKeyPose.Thumb) || GetGesture(MLHands.Right, MLHandKeyPose.Thumb))
         {
             return true;
         }
 
         return false;
-    }
+   }
 
-    bool Time_Switch()
-    {
+   bool Time_Switch()
+   {
         if (GetGesture(MLHands.Left, MLHandKeyPose.OpenHand) || GetGesture(MLHands.Right, MLHandKeyPose.OpenHand))
         {
             return true;
         }
 
         return false;
-    }
+   }
 
-    bool Time_Reset()
-    {
+   bool Time_Reset()
+   {
         if (GetGesture(MLHands.Left, MLHandKeyPose.Pinch) || GetGesture(MLHands.Right, MLHandKeyPose.Pinch))
         {
             return true;
         }
 
         return false;
-    }
+   }
     
-    bool Instruction()
+   bool Instruction()
+   {
+        if (GetGesture(MLHands.Left, MLHandKeyPose.Finger) || GetGesture(MLHands.Right, MLHandKeyPose.Finger))
         {
-            if (GetGesture(MLHands.Left, MLHandKeyPose.Finger) || GetGesture(MLHands.Right, MLHandKeyPose.Finger))
-            {
-                return true;
-            }
-    
-            return false;
+            return true;
         }
+    
+        return false;
+   }
 
-    bool GetDone()
+   bool GetDone()
    {
        if (GetGesture(MLHands.Left, MLHandKeyPose.Ok) || GetGesture(MLHands.Right, MLHandKeyPose.Ok)) 
        {
            return true;
        }
-
        return false;
    }
+   
+   void HandleSwipe(MLInputControllerTouchpadGestureDirection direction)     
+   {
+       if (direction == MLInputControllerTouchpadGestureDirection.Right && active_timer < 2)
+       {
+           UpdateActiveTimer(direction);
+       }
 
-    void startPopulateTimers(){   
+       if (direction == MLInputControllerTouchpadGestureDirection.Left && active_timer > 0)
+       {
+           UpdateActiveTimer(direction);
+       }
+   }
+       
+   void UpdateActiveTimer(MLInputControllerTouchpadGestureDirection direction)
+   {
+       int oldIndex = (int)active_timer;
+       
+       if (direction == MLInputControllerTouchpadGestureDirection.Right)
+       {
+           active_timer += 1;
+       }
+
+       if (direction == MLInputControllerTouchpadGestureDirection.Left)
+       {
+           active_timer -= 1;
+       }
+       
+       countdown[oldIndex].color = new Color(0.56f, 0.56f, 0.75f);
+       countdown[active_timer].color = Color.yellow;
+   }  
+
+   void startPopulateTimers()
+   {
+            countdown = new List<Text>(); 
+            timeLeft = new List<List<float>>(); 
+            hours = new List<int>(); 
+            minutes = new List<int>(); 
+            seconds = new List<int>(); 
+            niceTime = new List<string>(); 
+            timer_running = new List<bool>();
+            stepTime = new List<float>();
+            
             countdown.Add(GameObject.Find("Timer_1").GetComponent<Text>());
             countdown.Add(GameObject.Find("Timer_2").GetComponent<Text>());
             countdown.Add(GameObject.Find("Timer_3").GetComponent<Text>());
+            
             for (int i = 0; i < 3; i++){
-                called.Add(true);
                 timer_running.Add(false); 
-                List<float> currTimer = new List<float> {(i+0.0), -1.0 }; 
+                List<float> currTimer = new List<float>(); 
+                currTimer.Add((float)-1.0);
+                currTimer.Add((float)-1.0);
                 timeLeft.Add(currTimer);    
-            }                 
-    }
+            }     
+            active_timer = 0;   
+            controlInput.OnSwipe.AddListener(HandleSwipe);         
+   }
     
+ 
     
    void Hold(int delay){
        Stopwatch stopWatch = new Stopwatch();
