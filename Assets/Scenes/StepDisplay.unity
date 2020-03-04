@@ -120,7 +120,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
-<<<<<<< HEAD
 --- !u!1 &951620
 GameObject:
   m_ObjectHideFlags: 0
@@ -376,8 +375,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 170327116}
   m_CullTransparentMesh: 0
-=======
->>>>>>> 0934d8095186c367baae9c3461d249374c01f11a
 --- !u!1 &239502644
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,7 +454,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 239502644}
   m_CullTransparentMesh: 0
-<<<<<<< HEAD
+
 --- !u!1 &317435863
 GameObject:
   m_ObjectHideFlags: 0
@@ -538,9 +535,6 @@ CanvasRenderer:
   m_GameObject: {fileID: 317435863}
   m_CullTransparentMesh: 0
 --- !u!1 &407634142
-=======
---- !u!1 &327361442
->>>>>>> 0934d8095186c367baae9c3461d249374c01f11a
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2171,7 +2165,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f3b592e80378423d925298226d9d722, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
   controlInput: {fileID: 0}
   notification: {fileID: 8300000, guid: e00d63f2e8c6e4e3fb724ae5943b5b11, type: 3}
 --- !u!1 &1780828719
@@ -2210,8 +2203,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
-=======
->>>>>>> 0934d8095186c367baae9c3461d249374c01f11a
 --- !u!1 &1851614145
 GameObject:
   m_ObjectHideFlags: 0
@@ -2292,11 +2283,8 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1851614145}
   m_CullTransparentMesh: 0
-<<<<<<< HEAD
+
 --- !u!1 &1916206322
-=======
---- !u!1 &1928191300
->>>>>>> 0934d8095186c367baae9c3461d249374c01f11a
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2304,35 +2292,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-<<<<<<< HEAD
   - component: {fileID: 1916206323}
   - component: {fileID: 1916206325}
   - component: {fileID: 1916206324}
   m_Layer: 5
   m_Name: Notice3
-=======
-  - component: {fileID: 1928191301}
-  - component: {fileID: 1928191303}
-  - component: {fileID: 1928191302}
-  m_Layer: 5
-  m_Name: Text
->>>>>>> 0934d8095186c367baae9c3461d249374c01f11a
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
-<<<<<<< HEAD
+
 --- !u!224 &1916206323
-=======
---- !u!224 &1928191301
->>>>>>> 0934d8095186c367baae9c3461d249374c01f11a
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
   m_GameObject: {fileID: 1916206322}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -2347,32 +2323,12 @@ RectTransform:
   m_SizeDelta: {x: 170, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1916206324
-=======
-  m_GameObject: {fileID: 1928191300}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 504066938}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1928191302
->>>>>>> 0934d8095186c367baae9c3461d249374c01f11a
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
   m_GameObject: {fileID: 1916206322}
-=======
-  m_GameObject: {fileID: 1928191300}
->>>>>>> 0934d8095186c367baae9c3461d249374c01f11a
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
@@ -2393,33 +2349,21 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
-<<<<<<< HEAD
     m_Alignment: 0
-=======
-    m_Alignment: 3
->>>>>>> 0934d8095186c367baae9c3461d249374c01f11a
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-<<<<<<< HEAD
+
   m_Text: 
 --- !u!222 &1916206325
-=======
-  m_Text: Button
---- !u!222 &1928191303
->>>>>>> 0934d8095186c367baae9c3461d249374c01f11a
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
   m_GameObject: {fileID: 1916206322}
-=======
-  m_GameObject: {fileID: 1928191300}
->>>>>>> 0934d8095186c367baae9c3461d249374c01f11a
   m_CullTransparentMesh: 0
 --- !u!1 &1944171517
 GameObject:

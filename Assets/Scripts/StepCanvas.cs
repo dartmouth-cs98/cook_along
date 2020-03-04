@@ -61,8 +61,6 @@ public class StepCanvas : MonoBehaviour
     private AudioSource audio;
     private List<bool> play;
     
-    public ControlInput controlInput;
-    
     //variables for ingredient instuctions
     private Text ges_instructions;
     private bool visible = false;
