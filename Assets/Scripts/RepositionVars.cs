@@ -47,7 +47,7 @@ public class RepositionVars : MonoBehaviour
 	
 	// 0 - prev
 	// 1 - next
-	public static int TutorialIndex
+	public static int TutorialIndex;
 
 	void Awake()
 	{
