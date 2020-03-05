@@ -59,7 +59,8 @@ public class WelcomeScreenRepo : MonoBehaviour
 			// RecipeMenu
 			case 5:
 				WorldCanvas.transform.position = RepositionVars.RecipeMenu_position;
-				WorldCanvas.transform.rotation = RepositionVars.RecipeMenu_rotaiton;
+				WorldCanvas.transform.rotation = RepositionVars.RecipeMenu_rotation;
+				break;
 		}
 		
 		RepositionVars.WelcomeScreen_position = WorldCanvas.transform.position;

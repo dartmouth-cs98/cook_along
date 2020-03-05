@@ -36,10 +36,17 @@ public class RecipeMenuRepo : MonoBehaviour
 				WorldCanvas.transform.position = RepositionVars.StepDisplay_position;
 				WorldCanvas.transform.rotation = RepositionVars.StepDisplay_rotation;
 				break;
-
+			
+			// TutorialSuccess
 			case 2:
 				WorldCanvas.transform.position = RepositionVars.TutorialSuccess_position;
 				WorldCanvas.transform.rotation = RepositionVars.TutorialSuccess_rotation;
+				break;
+
+			// RecipeInformation
+			case 3:
+				WorldCanvas.transform.position = RepositionVars.RecipeInformation_position;
+				WorldCanvas.transform.rotation = RepositionVars.RecipeInformation_rotation;
 				break;
 		}
 
