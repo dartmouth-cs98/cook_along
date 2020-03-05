@@ -31,6 +31,9 @@ public class RepositionVars : MonoBehaviour
 	public static Vector3 StepDisplay_position;
 	public static Quaternion StepDisplay_rotation;
 
+	public static Vector3 Loading_position;
+	public static Quaternion Loading_rotation;
+
 	// indices - keep track of which coordinates to update
 
 	// 0 - start
@@ -49,6 +52,19 @@ public class RepositionVars : MonoBehaviour
 	// 0 - prev
 	// 1 - next
 	public static int TutorialIndex;
+
+	// Scene before loading screne
+	// 0 - WelcomeScreen
+	// 1 - TutorialLanding
+	// 2 - TutorialGestures
+	// 3 - TutorialStep
+	// 4 - TutorialSuccess
+	// 5 - RecipeMenu
+	// 6 - RecipeInformation
+	// 7 - StepDisplay
+	public static int LoadIndex;
+
+	public static float _distance = 1.25f;
 
 	void Awake()
 	{

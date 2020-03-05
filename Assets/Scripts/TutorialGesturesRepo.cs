@@ -19,8 +19,6 @@ public class TutorialGesturesRepo : MonoBehaviour
   public GameObject WorldCanvas;
   public GameObject _camera;
 
-	private const float _distance = 2.0f;
-
 	private void Awake()
 	{
 		switch (RepositionVars.TutorialIndex)
@@ -44,7 +42,7 @@ public class TutorialGesturesRepo : MonoBehaviour
 	void Update()
 	{
 		if (controlInput.Bumper) {
-			WorldCanvas.transform.position = _camera.transform.position + _camera.transform.forward * _distance;
+			WorldCanvas.transform.position = _camera.transform.position + _camera.transform.forward * RepositionVars._distance;
 			RepositionVars.TutorialGestures_position = WorldCanvas.transform.position;
 
 			WorldCanvas.transform.rotation = _camera.transform.rotation;

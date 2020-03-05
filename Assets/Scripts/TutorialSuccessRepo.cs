@@ -19,8 +19,6 @@ public class TutorialSuccessRepo : MonoBehaviour
   public GameObject WorldCanvas;
   public GameObject _camera;
 
-	private const float _distance = 2.0f;
-
 	private void Awake()
 	{
 		WorldCanvas.transform.position = RepositionVars.TutorialStep_position;
@@ -34,7 +32,7 @@ public class TutorialSuccessRepo : MonoBehaviour
 	void Update()
 	{
 		if (controlInput.Bumper) {
-			WorldCanvas.transform.position = _camera.transform.position + _camera.transform.forward * _distance;
+			WorldCanvas.transform.position = _camera.transform.position + _camera.transform.forward * RepositionVars._distance;
 			RepositionVars.TutorialSuccess_position = WorldCanvas.transform.position;
 
 			WorldCanvas.transform.rotation = _camera.transform.rotation;
