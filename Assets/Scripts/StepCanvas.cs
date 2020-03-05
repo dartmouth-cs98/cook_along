@@ -17,6 +17,7 @@ using Debug = UnityEngine.Debug;
 public class StepCanvas : MonoBehaviour
 {
     private GameObject canvas;
+    public static bool fromScroller; //*********************// 
 
     //Setting up Variables used for video
 	private int yCoord;
@@ -77,7 +78,8 @@ public class StepCanvas : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        canvas = GameObject.Find("Canvas");     
+        canvas = GameObject.Find("Canvas");    
+        fromScroller = false; //*********************// 
         yCoord=90;
         xCoord= 255;        
         URLsList= RecipeInformation.ingredientURLlistoflist;
@@ -170,7 +172,6 @@ public class StepCanvas : MonoBehaviour
             
             else 
             {
-                //Debug.Log("time left less than one");
               
                 if(timeLeft[i][1] > -15.0)
                 {
@@ -262,8 +263,14 @@ public class StepCanvas : MonoBehaviour
                                       
  //*********    
          //********** Work on Recipe Step Change ********** 
-       if(GetOkay() && RecipeMenuList.SelectedRecipe != null && step_number < (RecipeMenuList.SelectedRecipe.steps.Count - 1)) {   
-               step_number += 1;  
+         //*********************// 
+       if((GetOkay() || fromScrollerFront) && RecipeMenuList.SelectedRecipe != null && step_number < (RecipeMenuList.SelectedRecipe.steps.Count - 1)) {   
+               
+               if(!fromScroller)
+               {
+                    step_number += 1;
+               }  
+               
                called = false;
                visible = false;
                
@@ -279,25 +286,27 @@ public class StepCanvas : MonoBehaviour
                }
                Hold(1);
                
-
-    
                List<RawImage> SceneObject = new List<RawImage>();
                foreach (RawImage go in Resources.FindObjectsOfTypeAll(typeof(RawImage)) as RawImage[]){
                     RawImage image = go as RawImage; 
                     Destroy(image);
                     yCoord=90;
                }
+               
                ingred.text = "" ;
                firstUpdate = true;
                firstvideo=true;
                if (previousVideo){
-                Destroy(NewObj);
-                previousVideo=false;
+                   Destroy(videoPlayer);
+                   Destroy(NewObj);
+                   previousVideo=false;
                }
+               
+               fromScroller = false;
                
           }else if (GetDone()) {
                 Loader.Load(Loader.Scene.RecipeMenu);
-          } else if (GetGesture(MLHands.Left, MLHandKeyPose.L) || GetGesture(MLHands.Right, MLHandKeyPose.L)) {
+          } else if (GetL()) { //*********************// 
                 step_number -= 1;
                 if (step_number<0){
                   step_number=0;
@@ -312,22 +321,25 @@ public class StepCanvas : MonoBehaviour
                 else
                 {
                     StepListControl.ScrollRect.verticalNormalizedPosition += 0.2f; 
-                }          
+                }    
+                      
                 called = false;
                 visible = false;
                          
                 foreach (RawImage go in Resources.FindObjectsOfTypeAll(typeof(RawImage)) as RawImage[]){
                     RawImage image = go as RawImage; 
                     Destroy(image);
-                    yCoord=-60;
+                    yCoord=90;
                }
                ingred.text = "" ;
                 Hold(1);    
                firstUpdate = true;
                firstvideo=true;
-               Destroy(videoPlayer);
-               Destroy(NewObj);
-
+               if (previousVideo){
+                  Destroy(videoPlayer);
+                  Destroy(NewObj);
+                  previousVideo=false;
+               }
           }
 
         //********** Work on Populating Recipe ********** 
@@ -505,6 +517,16 @@ public class StepCanvas : MonoBehaviour
         }
 
         return false;
+   }
+   
+   bool GetL()  //*********************// 
+    {
+           if (GetGesture(MLHands.Left, MLHandKeyPose.L) || GetGesture(MLHands.Right, MLHandKeyPose.L))
+           {
+               return true;
+           }
+    
+           return false;
    }
 
    bool Time_Switch()

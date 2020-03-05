@@ -35,6 +35,7 @@ public class StepListControl : MonoBehaviour
         if (Selecting)
         {
             StepCanvas.step_number = _selectingRecipeIndex;
+            StepCanvas.fromScroller = true; //*********************// 
             Image viewportImage = GameObject.Find("Viewport").GetComponent<Image>();
             viewportImage.color = Color.white;
             Selecting = false;
