@@ -234,11 +234,11 @@ public class StepCanvas : MonoBehaviour
       if(visible)
       {
         ges_instructions.text = "";
-        GameObject.Find("GestureIcons").SetActive(true);
+        GameObject.Find("GestureIcons").transform.localScale = new Vector3(1, 1, 1);
                                               
       }else
       {
-          GameObject.Find("GestureIcons").SetActive(false);
+          GameObject.Find("GestureIcons").transform.localScale = new Vector3(0, 0, 0);
           ges_instructions.text = "Point up to see list of actions";
       }
                                       
