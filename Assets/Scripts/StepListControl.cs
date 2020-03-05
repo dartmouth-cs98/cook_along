@@ -45,35 +45,38 @@ public class StepListControl : MonoBehaviour
     {
         Image viewportImage = GameObject.Find("Viewport").GetComponent<Image>();
         
-        if (!Selecting && direction == MLInputControllerTouchpadGestureDirection.Left)
-        {
-            viewportImage.color = _viewportActiveColor;
-            Selecting = true;
-            _selectingRecipeIndex = StepCanvas.step_number;
-            PrevNormPosition = ScrollRect.verticalNormalizedPosition;
-        }
-
-        if (Selecting && direction == MLInputControllerTouchpadGestureDirection.Right)
-        { 
-            viewportImage.color = Color.white;
-            Selecting = false;
-            if (_selectingRecipeIndex != StepCanvas.step_number)
+        if (!TimeSelect){
+        
+            if (!Selecting && direction == MLInputControllerTouchpadGestureDirection.Left)
             {
-                ScrollRect.verticalNormalizedPosition = PrevNormPosition;
+                viewportImage.color = _viewportActiveColor;
+                Selecting = true;
+                _selectingRecipeIndex = StepCanvas.step_number;
+                PrevNormPosition = ScrollRect.verticalNormalizedPosition;
             }
-        }
-
-        if (Selecting && direction == MLInputControllerTouchpadGestureDirection.Up && _selectingRecipeIndex	> 0)
-        {
-            ScrollRect.verticalNormalizedPosition += 0.2f;
-            UpdateListRecipe(direction);
-
-        }
-
-        if (Selecting && direction == MLInputControllerTouchpadGestureDirection.Down && _selectingRecipeIndex < _buttons.Count - 1)
-        {
-            ScrollRect.verticalNormalizedPosition -= 0.2f;
-            UpdateListRecipe(direction);
+    
+            if (Selecting && direction == MLInputControllerTouchpadGestureDirection.Right)
+            { 
+                viewportImage.color = Color.white;
+                Selecting = false;
+                if (_selectingRecipeIndex != StepCanvas.step_number)
+                {
+                    ScrollRect.verticalNormalizedPosition = PrevNormPosition;
+                }
+            }
+    
+            if (Selecting && direction == MLInputControllerTouchpadGestureDirection.Up && _selectingRecipeIndex	> 0)
+            {
+                ScrollRect.verticalNormalizedPosition += 0.2f;
+                UpdateListRecipe(direction);
+    
+            }
+    
+            if (Selecting && direction == MLInputControllerTouchpadGestureDirection.Down && _selectingRecipeIndex < _buttons.Count - 1)
+            {
+                ScrollRect.verticalNormalizedPosition -= 0.2f;
+                UpdateListRecipe(direction);
+            }
         }
         
         //For Timer Below
