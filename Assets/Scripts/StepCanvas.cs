@@ -45,7 +45,7 @@ public class StepCanvas : MonoBehaviour
     public static List<Text> countdown; //UI Text Object
     private bool called; //used to make sure time is called only once per new step
     private List<bool> timer_running; //used to toggle start and stop for timer
-    public static int currInd = -1;
+    public static int hasTime = false;
     
     // variables used for styling the display of time into hh:mm:ss
     private List<int> hours;
@@ -156,30 +156,27 @@ public class StepCanvas : MonoBehaviour
                 {
                     countdown[i].color = new Color(0.85f, 0.85f, 0.10f);
                     countdown[i].text = ("Step " + (int)timeLeft[i][0] + ".  " + niceTime[i]); //Showing the Score on the Canvas
-                }
-                else if (!timer_running[i])
+                }else if (!timer_running[i])
                  {
                     Debug.Log("time left more than one and not running");
                     countdown[i].color = new Color(1f, 1.0f, 1.0f);
                     countdown[i].text = ("Step " + (int)timeLeft[i][0] + ".  " + niceTime[i]);
-                 }
-                else
-                {
+                 }else{
                     Debug.Log("time left more than one and running");
                     countdown[i].color = new Color(0.56f, 0.56f, 0.75f);
                     countdown[i].text = ("Step " + (int)timeLeft[i][0] + ".  " + niceTime[i]); //Showing the Score on the Canvas
-                }
+                 }
             }
             
             else 
             {
                 //Debug.Log("time left less than one");
               
-                //if(timeLeft[i][1] > -10.0)
-                //{
+                if(timeLeft[i][1] > -15.0)
+                {
                     Debug.Log("time left less than one but in countdown");
                     //timerCountdown[i] -=  Time.deltaTime; 
-                    while(timerCountdown[i] > 0)
+                    if(timerCountdown[i] > 0)
                     {
                         timerCountdown[i] -=  Time.deltaTime; 
                         if (play[i])
@@ -192,8 +189,8 @@ public class StepCanvas : MonoBehaviour
                          timer_notifs[i].GetComponent<RectTransform>().sizeDelta=new Vector2(170,50);
                          timer_notifs[i].text = "Timer has run out for step: " + timeLeft[i][0];        
                     }
-                    //else
-                    //{   
+                    else
+                    {   
                         timer_running[i] = false;
                         timeLeft[i][1] = (float)(-1.0);
                         timeLeft[i][0] = (float)(-50.0);
@@ -207,12 +204,15 @@ public class StepCanvas : MonoBehaviour
                         hours[i] = 0;
                         niceTime[i] = "";
                         timer_notifs[i].GetComponent<RectTransform>().sizeDelta=new Vector2(170,0);
-                        if (currInd == ((int)i))
-                        {
-                            currInd = -1;
+                        hasTime = false;
+                        for (int d; d < 3; d++){
+                            if (timeLeft[d][0]!=((float)(-1.0)))
+                            {
+                                hasTime = true;
+                            }
                         }
-                    //}
-                //}
+                    }
+                }
             }
         }
         
@@ -366,7 +366,7 @@ public class StepCanvas : MonoBehaviour
                        timeLeft[i][0] = (float)step_number;
                        stepTime[i] = timeLeft[i][1];    
                        countdown[i].text = ("");
-                       currInd = i;
+                       hasTime = true;
                      }
                  }
            }

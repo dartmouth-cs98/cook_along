@@ -77,7 +77,7 @@ public class StepListControl : MonoBehaviour
         }
         
         //For Timer Below
-        if(StepCanvas.currInd >= 0)
+        if(StepCanvas.hasTime == true)
         {
             if (!TimeSelect && direction == MLInputControllerTouchpadGestureDirection.Up)
             {
