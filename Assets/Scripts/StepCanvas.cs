@@ -264,7 +264,7 @@ public class StepCanvas : MonoBehaviour
  //*********    
          //********** Work on Recipe Step Change ********** 
          //*********************// 
-       if((GetOkay() || fromScrollerFront) && RecipeMenuList.SelectedRecipe != null && step_number < (RecipeMenuList.SelectedRecipe.steps.Count - 1)) {   
+       if((GetOkay() || fromScroller) && RecipeMenuList.SelectedRecipe != null && step_number < (RecipeMenuList.SelectedRecipe.steps.Count - 1)) {   
                
                if(!fromScroller)
                {
