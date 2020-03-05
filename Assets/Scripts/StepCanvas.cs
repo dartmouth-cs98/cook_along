@@ -17,7 +17,7 @@ using Debug = UnityEngine.Debug;
 public class StepCanvas : MonoBehaviour
 {
     private GameObject canvas;
-    public static bool fromScroller; //*********************// 
+    public static bool fromScroller; 
 
     //Setting up Variables used for video
 	private int yCoord;
@@ -56,7 +56,7 @@ public class StepCanvas : MonoBehaviour
     private List<float> timerCountdown;
     
     private int active_timer;
-    private List<int> currActive;
+    public static List<int> currActive;
      
     // Audio for Timer Notifications
     private List<Text> timer_notifs;
@@ -80,7 +80,7 @@ public class StepCanvas : MonoBehaviour
     void Start()
     {
         canvas = GameObject.Find("Canvas");    
-        fromScroller = false; //*********************// 
+        fromScroller = false; 
         yCoord=90;
         xCoord= 255;        
         URLsList= RecipeInformation.ingredientURLlistoflist;
@@ -129,7 +129,7 @@ public class StepCanvas : MonoBehaviour
     
             if(Time_Reset()){
                 timer_running[active_timer] = false;
-                countdown[active_timer].text = ("");
+                countdown[active_timer].text = (""); 
                 timeLeft[active_timer][1] = stepTime[active_timer];
                 timerCountdown[active_timer] = 10;
                 Hold(1);
@@ -139,10 +139,8 @@ public class StepCanvas : MonoBehaviour
 
         for (int i = 0; i < 3; i++)
         {
-            Debug.Log("timeLeft for timer" + i + " is: " + timeLeft[i][1]);
             if(timeLeft[i][1] > 1)
             {
-                Debug.Log("in timer with wimte left more than one");
                 if (timer_running[i])
                 {
                     timeLeft[i][1] = timeLeft[i][1] - Time.deltaTime;
@@ -158,16 +156,14 @@ public class StepCanvas : MonoBehaviour
                 if(i == active_timer)
                 {
                     countdown[i].color = new Color(0.85f, 0.85f, 0.10f);
-                    countdown[i].text = ("Step " + (int)timeLeft[i][0] + ".  " + niceTime[i]); //Showing the Score on the Canvas
+                    countdown[i].text = ("Step " + (int)(timeLeft[i][0]+1) + ".  " + niceTime[i]); //Showing the Score on the Canvas
                 }else if (!timer_running[i])
                  {
-                    Debug.Log("time left more than one and not running");
                     countdown[i].color = new Color(1f, 1.0f, 1.0f);
-                    countdown[i].text = ("Step " + (int)timeLeft[i][0] + ".  " + niceTime[i]);
+                    countdown[i].text = ("Step " + (int)(timeLeft[i][0]+1) + ".  " + niceTime[i]);
                  }else{
-                    Debug.Log("time left more than one and running");
                     countdown[i].color = new Color(0.56f, 0.56f, 0.75f);
-                    countdown[i].text = ("Step " + (int)timeLeft[i][0] + ".  " + niceTime[i]); //Showing the Score on the Canvas
+                    countdown[i].text = ("Step " + (int)(timeLeft[i][0]+1) + ".  " + niceTime[i]); //Showing the Score on the Canvas
                  }
             }
             
@@ -176,7 +172,7 @@ public class StepCanvas : MonoBehaviour
               
                 if(timeLeft[i][1] > -15.0)
                 {
-                    Debug.Log("time left less than one but in countdown");
+                    currActive.Remove(i);
                     //timerCountdown[i] -=  Time.deltaTime; 
                     if(timerCountdown[i] > 0)
                     {
@@ -189,7 +185,7 @@ public class StepCanvas : MonoBehaviour
                          countdown[i].color = new Color(1f, 0f, 0f);
                          countdown[i].text = ("00:00:00"); //Showing the Score on the Canvas
                          timer_notifs[i].GetComponent<RectTransform>().sizeDelta=new Vector2(170,50);
-                         timer_notifs[i].text = "Timer has run out for step: " + timeLeft[i][0];        
+                         timer_notifs[i].text = "Timer has run out for step: " + (int)(timeLeft[i][0]+1.0);        
                     }
                     else
                     {   
@@ -207,7 +203,6 @@ public class StepCanvas : MonoBehaviour
                         niceTime[i] = "";
                         timer_notifs[i].GetComponent<RectTransform>().sizeDelta=new Vector2(170,0);
                         hasTime = false;
-                        currActive.Remove(i);
                         for(int d = 0; d < 3; d++){
                             if (timeLeft[d][0]!=((float)(-1.0)))
                             {
@@ -251,21 +246,15 @@ public class StepCanvas : MonoBehaviour
                                       Environment.NewLine +
                                       "Point Up Again to Close Gesture Menu";
 
-          //showStart = showStart - Time.deltaTime; 
-                                            
-            /*if(showStart < 0){
-               visible = false;
-               ges_instructions.GetComponent<RectTransform>().sizeDelta=new Vector2(300,30);
-            }*/
+          
       }else
       {
           ges_instructions.GetComponent<RectTransform>().sizeDelta=new Vector2(300,30);
           ges_instructions.text = "Point up to see list of actions";
       }
                                       
- //*********    
+   
          //********** Work on Recipe Step Change ********** 
-         //*********************// 
        if((GetOkay() || fromScroller) && RecipeMenuList.SelectedRecipe != null && step_number < (RecipeMenuList.SelectedRecipe.steps.Count - 1)) {   
                
                if(!fromScroller)
@@ -308,7 +297,7 @@ public class StepCanvas : MonoBehaviour
                
           }else if (GetDone()) {
                 Loader.Load(Loader.Scene.RecipeMenu);
-          } else if (GetL()) { //*********************// 
+          } else if (GetL()) {  
                 step_number -= 1;
                 if (step_number<0){
                   step_number=0;
@@ -356,9 +345,6 @@ public class StepCanvas : MonoBehaviour
                 int posTime = RecipeMenuList.SelectedRecipe.steps[step_number].time;
                 if (posTime > 0)
                 {
-                    //**********DEBUG************** 
-                     Debug.Log("in has time"); //****
-                     //**********DEBUG************ 
                      bool alreadyin = false;
                      for(int j = 0; j < 3; j++)
                      {
@@ -373,15 +359,20 @@ public class StepCanvas : MonoBehaviour
                         int i = 0;
                         while(((timeLeft[i][1]) != ((float)(-50.0))) && i < 3)
                         {
-                           Debug.Log("in while");
                             i++;
                         }
-                       //Debug.Log("out of while");
                        timeLeft[i][1] = (float)RecipeMenuList.SelectedRecipe.steps[step_number].time;
                        timeLeft[i][0] = (float)step_number;
                        stepTime[i] = timeLeft[i][1];    
                        countdown[i].text = ("");
-                       currActive.Add(i);
+                       if(currActive.Count != 0 && i < currActive[0])
+                       {
+                            currActive.Insert(0, i);
+                       }
+                       else
+                       {
+                            currActive.Add(i);
+                       }
                        hasTime = true;
                      }
                  }
@@ -523,7 +514,7 @@ public class StepCanvas : MonoBehaviour
         return false;
    }
    
-   bool GetL()  //*********************// 
+   bool GetL()  
     {
            if (GetGesture(MLHands.Left, MLHandKeyPose.L) || GetGesture(MLHands.Right, MLHandKeyPose.L))
            {
