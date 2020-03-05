@@ -32,6 +32,7 @@ public class TutorialLanding : MonoBehaviour
     void HandleDoubleTap(Vector4 param)
     {
         Loader.Load(Loader.Scene.WelcomeScreen);
+				RepositionVars.WelcomeScreenIndex = 1;
     }
 
     void HandleTrigger()
@@ -44,6 +45,7 @@ public class TutorialLanding : MonoBehaviour
         if (_textIndex == 3)
         {
             Loader.Load(Loader.Scene.TutorialGestures);
+						RepositionVars.TutorialIndex = 0;
         }
         
     }
@@ -53,6 +55,7 @@ public class TutorialLanding : MonoBehaviour
         if (_textIndex == 0)
         {
             Loader.Load(Loader.Scene.WelcomeScreen);
+						RepositionVars.WelcomeScreenIndex = 1;
         }
         if (_textIndex == 1)
         {
