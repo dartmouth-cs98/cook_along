@@ -183,6 +183,12 @@ Camera:
     type: 3}
   m_PrefabInstance: {fileID: 67730634}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &67730636 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1011244501761250, guid: 24158fb1437dc8e418d893939758764d,
+    type: 3}
+  m_PrefabInstance: {fileID: 67730634}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &121870545
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,6 +265,7 @@ GameObject:
   m_Component:
   - component: {fileID: 159178640}
   - component: {fileID: 159178641}
+  - component: {fileID: 159178642}
   m_Layer: 0
   m_Name: '[LOGIC]'
   m_TagString: Untagged
@@ -294,6 +301,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controlInput: {fileID: 1107156848}
   instructionText: {fileID: 1167040528}
+--- !u!114 &159178642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159178639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b81ccdbb8cc44016af794704801feae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controlInput: {fileID: 1107156848}
+  WorldCanvas: {fileID: 835056718}
+  _camera: {fileID: 67730636}
 --- !u!1 &271419268
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,6 +19,7 @@ public class TutorialSuccess : MonoBehaviour
     void HandleTrigger()
     {
 			Loader.Load(Loader.Scene.RecipeMenu);
+			RepositionVars.RecipeMenuIndex = 2;
     }
 
     void HandleHomeTap()

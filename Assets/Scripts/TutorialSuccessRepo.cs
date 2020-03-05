@@ -23,20 +23,11 @@ public class TutorialSuccessRepo : MonoBehaviour
 
 	private void Awake()
 	{
-		switch (RepositionVars.TutorialIndex)
-		{
-			case 0:
-				WorldCanvas.transform.position = RecipeVars.TutorialStep_position;
-				WorldCanvas.transform.rotation = RecipeVars.TutorialStep_rotation;
-				break;
-			case 1:
-				WorldCanvas.transform.position = RecipeVars.WelcomeScreen_position;
-				WorldCanvas.transform.rotation = RecipeVars.WelcomeScreen_rotation;
-				break;
-		}
+		WorldCanvas.transform.position = RepositionVars.TutorialStep_position;
+		WorldCanvas.transform.rotation = RepositionVars.TutorialStep_rotation;
 
-		RecipeVars.TutorialSuccess_position = WorldCanvas.transform.position;
-		RecipeVars.TutorialSuccess_rotation = WorldCanvas.transform.rotation;
+		RepositionVars.TutorialSuccess_position = WorldCanvas.transform.position;
+		RepositionVars.TutorialSuccess_rotation = WorldCanvas.transform.rotation;
 	}
 
 	// Update is called once per frame
@@ -44,10 +35,10 @@ public class TutorialSuccessRepo : MonoBehaviour
 	{
 		if (controlInput.Bumper) {
 			WorldCanvas.transform.position = _camera.transform.position + _camera.transform.forward * _distance;
-			RecipeVars.TutorialSuccess_position = WorldCanvas.transform.position;
+			RepositionVars.TutorialSuccess_position = WorldCanvas.transform.position;
 
 			WorldCanvas.transform.rotation = _camera.transform.rotation;
-			RecipeVars.TutorialSuccess_rotation = WorldCanvas.transform.rotation;
+			RepositionVars.TutorialSuccess_rotation = WorldCanvas.transform.rotation;
 		}
 	}
 }

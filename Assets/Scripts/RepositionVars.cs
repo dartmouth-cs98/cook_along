@@ -22,8 +22,8 @@ public class RepositionVars : MonoBehaviour
 	public static Vector3 RecipeChooser_position;
 	public static Quaternion RecipeChooser_rotation;
 
-	// public static Vector3 RecipeMenu_position;
-	// public static Quaternion RecipeMenu_rotation;
+	public static Vector3 RecipeMenu_position;
+	public static Quaternion RecipeMenu_rotation;
 	
 	public static Vector3 RecipeInformation_position;
 	public static Quaternion RecipeInformation_rotation;
@@ -42,8 +42,9 @@ public class RepositionVars : MonoBehaviour
 	
 	// 0 - WelcomeScreen
 	// 1 - StepDisplay
+	// 2 - TutorialSuccess
 	public static int RecipeChooserIndex;
-	// public static int RecipeMenuTranIndex;
+	public static int RecipeMenuIndex;
 	
 	// 0 - prev
 	// 1 - next

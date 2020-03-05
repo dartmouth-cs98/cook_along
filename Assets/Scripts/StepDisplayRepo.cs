@@ -23,13 +23,13 @@ public class StepDisplayRepo : MonoBehaviour
 
 	private void Awake()
 	{
-		WorldCanvas.transform.position = RecipeVars.RecipeInformation_position;
-		WorldCanvas.transform.rotation = RecipeVars.RecipeInformation_rotation;
+		WorldCanvas.transform.position = RepositionVars.RecipeInformation_position;
+		WorldCanvas.transform.rotation = RepositionVars.RecipeInformation_rotation;
 
-		RecipeVars.StepDisplay_position = WorldCanvas.transform.position;
-		RecipeVars.StepDisplay_rotation = WorldCanvas.transform.rotation;
+		RepositionVars.StepDisplay_position = WorldCanvas.transform.position;
+		RepositionVars.StepDisplay_rotation = WorldCanvas.transform.rotation;
 
-		RecipeVars.RecipeChooserIndex = 1;
+		RepositionVars.RecipeChooserIndex = 1;
 	}
 
 	// Update is called once per frame
@@ -37,10 +37,10 @@ public class StepDisplayRepo : MonoBehaviour
 	{
 		if (controlInput.Bumper) {
 			WorldCanvas.transform.position = _camera.transform.position + _camera.transform.forward * _distance;
-			RecipeVars.StepDisplay_position = WorldCanvas.transform.position;
+			RepositionVars.StepDisplay_position = WorldCanvas.transform.position;
 
 			WorldCanvas.transform.rotation = _camera.transform.rotation;
-			RecipeVars.StepDisplay_rotation = WorldCanvas.transform.rotation;
+			RepositionVars.StepDisplay_rotation = WorldCanvas.transform.rotation;
 		}
 	}
 }

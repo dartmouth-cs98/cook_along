@@ -23,8 +23,8 @@ public class RecipeInformationRepo : MonoBehaviour
 
 	private void Awake()
 	{
-		WorldCanvas.transform.position = RepositionVars.RecipeChooser_position;
-		WorldCanvas.transform.rotation = RepositionVars.RecipeChooser_rotation;
+		WorldCanvas.transform.position = RepositionVars.RecipeMenu_position;
+		WorldCanvas.transform.rotation = RepositionVars.RecipeMenu_rotation;
 
 		RepositionVars.RecipeInformation_position = WorldCanvas.transform.position;
 		RepositionVars.RecipeInformation_rotation = WorldCanvas.transform.rotation;

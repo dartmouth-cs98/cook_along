@@ -13,7 +13,7 @@ using UnityEngine.XR.MagicLeap;
  * StepDisplay Repo
  *
  */
-public class TutorialStepRepo : MonoBehaviour
+public class RecipeMenuRepo : MonoBehaviour
 {
 	public ControlInput controlInput;
   public GameObject WorldCanvas;
@@ -23,20 +23,29 @@ public class TutorialStepRepo : MonoBehaviour
 
 	private void Awake()
 	{
-		switch (RepositionVars.TutorialIndex)
+		switch (RepositionVars.RecipeMenuIndex)
 		{
+			// WelcomeScreen
 			case 0:
-				WorldCanvas.transform.position = RepositionVars.TutorialGestures_position;
-				WorldCanvas.transform.rotation = RepositionVars.TutorialGestures_rotation;
+				WorldCanvas.transform.position = RepositionVars.WelcomeScreen_position;
+				WorldCanvas.transform.rotation = RepositionVars.WelcomeScreen_rotation;
 				break;
-			
+
+			// StepDisplay
 			case 1:
+				WorldCanvas.transform.position = RepositionVars.StepDisplay_position;
+				WorldCanvas.transform.rotation = RepositionVars.StepDisplay_rotation;
+				break;
+
+			case 2:
 				WorldCanvas.transform.position = RepositionVars.TutorialSuccess_position;
 				WorldCanvas.transform.rotation = RepositionVars.TutorialSuccess_rotation;
 				break;
 		}
-		RepositionVars.TutorialStep_position = WorldCanvas.transform.position;
-		RepositionVars.TutorialStep_rotation = WorldCanvas.transform.rotation;
+
+		RepositionVars.RecipeMenu_position = WorldCanvas.transform.position;
+		RepositionVars.RecipeMenu_rotation = WorldCanvas.transform.rotation;
+
 	}
 
 	// Update is called once per frame
@@ -44,10 +53,10 @@ public class TutorialStepRepo : MonoBehaviour
 	{
 		if (controlInput.Bumper) {
 			WorldCanvas.transform.position = _camera.transform.position + _camera.transform.forward * _distance;
-			RepositionVars.TutorialStep_position = WorldCanvas.transform.position;
+			RepositionVars.RecipeMenu_position = WorldCanvas.transform.position;
 
 			WorldCanvas.transform.rotation = _camera.transform.rotation;
-			RepositionVars.TutorialStep_rotation = WorldCanvas.transform.rotation;
+			RepositionVars.RecipeMenu_rotation = WorldCanvas.transform.rotation;
 		}
 	}
 }

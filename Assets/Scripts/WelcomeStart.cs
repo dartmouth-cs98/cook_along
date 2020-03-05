@@ -40,10 +40,12 @@ public class WelcomeStart : MonoBehaviour
         if (_startActivated)
         {
             Loader.Load(Loader.Scene.RecipeMenu);
+						RepositionVars.RecipeMenuIndex = 0;
         }
         else
         {
             Loader.Load(Loader.Scene.TutorialLanding);
+						RepositionVars.TutorialIndex = 0;
         }
         
     }

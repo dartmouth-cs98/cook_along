@@ -24,36 +24,46 @@ public class WelcomeScreenRepo : MonoBehaviour
 	void Awake()
 	{
 
-		switch (RecipeVars.WelcomeScreenIndex)
+		switch (RepositionVars.WelcomeScreenIndex)
 		{
+			// Start
 			case 0:
 				WorldCanvas.transform.position = _camera.transform.position + _camera.transform.forward * _distance;		
 				WorldCanvas.transform.rotation = _camera.transform.rotation;
 				break;
 			
+			// TutorialLanding
 			case 1:
-				WorldCanvas.transform.position = RecipeVars.TutorialLanding_position;
-				WorldCanvas.transform.rotation = RecipeVars.TutorialLanding_rotation;
+				WorldCanvas.transform.position = RepositionVars.TutorialLanding_position;
+				WorldCanvas.transform.rotation = RepositionVars.TutorialLanding_rotation;
 				break;
-
+			
+			// TutorialGestures
 			case 2:
-				WorldCanvas.transform.position = RecipeVars.TutorialGestures_position;
-				WorldCanvas.transform.rotation = RecipeVars.TutorialGestures_rotation;
+				WorldCanvas.transform.position = RepositionVars.TutorialGestures_position;
+				WorldCanvas.transform.rotation = RepositionVars.TutorialGestures_rotation;
 				break;
 
+			// TutorialStep
 			case 3:
-				WorldCanvas.transform.position = RecipeVars.TutorialStep_position;
-				WorldCanvas.transform.rotation = RecipeVars.TutorialStep_rotation;
+				WorldCanvas.transform.position = RepositionVars.TutorialStep_position;
+				WorldCanvas.transform.rotation = RepositionVars.TutorialStep_rotation;
+				break;
+		
+			// TutorialSuccess
+			case 4:
+				WorldCanvas.transform.position = RepositionVars.TutorialSuccess_position;
+				WorldCanvas.transform.rotation = RepositionVars.TutorialSuccess_rotation;
 				break;
 
-			case 4:
-				WorldCanvas.transform.position = RecipeVars.TutorialSuccess_position;
-				WorldCanvas.transform.rotation = RecipeVars.TutorialSuccess_rotation;
-				break;
+			// RecipeMenu
+			case 5:
+				WorldCanvas.transform.position = RepositionVars.RecipeMenu_position;
+				WorldCanvas.transform.rotation = RepositionVars.RecipeMenu_rotaiton;
 		}
 		
-		RecipeVars.WelcomeScreen_position = WorldCanvas.transform.position;
-		RecipeVars.WelcomeScreen_rotation = WorldCanvas.transform.rotation;
+		RepositionVars.WelcomeScreen_position = WorldCanvas.transform.position;
+		RepositionVars.WelcomeScreen_rotation = WorldCanvas.transform.rotation;
 	}
 
 
@@ -62,10 +72,10 @@ public class WelcomeScreenRepo : MonoBehaviour
 	{
 		if (controlInput.Bumper) {
 			WorldCanvas.transform.position = _camera.transform.position + _camera.transform.forward * _distance;
-			RecipeVars.WelcomeScreen_position = WorldCanvas.transform.position;
+			RepositionVars.WelcomeScreen_position = WorldCanvas.transform.position;
 
 			WorldCanvas.transform.rotation = _camera.transform.rotation;
-			RecipeVars.WelcomeScreen_rotation = WorldCanvas.transform.rotation;
+			RepositionVars.WelcomeScreen_rotation = WorldCanvas.transform.rotation;
 		}
 	}
 }
