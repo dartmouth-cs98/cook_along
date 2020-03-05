@@ -12,6 +12,7 @@ public class StepListControl : MonoBehaviour
     private Color _baseColor;
     private Color _viewportActiveColor;
     private List<GameObject> _buttons;
+    private int count;
     public ControlInput controlInput;
     public static bool Selecting;
     public static bool TimeSelect;
@@ -86,7 +87,7 @@ public class StepListControl : MonoBehaviour
             if (!TimeSelect && direction == MLInputControllerTouchpadGestureDirection.Up)
             {
                 TimeSelect = true;
-                active_timer_index = 0;
+                active_timer_index = StepCanvas.currActive[0];
                 StepCanvas.countdown[active_timer_index].color = Color.yellow;
             }
             
@@ -97,12 +98,12 @@ public class StepListControl : MonoBehaviour
                 active_timer_index = -1;
             }
             
-            if (TimeSelect && direction == MLInputControllerTouchpadGestureDirection.Right && active_timer_index < 2)
+            if (TimeSelect && direction == MLInputControllerTouchpadGestureDirection.Right && count < (StepCanvas.currActive.Count - 1) )
             {
                 UpdateActiveTimer(direction);
             }
     
-            if (TimeSelect && direction == MLInputControllerTouchpadGestureDirection.Left && active_timer_index > 0)
+            if (TimeSelect && direction == MLInputControllerTouchpadGestureDirection.Left && count > 0)
             {
                 UpdateActiveTimer(direction);
             }
@@ -116,6 +117,7 @@ public class StepListControl : MonoBehaviour
         if (Selecting && direction == MLInputControllerTouchpadGestureDirection.Up)
         {
             _selectingRecipeIndex -= 1;
+          
         }
 
         if (Selecting && direction == MLInputControllerTouchpadGestureDirection.Down)
@@ -133,12 +135,14 @@ public class StepListControl : MonoBehaviour
         int oldTimer = active_timer_index;
         if (TimeSelect && direction == MLInputControllerTouchpadGestureDirection.Right)
         {
-            active_timer_index += 1;
+            count += 1;
+            active_timer_index = StepCanvas.currActive[count];            
         }
 
         if (TimeSelect && direction == MLInputControllerTouchpadGestureDirection.Left)
         {
-            active_timer_index -= 1;
+            count -= 1;
+            active_timer_index = StepCanvas.currActive[count];
         }
     }
     
@@ -166,6 +170,7 @@ public class StepListControl : MonoBehaviour
         _baseColor = new Color(1f, 1f, 1f);
         _buttons = new List<GameObject>();
         active_timer_index = -1;
+        count = 0;
         
         List<RecipeStep> steps = RecipeMenuList.SelectedRecipe.steps;
         for (int i = 0; i < steps.Count; i++)

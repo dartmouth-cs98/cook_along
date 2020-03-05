@@ -56,7 +56,8 @@ public class StepCanvas : MonoBehaviour
     private List<float> timerCountdown;
     
     private int active_timer;
-    
+    private List<int> currActive;
+     
     // Audio for Timer Notifications
     private List<Text> timer_notifs;
     public AudioClip notification;
@@ -206,6 +207,7 @@ public class StepCanvas : MonoBehaviour
                         niceTime[i] = "";
                         timer_notifs[i].GetComponent<RectTransform>().sizeDelta=new Vector2(170,0);
                         hasTime = false;
+                        currActive.Remove(i);
                         for(int d = 0; d < 3; d++){
                             if (timeLeft[d][0]!=((float)(-1.0)))
                             {
@@ -365,6 +367,7 @@ public class StepCanvas : MonoBehaviour
                             alreadyin = true;
                         }
                      }
+                     
                      if(!alreadyin)
                      {
                         int i = 0;
@@ -378,6 +381,7 @@ public class StepCanvas : MonoBehaviour
                        timeLeft[i][0] = (float)step_number;
                        stepTime[i] = timeLeft[i][1];    
                        countdown[i].text = ("");
+                       currActive.Add(i);
                        hasTime = true;
                      }
                  }
@@ -583,6 +587,7 @@ public class StepCanvas : MonoBehaviour
             stepTime = new List<float>();
             timerCountdown = new List<float>();
             play = new List<bool>();
+            currActive = new List<int>();
             
             countdown.Add(GameObject.Find("Timer_1").GetComponent<Text>());
             countdown.Add(GameObject.Find("Timer_2").GetComponent<Text>());
