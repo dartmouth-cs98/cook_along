@@ -24,8 +24,8 @@ public class TutorialLanding : MonoBehaviour
         {
             "The trigger selects an item. Pull the trigger.",
             "The home button moves you back a screen. Hit the home button",
-            "Holding the bumper repositions the screen. The screen will be placed on release. Hold the bumper.",
-            "Great job! Pull the trigger to move to the next phase of the tutorial. Press the home button to start this section again from the beginning."
+            "Holding the bumper repositions the screen. The screen will be placed on release. Hold the bumper for 4 seconds.",
+            "Great job! Pull the trigger to move to the next phase of the tutorial. Press the home button to restart this button section."
         };
     }
 
@@ -50,6 +50,10 @@ public class TutorialLanding : MonoBehaviour
 
     void HandleHomeTap()
     {
+        if (_textIndex == 0)
+        {
+            Loader.Load(Loader.Scene.WelcomeScreen);
+        }
         if (_textIndex == 1)
         {
             UpdateInstructions();
