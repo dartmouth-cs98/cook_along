@@ -158,7 +158,7 @@ public class StepListControl : MonoBehaviour
     {
         _highlightedColor = new Color(0.937f, 0.741f, 0.42f);
         _viewportActiveColor = new Color(0f, 0.9f, 0.9f);
-        _selectingColor = new Color	(0.2f, 0.6f, 0.8f);
+        _selectingColor = new Color	(0.56f, 0.67f, 0.85f);
         _baseColor = new Color(1f, 1f, 1f);
         _buttons = new List<GameObject>();
         active_timer_index = -1;
