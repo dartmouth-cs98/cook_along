@@ -318,9 +318,7 @@ public class StepCanvas : MonoBehaviour
                 }    
                       
                 called = false;
-                visible = false;
-<<<<<<< HEAD
-                         
+                visible = false;                         
                 foreach (RawImage go in Resources.FindObjectsOfTypeAll(typeof(RawImage)) as RawImage[]){
                     RawImage image = go as RawImage; 
                     Destroy(image);
