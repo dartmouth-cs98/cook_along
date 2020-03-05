@@ -84,7 +84,9 @@ public class StepCanvas : MonoBehaviour
         yCoord=90;
         xCoord= 255;        
         URLsList= RecipeInformation.ingredientURLlistoflist;
+
         URLs=URLsList[0];
+
         videoURL= RecipeMenuList.SelectedRecipe.steps[step_number].videoUrl;
 
         MLHands.Start();
@@ -92,9 +94,9 @@ public class StepCanvas : MonoBehaviour
         gestures[0] = MLHandKeyPose.Ok;
         gestures[1] = MLHandKeyPose.Thumb;
         gestures[2] = MLHandKeyPose.L;
-		gestures[3] = MLHandKeyPose.OpenHand;
-		gestures[4] = MLHandKeyPose.Pinch;
-		gestures[5] = MLHandKeyPose.Finger;
+		    gestures[3] = MLHandKeyPose.OpenHand;
+		    gestures[4] = MLHandKeyPose.Pinch;
+		    gestures[5] = MLHandKeyPose.Finger;
         gestures[6]= MLHandKeyPose.Fist;
         MLHands.KeyPoseManager.EnableKeyPoses(gestures, true, false);
 
@@ -110,6 +112,7 @@ public class StepCanvas : MonoBehaviour
     //********** Update ********** 
     void Update()
     {
+        URLsList= RecipeInformation.ingredientURLlistoflist;
         active_timer = StepListControl.active_timer_index;     
        
         if (active_timer >= 0)
@@ -316,6 +319,7 @@ public class StepCanvas : MonoBehaviour
                       
                 called = false;
                 visible = false;
+<<<<<<< HEAD
                          
                 foreach (RawImage go in Resources.FindObjectsOfTypeAll(typeof(RawImage)) as RawImage[]){
                     RawImage image = go as RawImage; 
@@ -377,7 +381,7 @@ public class StepCanvas : MonoBehaviour
                      }
                  }
            }
-       
+
            thisText.text = RecipeMenuList.SelectedRecipe.steps[step_number].instruction;
            videoURL= RecipeMenuList.SelectedRecipe.steps[step_number].videoUrl;
            URLs=URLsList[step_number];
