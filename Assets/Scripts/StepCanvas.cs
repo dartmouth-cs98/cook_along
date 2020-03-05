@@ -45,7 +45,7 @@ public class StepCanvas : MonoBehaviour
     public static List<Text> countdown; //UI Text Object
     private bool called; //used to make sure time is called only once per new step
     private List<bool> timer_running; //used to toggle start and stop for timer
-    public static int hasTime = false;
+    public static bool hasTime = false;
     
     // variables used for styling the display of time into hh:mm:ss
     private List<int> hours;
@@ -181,19 +181,19 @@ public class StepCanvas : MonoBehaviour
                         timerCountdown[i] -=  Time.deltaTime; 
                         if (play[i])
                         {
-                                audio.PlayOneShot(notification);
-                                play[i] = false; 
+                            audio.PlayOneShot(notification);
+                            play[i] = false; 
                         }
                          countdown[i].color = new Color(1f, 0f, 0f);
-                         countdown[i].text = ((int)timeLeft[i][0] + ". " + "00:00:00"); //Showing the Score on the Canvas
+                         countdown[i].text = ("00:00:00"); //Showing the Score on the Canvas
                          timer_notifs[i].GetComponent<RectTransform>().sizeDelta=new Vector2(170,50);
                          timer_notifs[i].text = "Timer has run out for step: " + timeLeft[i][0];        
                     }
                     else
                     {   
                         timer_running[i] = false;
-                        timeLeft[i][1] = (float)(-1.0);
-                        timeLeft[i][0] = (float)(-50.0);
+                        timeLeft[i][0] = (float)(-1.0);
+                        timeLeft[i][1] = (float)(-50.0);
                         timerCountdown[i] = (float)(10);
                         countdown[i].text = ("");
                         timer_notifs[i].text = "";
@@ -205,7 +205,7 @@ public class StepCanvas : MonoBehaviour
                         niceTime[i] = "";
                         timer_notifs[i].GetComponent<RectTransform>().sizeDelta=new Vector2(170,0);
                         hasTime = false;
-                        for (int d; d < 3; d++){
+                        for(int d = 0; d < 3; d++){
                             if (timeLeft[d][0]!=((float)(-1.0)))
                             {
                                 hasTime = true;
@@ -339,8 +339,8 @@ public class StepCanvas : MonoBehaviour
            if (!called)
            {
                 called = true;
-                int hasTime = RecipeMenuList.SelectedRecipe.steps[step_number].time;
-                if (hasTime > 0)
+                int posTime = RecipeMenuList.SelectedRecipe.steps[step_number].time;
+                if (posTime > 0)
                 {
                     //**********DEBUG************** 
                      Debug.Log("in has time"); //****
