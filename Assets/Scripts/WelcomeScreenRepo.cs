@@ -19,8 +19,6 @@ public class WelcomeScreenRepo : MonoBehaviour
   public GameObject WorldCanvas;
   public GameObject _camera;
 
-	private const float _distance = 2.0f;
-
 	void Awake()
 	{
 
@@ -28,7 +26,7 @@ public class WelcomeScreenRepo : MonoBehaviour
 		{
 			// Start
 			case 0:
-				WorldCanvas.transform.position = _camera.transform.position + _camera.transform.forward * _distance;		
+				WorldCanvas.transform.position = _camera.transform.position + _camera.transform.forward * RepositionVars._distance;		
 				WorldCanvas.transform.rotation = _camera.transform.rotation;
 				break;
 			
@@ -65,6 +63,8 @@ public class WelcomeScreenRepo : MonoBehaviour
 		
 		RepositionVars.WelcomeScreen_position = WorldCanvas.transform.position;
 		RepositionVars.WelcomeScreen_rotation = WorldCanvas.transform.rotation;
+
+		RepositionVars.LoadIndex = 0;
 	}
 
 
@@ -72,7 +72,7 @@ public class WelcomeScreenRepo : MonoBehaviour
 	void Update()
 	{
 		if (controlInput.Bumper) {
-			WorldCanvas.transform.position = _camera.transform.position + _camera.transform.forward * _distance;
+			WorldCanvas.transform.position = _camera.transform.position + _camera.transform.forward * RepositionVars._distance;
 			RepositionVars.WelcomeScreen_position = WorldCanvas.transform.position;
 
 			WorldCanvas.transform.rotation = _camera.transform.rotation;

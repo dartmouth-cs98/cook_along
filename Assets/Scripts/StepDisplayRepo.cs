@@ -19,8 +19,6 @@ public class StepDisplayRepo : MonoBehaviour
   public GameObject WorldCanvas;
   public GameObject _camera;
 
-	private const float _distance = 2.0f;
-
 	private void Awake()
 	{
 		WorldCanvas.transform.position = RepositionVars.RecipeInformation_position;
@@ -30,13 +28,14 @@ public class StepDisplayRepo : MonoBehaviour
 		RepositionVars.StepDisplay_rotation = WorldCanvas.transform.rotation;
 
 		RepositionVars.RecipeChooserIndex = 1;
+		RepositionVars.LoadIndex = 7;
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
 		if (controlInput.Bumper) {
-			WorldCanvas.transform.position = _camera.transform.position + _camera.transform.forward * _distance;
+			WorldCanvas.transform.position = _camera.transform.position + _camera.transform.forward * RepositionVars._distance;
 			RepositionVars.StepDisplay_position = WorldCanvas.transform.position;
 
 			WorldCanvas.transform.rotation = _camera.transform.rotation;

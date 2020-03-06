@@ -18,7 +18,6 @@ public class LoaderRepo : MonoBehaviour
 	public Vector3 _position;
 	public Quaternion _rotation;
 
-	public ControlInput controlInput;
   public GameObject WorldCanvas;
   public GameObject _camera;
 	

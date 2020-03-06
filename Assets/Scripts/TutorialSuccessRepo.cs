@@ -26,6 +26,8 @@ public class TutorialSuccessRepo : MonoBehaviour
 
 		RepositionVars.TutorialSuccess_position = WorldCanvas.transform.position;
 		RepositionVars.TutorialSuccess_rotation = WorldCanvas.transform.rotation;
+
+		RepositionVars.LoadIndex = 4;
 	}
 
 	// Update is called once per frame

@@ -41,6 +41,8 @@ public class TutorialLandingRepo : MonoBehaviour
 
 		RepositionVars.TutorialLanding_position = WorldCanvas.transform.position;
 		RepositionVars.TutorialLanding_rotation = WorldCanvas.transform.rotation;
+
+		RepositionVars.LoadIndex = 1;
 	}
 
 	// Update is called once per frame

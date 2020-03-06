@@ -36,6 +36,8 @@ public class TutorialGesturesRepo : MonoBehaviour
 
 		RepositionVars.TutorialGestures_position = WorldCanvas.transform.position;
 		RepositionVars.TutorialGestures_rotation = WorldCanvas.transform.rotation;
+
+		RepositionVars.LoadIndex = 2;
 	}
 
 	// Update is called once per frame

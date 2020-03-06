@@ -33,8 +33,11 @@ public class TutorialStepRepo : MonoBehaviour
 				WorldCanvas.transform.rotation = RepositionVars.TutorialSuccess_rotation;
 				break;
 		}
+
 		RepositionVars.TutorialStep_position = WorldCanvas.transform.position;
 		RepositionVars.TutorialStep_rotation = WorldCanvas.transform.rotation;
+
+		RepositionVars.LoadIndex = 3;
 	}
 
 	// Update is called once per frame
