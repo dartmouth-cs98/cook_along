@@ -88,6 +88,7 @@ public class TutorialGestures : MonoBehaviour
         if (_textIndex == 0)
         {
             Loader.Load(Loader.Scene.TutorialLanding);
+						RepositionVars.TutorialIndex = 1;
         }
         else
         {
@@ -99,6 +100,7 @@ public class TutorialGestures : MonoBehaviour
     void HandleDoubleTap(Vector4 param)
     {
         Loader.Load(Loader.Scene.WelcomeScreen);
+				RepositionVars.WelcomeScreenIndex = 2;
     }
     
     IEnumerator NextGesture()
@@ -133,6 +135,7 @@ public class TutorialGestures : MonoBehaviour
         if (_checkForGesture && _textIndex == _gestures.Length && CheckForGesture(MLHandKeyPose.Thumb))
         {
           Loader.Load(Loader.Scene.TutorialStep);  
+					RepositionVars.TutorialIndex = 0;
         }
     }
 
