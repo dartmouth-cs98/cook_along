@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using MagicLeapTools;
@@ -24,6 +25,7 @@ public class TutorialGestures : MonoBehaviour
     private List<string> _instructions;
     private List<Sprite> _images;
     private bool _checkForGesture;
+    public static bool BackFromStep;
     
     private MLHandKeyPose[] _gestures;   // Holds the different gestures we will look for
     
@@ -134,6 +136,20 @@ public class TutorialGestures : MonoBehaviour
         {
           Loader.Load(Loader.Scene.TutorialStep);  
 					RepositionVars.TutorialIndex = 0;
+        }
+    }
+
+    private void Start()
+    {
+        if (BackFromStep)
+        {
+            _textIndex = _instructions.Count - 1;
+            instruction.text = _instructions[_textIndex];
+            gestureImage.sprite = _images[_textIndex];
+        }
+        else
+        {
+            BackFromStep = false;
         }
     }
 }
