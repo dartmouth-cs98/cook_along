@@ -28,6 +28,7 @@ public class RecipeInformationRepo : MonoBehaviour
 		RepositionVars.RecipeInformation_rotation = WorldCanvas.transform.rotation;
 
 		RepositionVars.LoadIndex = 6;
+		RepositionVars.RecipeMenuIndex = 3;
 	}
 
 	// Update is called once per frame

@@ -157,6 +157,5 @@ public class RecipeInformation : MonoBehaviour
     private void HandleHomeTap()
     {
         Loader.Load(Loader.Scene.RecipeMenu);
-				RepositionVars.RecipeMenuIndex = 3;
     }
 }

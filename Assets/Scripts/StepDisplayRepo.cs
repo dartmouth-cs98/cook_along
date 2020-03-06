@@ -27,7 +27,7 @@ public class StepDisplayRepo : MonoBehaviour
 		RepositionVars.StepDisplay_position = WorldCanvas.transform.position;
 		RepositionVars.StepDisplay_rotation = WorldCanvas.transform.rotation;
 
-		RepositionVars.RecipeChooserIndex = 1;
+		RepositionVars.RecipeMenuIndex = 1;
 		RepositionVars.LoadIndex = 7;
 	}
 
