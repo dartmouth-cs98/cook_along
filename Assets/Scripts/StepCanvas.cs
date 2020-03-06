@@ -233,26 +233,12 @@ public class StepCanvas : MonoBehaviour
               
       if(visible)
       {
-          
-         ges_instructions.GetComponent<RectTransform>().sizeDelta=new Vector2(300,300);
-         ges_instructions.text = "Thumbs Up: go to next step" + 
-                                      Environment.NewLine +
-                                      "L Gesture: go back a step" +
-                                      Environment.NewLine +
-                                      "Ok Gesture: go back to recipe chooser" +
-                                      Environment.NewLine +
-                                      "High Five: Start/Stop Timer" +
-                                      Environment.NewLine +
-                                      "Pinch: Reset Timer" +
-                                      Environment.NewLine +
-                                      "Closed Fist: Start/Stop Video"+
-                                      Environment.NewLine +
-                                      "Point Up Again to Close Gesture Menu";
-
-          
+        ges_instructions.text = "";
+        GameObject.Find("GestureIcons").transform.localScale = new Vector3(1, 1, 1);
+                                              
       }else
       {
-          ges_instructions.GetComponent<RectTransform>().sizeDelta=new Vector2(300,30);
+          GameObject.Find("GestureIcons").transform.localScale = new Vector3(0, 0, 0);
           ges_instructions.text = "Point up to see list of actions";
       }
                                       
