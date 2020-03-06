@@ -8,25 +8,25 @@ public class noiseNotification : MonoBehaviour
 {
 	public AudioClip notification;
 	private AudioSource audio;
-	private bool play;
+	private bool _play;
 	private bool stops; 
 	private float audioLength;
 
     // Start is called before the first frame update
     void Start()
     {
-    	audio= gameObject.AddComponent<AudioSource>();
+    	audio = gameObject.AddComponent<AudioSource>();
     	audio.clip = notification;
-    	play = true; 
+    	_play = true; 
         
     }
 
     // Update is called once per frame
     void Update()
     {
-    	if (play){
+    	if (_play){
     		audio.PlayOneShot(notification);
-    		play = false; 
+    		_play = false; 
     	}
     }
 

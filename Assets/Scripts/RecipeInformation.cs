@@ -82,8 +82,6 @@ public class RecipeInformation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        SetRecipeInfo(RecipeMenuList.SelectedRecipe);
-        StartCoroutine(getURLs());
     }
 
     String GetIngredientString(List<RecipeIngredient> ingredients)
