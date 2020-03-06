@@ -94,9 +94,9 @@ public class StepCanvas : MonoBehaviour
         gestures[0] = MLHandKeyPose.Ok;
         gestures[1] = MLHandKeyPose.Thumb;
         gestures[2] = MLHandKeyPose.L;
-		    gestures[3] = MLHandKeyPose.OpenHand;
-		    gestures[4] = MLHandKeyPose.Pinch;
-		    gestures[5] = MLHandKeyPose.Finger;
+        gestures[3] = MLHandKeyPose.OpenHand;
+        gestures[4] = MLHandKeyPose.Pinch;
+        gestures[5] = MLHandKeyPose.Finger;
         gestures[6]= MLHandKeyPose.Fist;
         MLHands.KeyPoseManager.EnableKeyPoses(gestures, true, false);
 
@@ -249,7 +249,7 @@ public class StepCanvas : MonoBehaviour
                if(!fromScroller)
                {
                     step_number += 1;
-               }  
+               }
                
                called = false;
                visible = false;
@@ -284,8 +284,10 @@ public class StepCanvas : MonoBehaviour
                
                fromScroller = false;
                
-          }else if (GetDone()) {
-                Loader.Load(Loader.Scene.RecipeMenu);
+          }else if (GetDone())
+       {
+           step_number = 0;
+           Loader.Load(Loader.Scene.RecipeMenu);
           } else if (GetL()) {  
                 step_number -= 1;
                 if (step_number<0){
