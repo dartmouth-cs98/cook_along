@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using MagicLeapTools;
@@ -24,6 +25,7 @@ public class TutorialGestures : MonoBehaviour
     private List<string> _instructions;
     private List<Sprite> _images;
     private bool _checkForGesture;
+    public static bool BackFromStep;
     
     private MLHandKeyPose[] _gestures;   // Holds the different gestures we will look for
     
@@ -32,7 +34,7 @@ public class TutorialGestures : MonoBehaviour
     {
         controlInput.OnHomeButtonTap.AddListener(HandleHomeTap);
         controlInput.OnDoubleTap.AddListener(HandleDoubleTap);
-        _textIndex = TutorialStep.WentBackToGestures ? _instructions.Count - 1 : 0;
+        _textIndex = 0;
         _instructions = new List<string>()
         {
             "The thumbs up sign takes you to the next step. Make a thumbs up.",
@@ -131,6 +133,20 @@ public class TutorialGestures : MonoBehaviour
         if (_checkForGesture && _textIndex == _gestures.Length && CheckForGesture(MLHandKeyPose.Thumb))
         {
           Loader.Load(Loader.Scene.TutorialStep);  
+        }
+    }
+
+    private void Start()
+    {
+        if (BackFromStep)
+        {
+            _textIndex = _instructions.Count - 1;
+            instruction.text = _instructions[_textIndex];
+            gestureImage.sprite = _images[_textIndex];
+        }
+        else
+        {
+            BackFromStep = false;
         }
     }
 }
