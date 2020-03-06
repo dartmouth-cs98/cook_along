@@ -26,11 +26,11 @@ public class TutorialStep : MonoBehaviour
             "Step List: \n Once activated, scroll up and down on the touchpad to choose which step to go to. Pull trigger to go to that step.",
             "Step List: \n You can exit step selection at any time by swiping right on the touchpad.",
             "Step List: \n If you make either the thumbs-up or L gesture, step selection will automatically exit.",
-            "Timers: \n Your currently running timers are located at the top of the screen.",
+            "Timers: \n Your currently active timers are located at the top of the screen.",
             "Timers: \n By default, your most recently created timer is selected.",
             "Timers: \n To change that, swipe up to activate timer selection. Swipe down to exit timer selection.",
             "Timers: \n Swipe right and left to choose the timer. Pull trigger to select.",
-            "Timers: \n Remember, use the open hand to start/stop the selected timer and the pinch to reset."
+            "Timers: \n Remember, use the open hand to start/stop the selected timer and the pinch to reset timer."
         };
     }
     
