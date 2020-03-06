@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using MagicLeapTools;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TutorialLanding : MonoBehaviour
@@ -44,8 +45,8 @@ public class TutorialLanding : MonoBehaviour
 
         if (_textIndex == 3)
         {
-            Loader.Load(Loader.Scene.TutorialGestures);
-						RepositionVars.TutorialIndex = 0;
+            SceneManager.LoadScene(Loader.Scene.TutorialGestures.ToString());
+            RepositionVars.TutorialIndex = 0;
         }
         
     }

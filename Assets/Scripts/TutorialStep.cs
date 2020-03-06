@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using MagicLeapTools;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TutorialStep : MonoBehaviour
@@ -38,8 +39,8 @@ public class TutorialStep : MonoBehaviour
     {
         if (_textIndex == 0)
         {
-            Loader.Load(Loader.Scene.TutorialGestures); 
-						RepositionVars.TutorialIndex = 1;
+            SceneManager.LoadScene(Loader.Scene.TutorialGestures.ToString());
+            RepositionVars.TutorialIndex = 1;
         }
         else
         {
@@ -58,8 +59,8 @@ public class TutorialStep : MonoBehaviour
     {
         if (_textIndex >= _instructions.Count - 1)
         {
-            Loader.Load(Loader.Scene.TutorialSuccess);
-						RepositionVars.TutorialIndex = 0;
+            SceneManager.LoadScene(Loader.Scene.TutorialSuccess.ToString());
+            RepositionVars.TutorialIndex = 0;
         }
         else
         {

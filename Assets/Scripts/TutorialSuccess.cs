@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using MagicLeapTools;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TutorialSuccess : MonoBehaviour
@@ -24,8 +25,8 @@ public class TutorialSuccess : MonoBehaviour
 
     void HandleHomeTap()
     {
-        Loader.Load(Loader.Scene.TutorialLanding);
-				RepositionVars.TutorialIndex = 2;
+        SceneManager.LoadScene(Loader.Scene.TutorialLanding.ToString());
+        RepositionVars.TutorialIndex = 2;
     }
 
     void HandleDoubleTap(Vector4 param)

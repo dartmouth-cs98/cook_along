@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using MagicLeapTools;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.XR.MagicLeap;
 
@@ -85,8 +86,8 @@ public class TutorialGestures : MonoBehaviour
     {
         if (_textIndex == 0)
         {
-            Loader.Load(Loader.Scene.TutorialLanding);
-						RepositionVars.TutorialIndex = 1;
+            SceneManager.LoadScene(Loader.Scene.TutorialLanding.ToString());
+            RepositionVars.TutorialIndex = 1;
         }
         else
         {
@@ -132,8 +133,8 @@ public class TutorialGestures : MonoBehaviour
 
         if (_checkForGesture && _textIndex == _gestures.Length && CheckForGesture(MLHandKeyPose.Thumb))
         {
-          Loader.Load(Loader.Scene.TutorialStep);  
-					RepositionVars.TutorialIndex = 0;
+            SceneManager.LoadScene(Loader.Scene.TutorialStep.ToString());
+            RepositionVars.TutorialIndex = 0;
         }
     }
 }
