@@ -65,13 +65,13 @@ public class WelcomeStart : MonoBehaviour
     {
         if (_startActivated)
         {
-            _startButtonImage.color = new Color(0.937f, 0.741f, 0.42f);
-            _tutorialButtonImage.color = new Color(1f, 1f, 1f);
+            _tutorialButtonImage.color = new Color(0.937f, 0.741f, 0.42f);
+            _startButtonImage.color = new Color(1f, 1f, 1f);
         }
         else
         {
-            _tutorialButtonImage.color = new Color(0.937f, 0.741f, 0.42f);
-            _startButtonImage.color = new Color(1f, 1f, 1f);
+            _startButtonImage.color = new Color(0.937f, 0.741f, 0.42f);
+            _tutorialButtonImage.color = new Color(1f, 1f, 1f);
         }
     }
 }

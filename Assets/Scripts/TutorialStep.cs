@@ -61,7 +61,7 @@ public class TutorialStep : MonoBehaviour
         {
             TutorialGestures.BackFromStep = true;
             Loader.Load(Loader.Scene.TutorialGestures); 
-						RepositionVars.TutorialIndex = 1;
+            RepositionVars.TutorialIndex = 1;
         }
         else
         {
@@ -73,7 +73,7 @@ public class TutorialStep : MonoBehaviour
     void HandleDoubleTap(Vector4 param)
     {
         Loader.Load(Loader.Scene.WelcomeScreen);
-				RepositionVars.WelcomeScreenIndex = 3;
+        RepositionVars.WelcomeScreenIndex = 3;
     }
 
     void HandleTrigger()
@@ -81,7 +81,7 @@ public class TutorialStep : MonoBehaviour
         if (_textIndex >= _instructions.Count - 1)
         {
             Loader.Load(Loader.Scene.TutorialSuccess);
-						RepositionVars.TutorialIndex = 0;
+            RepositionVars.TutorialIndex = 0;
         }
         else
         {
