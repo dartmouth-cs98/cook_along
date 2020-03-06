@@ -410,17 +410,18 @@ public class StepCanvas : MonoBehaviour
          { 
              if (firstUpdate){ 
                  string currentURLcorrected; 
-                 currentURLcorrected = currentURL; 
+                 currentURLcorrected = currentURL;
                  int length = currentURLcorrected.Length; 
                  if (length >0){
                     ingred.text ="Ingredients:";
                     int start = 0;
-              	    int end = length; 
-              	    
-                    if(currentURLcorrected[0]== ','){
-              		    start =2;
-              	    }
-              	
+              	    int end = length;
+
+                    while (currentURLcorrected[start] == ',' || currentURLcorrected[start] == '"')
+                    {
+                        start += 1;
+                    }
+
                     if(currentURLcorrected[length-1]!='g'){
               		    end = length-1;   
               	    }
