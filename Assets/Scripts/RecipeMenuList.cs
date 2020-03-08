@@ -38,7 +38,7 @@ public class RecipeMenuList : MonoBehaviour
     void HandleHomeTap()
     {
         Loader.Load	(Loader.Scene.WelcomeScreen);
-				RepositionVars.WelcomeScreenIndex = 5;
+		RepositionVars.WelcomeScreenIndex = 5;
     }
 
     void HandleTrigger()

@@ -24,7 +24,8 @@ public class noiseNotification : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    	if (_play){
+    	if (_play)
+    	{
     		audio.PlayOneShot(notification);
     		_play = false; 
     	}

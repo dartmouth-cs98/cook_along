@@ -46,15 +46,17 @@ public class TutorialGestures : MonoBehaviour
             "The closed point (point upwards) shows you a help menu for these gestures. Make a closed point.",
             "Good job! Now make a thumbs up to move to the next phase of the tutorial"
         };
+        
         _images = new List<Sprite>()
         {
             thumb, l, openHand, pinch, fist, okay, finger, check
         };
+        
         _checkForGesture = true;
         StartMlHands();
     }
     
-    void OnDestroy () {
+    void OnDestroy() {
         MLHands.Stop();
     }
 
