@@ -3,6 +3,7 @@
 An AR application to help streamline the cooking process. Include recipe selection, step-by-step instructions, and education on cooking terms and ingradient pictures.
 
 Sample mockups
+![Logo](https://github.com/dartmouth-cs98/19f-cookalong/blob/master/cookalong-horiz.png)
 ![Welcome](https://github.com/dartmouth-cs98/19f-cookalong/blob/master/welcome.png)
 ![Tutorial](https://github.com/dartmouth-cs98/19f-cookalong/blob/master/tutorial.png)
 ![Recipes](https://github.com/dartmouth-cs98/19f-cookalong/blob/master/recipes.png)
@@ -50,14 +51,14 @@ c. Modify and push as needed
 ## Deployment
 
 1. Download the .mpk file from the [repository](https://github.com/dartmouth-cs98/cook_along)
-2. Install using `mldb install appName.mpk`
+2. Install using `mldb install CookAlong.mpk`
 3. run `mldb packages`
 4. Try launching app with `mldb launch sampleApp`
 
 ## Authors
 Brian Tomasco
-Zach Johnson
-Anders Linstrom
+Zack Johnson
+Anders Limstrom
 Erika Ogino
 Danielle Fang
 
