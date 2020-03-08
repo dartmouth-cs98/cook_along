@@ -13,14 +13,16 @@ public class StreamVideo : MonoBehaviour {
      private VideoSource videoSource;
 
   // Use this for initialization
-  void Start () {
+    void Start () 
+    {
           Application.runInBackground=true;
           videoPlayer.source=VideoSource.Url;
           videoPlayer.url = "https:/dl.dropbox.com/s/f5suv9je1vya4pd/3%20Ways%20To%20Chop%20Onions%20Like%20A%20Pro.mp4?dl=1";
           StartCoroutine(PlayVideo());
-  }
-  IEnumerator PlayVideo()
-     {
+    }
+  
+    IEnumerator PlayVideo()
+    {
           videoPlayer.playOnAwake=false;
           videoPlayer.Prepare();
           
@@ -30,6 +32,5 @@ public class StreamVideo : MonoBehaviour {
           }
           rawImage.texture = videoPlayer.texture;
           videoPlayer.Play();
-
      }
 }

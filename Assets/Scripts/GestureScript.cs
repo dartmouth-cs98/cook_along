@@ -16,7 +16,8 @@ public class GestureScript : MonoBehaviour {
 	private string[] stepPaths;
 	private int stepIndex; // marks the recipe step
 
-	void Start () {
+	void Start () 
+	{
 		MLHands.Start();
 
 		gestures = new MLHandKeyPose[2];
@@ -25,17 +26,17 @@ public class GestureScript : MonoBehaviour {
 		gestures[1] = MLHandKeyPose.Thumb;
 		
 		MLHands.KeyPoseManager.EnableKeyPoses(gestures, true, false);
-
-		// myLoadedAssetBundle = AssetBundle.LoadFromFile("steps");
-		// stepPaths = myLoadedAssetBundle.GetAllScenePaths();
 	}
 
-	void onDestroy () {
+	void onDestroy() 
+	{
 		MLHands.Stop();
 	}
 
-	void Update () {
-		if (GetOkay()) {
+	void Update() 
+	{
+		if (GetOkay())
+		{
 			// unload active scene, then load recipe information
       		string scene = SceneManager.GetActiveScene().name;
             
@@ -47,40 +48,45 @@ public class GestureScript : MonoBehaviour {
 		}
 	}
 
-	bool GetGesture(MLHand hand, MLHandKeyPose type)	{
-		
-		if (hand != null) {
-			if (hand.KeyPose == type) {
-				if (hand.KeyPoseConfidence > 0.9f) {
+	bool GetGesture(MLHand hand, MLHandKeyPose type)	
+	{
+		if (hand != null) 
+		{
+			if (hand.KeyPose == type) 
+			{
+				if (hand.KeyPoseConfidence > 0.9f) 
+				{
 					return true;
 				}
 			}
 		}
-
+		
 		return false;
 	}
 	
 	// Cleans up logic for reading the 'All Good' gesture
-	bool GetOkay() {
-		
-		if (GetGesture(MLHands.Left, MLHandKeyPose.Thumb)
-		    || GetGesture(MLHands.Right, MLHandKeyPose.Thumb)) {
+	bool GetOkay() 
+	{
+		if (GetGesture(MLHands.Left, MLHandKeyPose.Thumb) || GetGesture(MLHands.Right, MLHandKeyPose.Thumb)) 
+		{
 			return true;
 		}
 
-		else {
+		else 
+		{
 			return false;
 		}
 	}
 
-	void Hold(int delay)
+  void Hold(int delay)
   {
-    Stopwatch stopWatch = new Stopwatch();
+  	Stopwatch stopWatch = new Stopwatch();
 
     stopWatch.Start();
     float curr = stopWatch.ElapsedMilliseconds / 1000;
 
-    while ( curr < delay) {
+    while ( curr < delay) 
+    {
       curr = stopWatch.ElapsedMilliseconds / 1000;
     }
     stopWatch.Stop();

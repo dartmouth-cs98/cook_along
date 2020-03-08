@@ -16,8 +16,8 @@ using UnityEngine.XR.MagicLeap;
 public class WelcomeScreenRepo : MonoBehaviour
 {
 	public ControlInput controlInput;
-  public GameObject WorldCanvas;
-  public GameObject _camera;
+ 	public GameObject WorldCanvas;
+  	public GameObject _camera;
 
 	void Awake()
 	{

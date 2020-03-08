@@ -118,26 +118,30 @@ public class StepCanvas : MonoBehaviour
         if (active_timer >= 0)
         {
              //********* Work on Timer **********
-            if(Time_Switch()){
-                if(timer_running[active_timer]){
+            if(Time_Switch())
+            {
+                if(timer_running[active_timer])
+                {
                     timer_running[active_timer] = false;
                     Hold(1);
                 }
-                else{
+                
+                else
+                {
                     timer_running[active_timer] = true;
                     Hold(1);
                 }
                 
             }
     
-            if(Time_Reset()){
+            if(Time_Reset())
+            {
                 timer_running[active_timer] = false;
                 countdown[active_timer].text = (""); 
                 timeLeft[active_timer][1] = stepTime[active_timer];
                 timerCountdown[active_timer] = 10;
                 Hold(1);
             }
-        
         }
 
         for (int i = 0; i < 3; i++)
@@ -153,7 +157,6 @@ public class StepCanvas : MonoBehaviour
                 minutes[i] = Mathf.FloorToInt((timeLeft[i][1] - (hours[i] * 3600)) / 60F);
                 seconds[i] = Mathf.FloorToInt(timeLeft[i][1] - (hours[i] * 3600) - (minutes[i] * 60));
                 niceTime[i] = String.Format("{0:00}:{1:00}:{2:00}", hours[i], minutes[i], seconds[i]);
-                
                 
                 
                 if(i == active_timer)
@@ -190,6 +193,7 @@ public class StepCanvas : MonoBehaviour
                          timer_notifs[i].GetComponent<RectTransform>().sizeDelta=new Vector2(170,50);
                          timer_notifs[i].text = "Timer has run out for step: " + (int)(timeLeft[i][0]+1.0);        
                     }
+                    
                     else
                     {   
                         timer_running[i] = false;
@@ -219,118 +223,66 @@ public class StepCanvas : MonoBehaviour
         
             
     
-      //********* Work on Gesture Instructions **********
-      if (Instruction()){
-          if(visible){
-              visible = false;
-          }
-          else
-          {
-              visible = true;
-          }
-          Hold(1);
-      }
+        //********* Work on Gesture Instructions **********
+        if (Instruction())
+        {
+            if(visible)
+            {
+                visible = false;
+            }
+            else
+            {
+                visible = true;
+            }
+            Hold(1);
+        }
               
-      if(visible)
-      {
-        ges_instructions.text = "";
-        GameObject.Find("GestureIcons").transform.localScale = new Vector3(1, 1, 1);
-                                              
-      }else
-      {
-          GameObject.Find("GestureIcons").transform.localScale = new Vector3(0, 0, 0);
-          ges_instructions.text = "Point up to see list of actions";
-      }
+        if(visible)
+        {
+            ges_instructions.text = "";
+            GameObject.Find("GestureIcons").transform.localScale = new Vector3(1, 1, 1);                                       
+        }
+        else
+        {
+            GameObject.Find("GestureIcons").transform.localScale = new Vector3(0, 0, 0);
+            ges_instructions.text = "Point up to see list of actions";
+        }
                                       
    
-         //********** Work on Recipe Step Change ********** 
-       if((GetOkay() || fromScroller) && RecipeMenuList.SelectedRecipe != null && step_number < (RecipeMenuList.SelectedRecipe.steps.Count - 1)) {   
+        //********** Work on Recipe Step Change ********** 
+        if((GetOkay() || fromScroller) && RecipeMenuList.SelectedRecipe != null && step_number < (RecipeMenuList.SelectedRecipe.steps.Count - 1)) {   
                
                if(!fromScroller)
                {
                     step_number += 1;
                }
                
-               called = false;
-               visible = false;
-               
-               if (StepListControl.Selecting)
-               {
-                   StepListControl.Selecting = false;
-                   StepListControl.ScrollRect.verticalNormalizedPosition = StepListControl.PrevNormPosition - 0.2f;
-                   GameObject.Find("Viewport").GetComponent<Image>().color = Color.white;
-               }
-               else
-               {
-                   StepListControl.ScrollRect.verticalNormalizedPosition -= 0.2f;
-               }
-               Hold(1);
-               
-               List<RawImage> SceneObject = new List<RawImage>();
-               foreach (RawImage go in Resources.FindObjectsOfTypeAll(typeof(RawImage)) as RawImage[]){
-                    RawImage image = go as RawImage; 
-                    Destroy(image);
-                    yCoord=90;
-               }
-               
-               ingred.text = "" ;
-               firstUpdate = true;
-               firstvideo=true;
-               if (previousVideo){
-                   Destroy(videoPlayer);
-                   Destroy(NewObj);
-                   previousVideo=false;
-               }
+               loadStep();
                
                fromScroller = false;
                
-          }else if (GetDone())
-       {
-           step_number = 0;
-           Loader.Load(Loader.Scene.RecipeMenu);
-          } else if (GetL()) {  
-                step_number -= 1;
-                if (step_number<0){
-                  step_number=0;
-                }
+        }else if (GetDone()){
+            step_number = 0;
+            Loader.Load(Loader.Scene.RecipeMenu);
+        }else if (GetL()){  
+            step_number -= 1;
+            if (step_number<0)
+            {
+                step_number=0;
+            }
                 
-                if (StepListControl.Selecting)
-                {
-                    StepListControl.Selecting = false;
-                    StepListControl.ScrollRect.verticalNormalizedPosition = StepListControl.PrevNormPosition + 0.2f;
-                    GameObject.Find("Viewport").GetComponent<Image>().color = Color.white;
-                }
-                else
-                {
-                    StepListControl.ScrollRect.verticalNormalizedPosition += 0.2f; 
-                }    
-                      
-                called = false;
-                visible = false;                         
-                foreach (RawImage go in Resources.FindObjectsOfTypeAll(typeof(RawImage)) as RawImage[]){
-                    RawImage image = go as RawImage; 
-                    Destroy(image);
-                    yCoord=90;
-               }
-               ingred.text = "" ;
-                Hold(1);    
-               firstUpdate = true;
-               firstvideo=true;
-               if (previousVideo){
-                  Destroy(videoPlayer);
-                  Destroy(NewObj);
-                  previousVideo=false;
-               }
-          }
+            loadStep();
+        }
 
         //********** Work on Populating Recipe ********** 
         if (RecipeMenuList.SelectedRecipe == null)
         {
             thisText.text = "No recipe downloaded at the moment";
-        } else
+        }
+        else
         {     
-           if (!called)
-           {
+            if (!called)
+            {
                 called = true;
                 int posTime = RecipeMenuList.SelectedRecipe.steps[step_number].time;
                 if (posTime > 0)
@@ -412,7 +364,9 @@ public class StepCanvas : MonoBehaviour
                  string currentURLcorrected; 
                  currentURLcorrected = currentURL;
                  int length = currentURLcorrected.Length; 
-                 if (length >0){
+                 
+                 if (length >0)
+                 {
                     ingred.text ="Ingredients:";
                     int start = 0;
               	    int end = length;
@@ -422,7 +376,8 @@ public class StepCanvas : MonoBehaviour
                         start += 1;
                     }
 
-                    if(currentURLcorrected[length-1]!='g'){
+                    if(currentURLcorrected[length-1]!='g')
+                    {
               		    end = length-1;   
               	    }
                 
@@ -441,6 +396,7 @@ public class StepCanvas : MonoBehaviour
                  }
              } 
          } 
+         
          firstUpdate=false;  
    }
 
@@ -462,100 +418,41 @@ public class StepCanvas : MonoBehaviour
         videoPlayer.Pause();
 
    }
-
-
-   IEnumerator GetTexture(string thisURL, GameObject currrentImage) {
-        UnityWebRequest www = UnityWebRequestTexture.GetTexture(thisURL);
-    	yield return www.SendWebRequest();
-
-        if(www.isNetworkError) {
-           UnityEngine.Debug.Log(www.error);
-        }
-        else {
-            currrentImage.GetComponent<RawImage>().texture = DownloadHandlerTexture.GetContent(www);
+   
+   void loadStep() {
+        if (StepListControl.Selecting)
+        {
+            StepListControl.Selecting = false;
+            StepListControl.ScrollRect.verticalNormalizedPosition = StepListControl.PrevNormPosition + 0.2f;
+            GameObject.Find("Viewport").GetComponent<Image>().color = Color.white;
         }
         
-   }
-
-
-    void OnDestroy () {
-        MLHands.Stop();
-   }
-    
-   bool GetGesture(MLHand hand, MLHandKeyPose type) {
-        if (hand != null) {
-            if (hand.KeyPose == type) {
-                if (hand.KeyPoseConfidence > 0.9f) {
-                    return true;
-                }
-            }
-        }
-        return false;
-   }
-    
-    
-   //********** Gesture Recognition Boolean Functions ********** 
-   bool GetOkay()
-   {
-        if (GetGesture(MLHands.Left, MLHandKeyPose.Thumb) || GetGesture(MLHands.Right, MLHandKeyPose.Thumb))
+        else
         {
-            return true;
-        }
-
-        return false;
-   }
-   
-   bool GetL()  
-    {
-           if (GetGesture(MLHands.Left, MLHandKeyPose.L) || GetGesture(MLHands.Right, MLHandKeyPose.L))
-           {
-               return true;
-           }
-    
-           return false;
-   }
-
-   bool Time_Switch()
-   {
-        if (GetGesture(MLHands.Left, MLHandKeyPose.OpenHand) || GetGesture(MLHands.Right, MLHandKeyPose.OpenHand))
+            StepListControl.ScrollRect.verticalNormalizedPosition += 0.2f; 
+        }    
+                         
+        called = false;
+        visible = false;                         
+        foreach (RawImage go in Resources.FindObjectsOfTypeAll(typeof(RawImage)) as RawImage[])
         {
-            return true;
+            RawImage image = go as RawImage; 
+            Destroy(image);
+            yCoord=90;
         }
-
-        return false;
-   }
-
-   bool Time_Reset()
-   {
-        if (GetGesture(MLHands.Left, MLHandKeyPose.Pinch) || GetGesture(MLHands.Right, MLHandKeyPose.Pinch))
+        
+        ingred.text = "" ;
+        Hold(1);    
+        firstUpdate = true;
+        firstvideo=true;
+        if (previousVideo)
         {
-            return true;
+             Destroy(videoPlayer);
+             Destroy(NewObj);
+             previousVideo=false;
         }
-
-        return false;
    }
     
-
-    bool Instruction()
-    {
-        if (GetGesture(MLHands.Left, MLHandKeyPose.Finger) || GetGesture(MLHands.Right, MLHandKeyPose.Finger))
-        {
-            return true;
-        }
-    
-        return false;
-   }
-
-
-   bool GetDone()
-   {
-       if (GetGesture(MLHands.Left, MLHandKeyPose.Ok) || GetGesture(MLHands.Right, MLHandKeyPose.Ok)) 
-       {
-           return true;
-       }
-       return false;
-   }
-   
    void startPopulateTimers()
    {
             countdown = new List<Text>(); 
@@ -578,7 +475,7 @@ public class StepCanvas : MonoBehaviour
             timer_notifs.Add(GameObject.Find("Notice1").GetComponent<Text>());
             timer_notifs.Add(GameObject.Find("Notice2").GetComponent<Text>());
             timer_notifs.Add(GameObject.Find("Notice3").GetComponent<Text>());
-            
+                
             for (int i = 0; i < 3; i++){
                 timer_running.Add(false); 
                 hours.Add(0);
@@ -592,13 +489,12 @@ public class StepCanvas : MonoBehaviour
                 timerCountdown.Add(10);
                 play.Add(true);  
                 stepTime.Add((float)(-1.0)); 
-            }     
-                      
+            }                            
    }
-    
- 
-    
-   void Hold(int delay){
+        
+        
+   void Hold(int delay)
+   {
        Stopwatch stopWatch = new Stopwatch();
        stopWatch.Start();
        float curr = stopWatch.ElapsedMilliseconds / 1000;
@@ -609,4 +505,95 @@ public class StepCanvas : MonoBehaviour
        stopWatch.Stop();
    }
 
+
+   IEnumerator GetTexture(string thisURL, GameObject currrentImage) {
+        UnityWebRequest www = UnityWebRequestTexture.GetTexture(thisURL);
+    	yield return www.SendWebRequest();
+
+        if(www.isNetworkError) {
+           UnityEngine.Debug.Log(www.error);
+        }
+        else {
+            currrentImage.GetComponent<RawImage>().texture = DownloadHandlerTexture.GetContent(www);
+        }
+        
+   }
+
+
+   //********** Gesture Recognition Boolean Functions ********** 
+   void OnDestroy () 
+   {
+       MLHands.Stop();
+   }
+   
+  bool GetGesture(MLHand hand, MLHandKeyPose type) 
+  {
+       if (hand != null) {
+           if (hand.KeyPose == type) {
+               if (hand.KeyPoseConfidence > 0.9f) {
+                   return true;
+               }
+           }
+       }
+       return false;
+  }
+  
+  bool GetOkay()
+  {
+        if (GetGesture(MLHands.Left, MLHandKeyPose.Thumb) || GetGesture(MLHands.Right, MLHandKeyPose.Thumb))
+        {
+            return true;
+        }
+
+        return false;
+  }
+   
+  bool GetL()  
+  {
+        if (GetGesture(MLHands.Left, MLHandKeyPose.L) || GetGesture(MLHands.Right, MLHandKeyPose.L))
+        {
+            return true;
+        }
+    
+        return false;
+  }
+
+  bool Time_Switch()
+  {
+       if (GetGesture(MLHands.Left, MLHandKeyPose.OpenHand) || GetGesture(MLHands.Right, MLHandKeyPose.OpenHand))
+       {
+           return true;
+       }
+        return false;
+  }
+
+  bool Time_Reset()
+  {
+      if (GetGesture(MLHands.Left, MLHandKeyPose.Pinch) || GetGesture(MLHands.Right, MLHandKeyPose.Pinch))
+      {
+           return true;
+      }
+      return false;
+  }
+    
+
+  bool Instruction()
+  {
+        if (GetGesture(MLHands.Left, MLHandKeyPose.Finger) || GetGesture(MLHands.Right, MLHandKeyPose.Finger))
+        {
+            return true;
+        }
+    
+        return false;
+  }
+
+
+   bool GetDone()
+   {
+       if (GetGesture(MLHands.Left, MLHandKeyPose.Ok) || GetGesture(MLHands.Right, MLHandKeyPose.Ok)) 
+       {
+           return true;
+       }
+       return false;
+   }
 }
