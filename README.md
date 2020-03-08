@@ -57,7 +57,7 @@ c. Modify and push as needed
 
 ## Authors
 Brian Tomasco
-Zack Johnson
+Zach Johnson
 Anders Limstrom
 Erika Ogino
 Danielle Fang
