@@ -51,9 +51,14 @@ c. Modify and push as needed
 ## Deployment
 
 1. Download the .mpk file from the [repository](https://github.com/dartmouth-cs98/cook_along)
-2. Install using `mldb install CookAlong.mpk`
-3. run `mldb packages`
-4. Try launching app with `mldb launch sampleApp`
+2. Download [The Lab](https://developer.magicleap.com/learn/guides/lab)
+3. Start the Magic Leap Device Bridge using these [instructions](https://developer.magicleap.com/learn/guides/lab-device-bridge)
+4. Click on `Apps`
+5. Click on `Install App`
+6. Select the downloaded .mpk file from step 1
+7. Click launch
+
+
 
 ## Authors
 Brian Tomasco
