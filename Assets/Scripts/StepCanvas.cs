@@ -257,20 +257,22 @@ public class StepCanvas : MonoBehaviour
                     step_number += 1;
                }
                
+               StepListScrollNext();
                loadStep();
                
                fromScroller = false;
                
         }else if (GetDone()){
-            step_number = 0;
-            Loader.Load(Loader.Scene.RecipeMenu);
+            // step_number = 0;
+            // Loader.Load(Loader.Scene.RecipeMenu);
         }else if (GetL()){  
             step_number -= 1;
             if (step_number<0)
             {
                 step_number=0;
             }
-                
+              
+            StepListScrollBack();
             loadStep();
         }
 
@@ -418,21 +420,39 @@ public class StepCanvas : MonoBehaviour
         videoPlayer.Pause();
 
    }
+
+   void StepListScrollBack()
+   {
+       if (StepListControl.Selecting)
+       {
+           StepListControl.Selecting = false;
+           StepListControl.ScrollRect.verticalNormalizedPosition = StepListControl.PrevNormPosition + 0.2f;
+           GameObject.Find("Viewport").GetComponent<Image>().color = Color.white;
+       }
+        
+       else
+       {
+           StepListControl.ScrollRect.verticalNormalizedPosition += 0.2f; 
+       }    
+   }
+
+   void StepListScrollNext()
+   {
+       if (StepListControl.Selecting)
+       {
+           StepListControl.Selecting = false;
+           StepListControl.ScrollRect.verticalNormalizedPosition = StepListControl.PrevNormPosition - 0.2f;
+           GameObject.Find("Viewport").GetComponent<Image>().color = Color.white;
+       }
+        
+       else
+       {
+           StepListControl.ScrollRect.verticalNormalizedPosition -= 0.2f; 
+       }    
+   }
    
    void loadStep() {
-        if (StepListControl.Selecting)
-        {
-            StepListControl.Selecting = false;
-            StepListControl.ScrollRect.verticalNormalizedPosition = StepListControl.PrevNormPosition + 0.2f;
-            GameObject.Find("Viewport").GetComponent<Image>().color = Color.white;
-        }
-        
-        else
-        {
-            StepListControl.ScrollRect.verticalNormalizedPosition += 0.2f; 
-        }    
-                         
-        called = false;
+       called = false;
         visible = false;                         
         foreach (RawImage go in Resources.FindObjectsOfTypeAll(typeof(RawImage)) as RawImage[])
         {
