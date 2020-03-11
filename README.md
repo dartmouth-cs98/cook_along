@@ -22,6 +22,7 @@ Frontend: https://github.com/dartmouth-cs98/cook_along
 1. Have Unity Installed
 2. Have The Lab Installed
 3. Configure the connection between the two using links below:
+
 [Dev Set up](https://creator.magicleap.com/learn/guides/develop-setup)
 
 [Device Set up](https://creator.magicleap.com/learn/guides/develop-device-setup)
