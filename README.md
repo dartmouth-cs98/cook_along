@@ -1,6 +1,6 @@
 # CookAlong
 
-An AR application to help streamline the cooking process. Include recipe selection, step-by-step instructions, and education on cooking terms and ingradient pictures.
+An AR application to help streamline the cooking process. Users can walk through a recipe step by step, see pictures of ingredients, manage multiple timers, and watch instructional videos, all within the app.
 
 ![Logo](https://github.com/dartmouth-cs98/19f-cookalong/blob/master/cookalong-horiz.png)
 ![Video](https://github.com/dartmouth-cs98/19f-cookalong/blob/master/video.gif)
