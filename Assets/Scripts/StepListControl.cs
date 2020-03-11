@@ -26,9 +26,16 @@ public class StepListControl : MonoBehaviour
     {
         controlInput.OnSwipe.AddListener(HandleSwipe);
         controlInput.OnTriggerPressEnded.AddListener(HandleTrigger);
+        controlInput.OnHomeButtonTap.AddListener(HandleHomeTap);
         TimeSelect = false;
         Selecting = false;
         ScrollRect = GetComponent<ScrollRect>();
+    }
+
+    void HandleHomeTap()
+    {
+        StepCanvas.step_number = 0;
+        Loader.Load(Loader.Scene.RecipeMenu);
     }
 
     void HandleTrigger()
