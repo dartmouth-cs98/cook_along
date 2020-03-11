@@ -2,14 +2,9 @@
 
 An AR application to help streamline the cooking process. Include recipe selection, step-by-step instructions, and education on cooking terms and ingradient pictures.
 
-Sample mockups
 ![Logo](https://github.com/dartmouth-cs98/19f-cookalong/blob/master/cookalong-horiz.png)
-![Welcome](https://github.com/dartmouth-cs98/19f-cookalong/blob/master/welcome.png)
-![Tutorial](https://github.com/dartmouth-cs98/19f-cookalong/blob/master/tutorial.png)
-![Recipes](https://github.com/dartmouth-cs98/19f-cookalong/blob/master/recipes.png)
-![ARecipes](https://github.com/dartmouth-cs98/19f-cookalong/blob/master/recipecheese.png)
-![Dicing](https://github.com/dartmouth-cs98/19f-cookalong/blob/master/slicewvid.png)
-![Dicingw/instructions](https://github.com/dartmouth-cs98/19f-cookalong/blob/master/slice.png)
+![Video](https://github.com/dartmouth-cs98/19f-cookalong/blob/master/video.gif)
+![Timers](https://github.com/dartmouth-cs98/19f-cookalong/blob/master/multiTimers.gif)
 
 
 ## Architecture
