@@ -60,11 +60,11 @@ c. Modify and push as needed
 
 
 ## Authors
-Brian Tomasco
-Zach Johnson
-Anders Limstrom
-Erika Ogino
-Danielle Fang
+Brian Tomasco <br/>
+Zack Johnson <br/>
+Anders Limstrom <br/>
+Erika Ogino <br/>
+Danielle Fang <br/>
 
 ## Acknowledgments
 [MagicLeap Guides](https://creator.magicleap.com/learn/guides/)
