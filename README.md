@@ -10,12 +10,15 @@ An AR application to help streamline the cooking process. Users can walk through
 ## Architecture
 Backend : https://github.com/dartmouth-cs98/cookalong-backend
 * Springboot Java for rest API calls
-* Data storage in AWS
+* Data storage in MongoDB Heroku app
 
 Frontend: https://github.com/dartmouth-cs98/cook_along
 * Unity app coded in C#
 * Building onto a MagicLeap headset
 
+Backend interface : https://github.com/dartmouth-cs98/cookalong-interface
+* React.js frontend for interacting with backend
+* Deployed with Surge.sh
 
 ## Setup
 
